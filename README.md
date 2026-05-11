@@ -1,7 +1,7 @@
 # 📚 TCS Notes — Theory of Computation
 
 > **Comprehensive, exam-ready study notes for Theory of Computation**
-> NMIMS MPSTME · B.Tech CSE · Semester 5
+> NMIMS MPSTME · B.Tech CSE · Semester 4
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/tcs-notes)
 
@@ -89,7 +89,7 @@ tcs-notes/
 ## 👨‍💻 Author
 
 **Made by Jay Naik**
-B.Tech CSE · NMIMS MPSTME · Semester 5
+B.Tech CSE · NMIMS MPSTME · Semester 4
 
 ---
 
