@@ -1,0 +1,2527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCS Notes — Chapter 5: Pushdown Automata</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg2: #161b22;
+            --bg3: #1c2128;
+            --bg4: #21262d;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent2: #3fb950;
+            --accent3: #ff7b72;
+            --accent4: #ffa657;
+            --accent5: #d2a8ff;
+            --text: #e6edf3;
+            --text2: #8b949e;
+            --text3: #c9d1d9;
+            --red: #f85149;
+            --yellow: #e3b341;
+            --green: #3fb950;
+            --purple: #d2a8ff;
+            --teal: #39d353;
+            --pink: #f778ba;
+            --cyan: #79c0ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 255px;
+            height: 100vh;
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            z-index: 100;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-brand {
+            padding: 18px 18px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-brand .course {
+            font-size: 10px;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 3px;
+        }
+
+        .sidebar-brand .title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--cyan);
+            line-height: 1.3;
+        }
+
+        .sidebar-brand .ch {
+            font-size: 11px;
+            color: var(--accent4);
+            margin-top: 3px;
+        }
+
+        .nav-section {
+            padding: 12px 10px 4px 18px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 6px 18px 6px 22px;
+            font-size: 12px;
+            color: var(--text3);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all .15s;
+        }
+
+        .nav-item:hover {
+            color: var(--cyan);
+            background: rgba(121, 192, 255, .06);
+            border-left-color: var(--cyan);
+        }
+
+        .nav-item.active {
+            color: var(--cyan);
+            border-left-color: var(--cyan);
+            background: rgba(121, 192, 255, .1);
+        }
+
+        .nav-sub {
+            padding-left: 34px;
+            font-size: 11.5px;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 255px;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .chapter-header {
+            background: linear-gradient(135deg, #0d1117 0%, #0d1a24 50%, #0f1f2e 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 55px 60px 45px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(121, 192, 255, .08) 0%, transparent 70%);
+        }
+
+        .ch-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(121, 192, 255, .12);
+            border: 1px solid rgba(121, 192, 255, .3);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .chapter-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .chapter-header h1 span {
+            color: var(--cyan);
+        }
+
+        .chapter-header p {
+            font-size: 14px;
+            color: var(--text2);
+            max-width: 640px;
+            position: relative;
+        }
+
+        .ch-meta {
+            display: flex;
+            gap: 14px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .ch-meta-item {
+            padding: 9px 16px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .ch-meta-item .label {
+            color: var(--text2);
+            margin-bottom: 2px;
+        }
+
+        .ch-meta-item .value {
+            color: var(--accent4);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 45px 60px;
+            max-width: 980px;
+        }
+
+        .section {
+            margin-bottom: 56px;
+        }
+
+        .section-title {
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .num {
+            background: var(--cyan);
+            color: #0d1117;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .subsection {
+            margin: 26px 0;
+        }
+
+        .subsection-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent4);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 15px;
+            background: var(--accent4);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: var(--text3);
+        }
+
+        /* BOXES */
+        .def-box {
+            background: rgba(121, 192, 255, .06);
+            border: 1px solid rgba(121, 192, 255, .25);
+            border-left: 3px solid var(--cyan);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 14px 0;
+        }
+
+        .def-box .def-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--cyan);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .def-box p {
+            color: var(--text3);
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .key-box {
+            background: rgba(255, 166, 87, .07);
+            border: 1px solid rgba(255, 166, 87, .25);
+            border-left: 3px solid var(--accent4);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .key-box .key-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent4);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .key-box ul {
+            padding-left: 17px;
+        }
+
+        .key-box li {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin-bottom: 5px;
+        }
+
+        .example-box {
+            background: rgba(63, 185, 80, .05);
+            border: 1px solid rgba(63, 185, 80, .2);
+            border-left: 3px solid var(--accent2);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .example-box .ex-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent2);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .example-box p {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin-bottom: 5px;
+        }
+
+        .note-box {
+            background: rgba(248, 81, 73, .06);
+            border: 1px solid rgba(248, 81, 73, .2);
+            border-left: 3px solid var(--red);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .note-box .note-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--red);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .note-box p {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin: 0;
+        }
+
+        .prob-box {
+            background: rgba(210, 168, 255, .05);
+            border: 1px solid rgba(210, 168, 255, .2);
+            border-left: 3px solid var(--purple);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .prob-box .prob-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--purple);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .prob-box p {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin-bottom: 4px;
+        }
+
+        /* PDA TRANSITION BLOCK */
+        .trans-block {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin: 12px 0;
+            line-height: 2.1;
+        }
+
+        .trans-block .tr {
+            color: var(--text3);
+        }
+
+        .trans-block .tr .state {
+            color: var(--cyan);
+        }
+
+        .trans-block .tr .sym {
+            color: var(--accent2);
+        }
+
+        .trans-block .tr .stack {
+            color: var(--accent4);
+        }
+
+        .trans-block .tr .comment {
+            color: var(--text2);
+            font-size: 11.5px;
+        }
+
+        .trans-block .tr .op {
+            color: var(--purple);
+        }
+
+        /* FORMULA */
+        .formula {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 13.5px;
+            color: var(--accent5);
+            margin: 12px 0;
+            line-height: 1.9;
+        }
+
+        /* ID TRACE TABLE */
+        .id-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 12px 0;
+        }
+
+        .id-table th {
+            background: var(--bg3);
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .id-table td {
+            padding: 9px 14px;
+            border-bottom: 1px solid var(--border);
+            font-family: 'Courier New', monospace;
+            font-size: 12.5px;
+            vertical-align: middle;
+        }
+
+        .id-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .id-table .start-row td {
+            background: rgba(121, 192, 255, .06);
+            color: var(--cyan);
+        }
+
+        .id-table .accept-row td {
+            background: rgba(63, 185, 80, .08);
+            color: var(--accent2);
+        }
+
+        .id-table .normal-row td {
+            color: var(--text3);
+        }
+
+        .id-table .normal-row:nth-child(even) td {
+            background: rgba(255, 255, 255, .02);
+        }
+
+        .id-table td .step-label {
+            font-family: inherit;
+            font-size: 11px;
+            color: var(--text2);
+        }
+
+        .id-table .action-col {
+            color: var(--accent4);
+            font-size: 12px;
+            font-family: inherit;
+        }
+
+        /* TABLE */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead tr {
+            background: var(--bg3);
+        }
+
+        thead th {
+            padding: 11px 14px;
+            text-align: left;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background .1s;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(121, 192, 255, .03);
+        }
+
+        tbody td {
+            padding: 10px 14px;
+            color: var(--text3);
+            vertical-align: top;
+        }
+
+        tbody td:first-child {
+            color: var(--cyan);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .td-normal td:first-child {
+            color: var(--text3);
+            font-family: inherit;
+            font-weight: 400;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 12.5px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--accent5);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        /* STACK VISUAL */
+        .stack-visual {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 6px;
+            vertical-align: middle;
+        }
+
+        .stack-cell {
+            min-width: 32px;
+            height: 28px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--accent4);
+            background: var(--bg4);
+            border-radius: 3px;
+            margin: 1px 0;
+        }
+
+        .stack-cell.top {
+            background: rgba(121, 192, 255, .15);
+            color: var(--cyan);
+            border-color: var(--cyan);
+        }
+
+        .stack-cell.bottom {
+            background: rgba(255, 166, 87, .12);
+            color: var(--accent4);
+            border-color: var(--accent4);
+        }
+
+        .stack-label {
+            font-size: 9px;
+            color: var(--text2);
+            margin-top: 3px;
+        }
+
+        /* DIAGRAM */
+        .diagram-box {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 16px 14px;
+            margin: 18px 0;
+            text-align: center;
+        }
+
+        .diagram-caption {
+            font-size: 11px;
+            color: var(--text2);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* DIVIDER */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 38px 0;
+        }
+
+        /* BADGE */
+        .badge {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: 10.5px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .badge-blue {
+            background: rgba(88, 166, 255, .2);
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, .3);
+        }
+
+        .badge-green {
+            background: rgba(63, 185, 80, .15);
+            color: var(--accent2);
+            border: 1px solid rgba(63, 185, 80, .3);
+        }
+
+        .badge-red {
+            background: rgba(248, 81, 73, .15);
+            color: var(--red);
+            border: 1px solid rgba(248, 81, 73, .3);
+        }
+
+        .badge-cyan {
+            background: rgba(121, 192, 255, .15);
+            color: var(--cyan);
+            border: 1px solid rgba(121, 192, 255, .3);
+        }
+
+        .badge-yes {
+            background: rgba(63, 185, 80, .15);
+            color: var(--accent2);
+            border: 1px solid rgba(63, 185, 80, .3);
+            padding: 3px 10px;
+        }
+
+        .badge-no {
+            background: rgba(248, 81, 73, .15);
+            color: var(--red);
+            border: 1px solid rgba(248, 81, 73, .3);
+            padding: 3px 10px;
+        }
+
+        /* GRID */
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 14px 0;
+        }
+
+        .summary-card {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 13px 15px;
+        }
+
+        .summary-card .sc-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent4);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+
+        .summary-card p,
+        .summary-card li {
+            font-size: 12.5px;
+            color: var(--text2);
+        }
+
+        .summary-card ul {
+            padding-left: 15px;
+        }
+
+        .summary-card li {
+            margin-bottom: 3px;
+        }
+
+        /* STEP BLOCK */
+        .step-block {
+            display: flex;
+            gap: 14px;
+            margin: 9px 0;
+        }
+
+        .step-num {
+            min-width: 28px;
+            height: 28px;
+            background: rgba(121, 192, 255, .15);
+            border: 1px solid rgba(121, 192, 255, .3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--cyan);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-body {
+            font-size: 13.5px;
+            color: var(--text3);
+            padding-top: 4px;
+        }
+
+        .step-body code {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--accent5);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        /* PDA PROBLEM CARD */
+        .pda-problem {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px 24px;
+            margin: 22px 0;
+        }
+
+        .pda-problem-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .prob-num {
+            min-width: 38px;
+            height: 38px;
+            background: var(--cyan);
+            color: #0d1117;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .prob-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .prob-lang {
+            font-size: 12px;
+            color: var(--text2);
+            margin-top: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ACCEPT BADGE */
+        .accept-chip {
+            display: inline-block;
+            padding: 3px 10px;
+            background: rgba(63, 185, 80, .15);
+            border: 1px solid rgba(63, 185, 80, .3);
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent2);
+        }
+
+        .reject-chip {
+            display: inline-block;
+            padding: 3px 10px;
+            background: rgba(248, 81, 73, .15);
+            border: 1px solid rgba(248, 81, 73, .3);
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--red);
+        }
+
+        /* PRACTICE */
+        .practice-section {
+            background: rgba(210, 168, 255, .05);
+            border: 1px solid rgba(210, 168, 255, .2);
+            border-radius: 10px;
+            padding: 22px 26px;
+            margin: 28px 0;
+        }
+
+        .practice-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .practice-title::before {
+            content: '✦';
+            font-size: 12px;
+        }
+
+        .q-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(210, 168, 255, .1);
+            font-size: 13.5px;
+            color: var(--text3);
+        }
+
+        .q-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .q-num {
+            min-width: 26px;
+            height: 26px;
+            background: rgba(210, 168, 255, .15);
+            border: 1px solid rgba(210, 168, 255, .25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--purple);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .q-ans {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 9px 13px;
+            margin-top: 7px;
+            font-size: 13px;
+            color: var(--text2);
+        }
+
+        .q-ans strong {
+            color: var(--accent2);
+        }
+
+        /* SCROLL TOP */
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            background: var(--cyan);
+            color: #0d1117;
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 17px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(121, 192, 255, .3);
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 28px 22px;
+            }
+
+            .chapter-header {
+                padding: 36px 22px;
+            }
+
+            .grid2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <div class="course">NMIMS MPSTME · B.Tech CSE · Sem 4</div>
+            <div class="title">Theory of Computation</div>
+            <div class="ch">Chapter 5 — Pushdown Automata</div>
+        </div>
+        <div class="nav-section">Contents</div>
+        <a class="nav-item active" href="#s1">5.1 Introduction to PDA</a>
+        <a class="nav-item nav-sub" href="#s1a">→ What is a PDA?</a>
+        <a class="nav-item nav-sub" href="#s1b">→ Formal 7-Tuple</a>
+        <a class="nav-item nav-sub" href="#s1c">→ Transition Function δ</a>
+        <a class="nav-item nav-sub" href="#s1d">→ Stack Operations</a>
+        <a class="nav-item" href="#s2">5.2 Instantaneous Description</a>
+        <a class="nav-item nav-sub" href="#s2a">→ ID Triple (q, w, α)</a>
+        <a class="nav-item nav-sub" href="#s2b">→ Turnstile Notation ⊢</a>
+        <a class="nav-item" href="#s3">5.3 Language Acceptance</a>
+        <a class="nav-item nav-sub" href="#s3a">→ By Final State</a>
+        <a class="nav-item nav-sub" href="#s3b">→ By Empty Stack</a>
+        <a class="nav-item nav-sub" href="#s3c">→ Equivalence</a>
+        <a class="nav-item" href="#s4">5.4 PDA Design — Problems</a>
+        <a class="nav-item nav-sub" href="#p1">→ P1: aⁿbⁿ</a>
+        <a class="nav-item nav-sub" href="#p2">→ P2: aⁿcbⁿ</a>
+        <a class="nav-item nav-sub" href="#p3">→ P3: 0ᵐ1ⁿ2ⁿ</a>
+        <a class="nav-item nav-sub" href="#p4">→ P4: aⁿb³ⁿ</a>
+        <a class="nav-item nav-sub" href="#p5">→ P5: Equal a's & b's</a>
+        <a class="nav-item nav-sub" href="#p6">→ P6: Palindromes</a>
+        <a class="nav-item nav-sub" href="#p7">→ P7: abⁿacabⁿa</a>
+        <a class="nav-item nav-sub" href="#p8">→ P8: i+j=k</a>
+        <a class="nav-item nav-sub" href="#p9">→ P9: aⁿbᵐcᵐdⁿ</a>
+        <a class="nav-item nav-sub" href="#p10">→ P10: Balanced Parens</a>
+        <a class="nav-item" href="#s5">5.5 Power of PDA over FSM</a>
+        <a class="nav-item" href="#s6">5.6 CFG to PDA Conversion</a>
+        <a class="nav-item" href="#s7">5.7 Practice Questions</a>
+        <a class="nav-item" href="#s8">5.8 Quick Revision</a>
+    </nav>
+
+    <!-- MAIN -->
+    <div class="main">
+        <div class="chapter-header">
+            <div class="ch-badge">Unit 5 · 5 Lectures</div>
+            <h1>Pushdown <span>Automata (PDA)</span></h1>
+            <p>Tuples and elements in PDA, design of PDA for CFL, Power of PDA over FSM, and Closure Properties of CFL.
+            </p>
+            <div class="ch-meta">
+                <div class="ch-meta-item">
+                    <div class="label">Duration</div>
+                    <div class="value">05 Lectures</div>
+                </div>
+                <div class="ch-meta-item">
+                    <div class="label">Model</div>
+                    <div class="value">FA + Stack</div>
+                </div>
+                <div class="ch-meta-item">
+                    <div class="label">Accepts</div>
+                    <div class="value">Context Free Languages</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- ═══════════════════════════════
+     5.1 INTRODUCTION
+═══════════════════════════════ -->
+            <div class="section" id="s1">
+                <div class="section-title"><span class="num">5.1</span> Introduction to Pushdown Automata</div>
+
+                <div class="subsection" id="s1a">
+                    <div class="subsection-title">5.1.1 What is a PDA?</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>A <strong>Pushdown Automaton (PDA)</strong> = <strong>Finite State Machine + an Infinite
+                                Stack</strong>. The stack gives it the ability to store and retrieve unlimited
+                            information, making it more powerful than FA.</p>
+                    </div>
+
+                    <div class="diagram-box">
+                        <svg width="100%" viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+                                    orient="auto">
+                                    <path d="M1 2L8 5L1 8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </marker>
+                            </defs>
+                            <!-- Input tape -->
+                            <text x="320" y="22" text-anchor="middle" font-size="11" fill="#8b949e">Input Tape
+                                (read-only, left-to-right)</text>
+                            <rect x="60" y="30" width="500" height="30" rx="4" fill="var(--bg3)" stroke="var(--border)"
+                                stroke-width="1" />
+                            <!-- tape cells -->
+                            <rect x="60" y="30" width="50" height="30" fill="rgba(121,192,255,0.15)"
+                                stroke="var(--border)" stroke-width="1" />
+                            <text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#79c0ff">a</text>
+                            <rect x="110" y="30" width="50" height="30" fill="var(--bg4)" stroke="var(--border)"
+                                stroke-width="1" />
+                            <text x="135" y="50" text-anchor="middle" font-size="14" fill="var(--text3)">a</text>
+                            <rect x="160" y="30" width="50" height="30" fill="var(--bg4)" stroke="var(--border)"
+                                stroke-width="1" />
+                            <text x="185" y="50" text-anchor="middle" font-size="14" fill="var(--text3)">b</text>
+                            <rect x="210" y="30" width="50" height="30" fill="var(--bg4)" stroke="var(--border)"
+                                stroke-width="1" />
+                            <text x="235" y="50" text-anchor="middle" font-size="14" fill="var(--text3)">b</text>
+                            <text x="310" y="50" text-anchor="middle" font-size="12" fill="var(--text2)">...</text>
+                            <!-- read head arrow -->
+                            <line x1="85" y1="62" x2="85" y2="75" stroke="#79c0ff" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="50" y="90" font-size="9" fill="#79c0ff">read head</text>
+
+                            <!-- FA box -->
+                            <rect x="220" y="90" width="200" height="60" rx="8" fill="rgba(121,192,255,0.08)"
+                                stroke="#79c0ff" stroke-width="1.5" />
+                            <text x="320" y="118" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#79c0ff">Finite Control</text>
+                            <text x="320" y="134" text-anchor="middle" font-size="10" fill="var(--text2)">(States: q0,
+                                q1, q2 ...)</text>
+
+                            <!-- tape to FA -->
+                            <line x1="85" y1="76" x2="230" y2="110" stroke="#79c0ff" stroke-width="1"
+                                stroke-dasharray="4,2" />
+
+                            <!-- Stack -->
+                            <rect x="480" y="60" width="60" height="120" rx="4" fill="var(--bg3)"
+                                stroke="var(--accent4)" stroke-width="1.5" />
+                            <text x="510" y="50" text-anchor="middle" font-size="10" fill="var(--accent4)">Stack ↑
+                                top</text>
+                            <!-- stack cells -->
+                            <rect x="481" y="62" width="58" height="22" fill="rgba(121,192,255,0.2)"
+                                stroke="var(--border)" stroke-width="0.5" />
+                            <text x="510" y="77" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#79c0ff">a</text>
+                            <rect x="481" y="84" width="58" height="22" fill="rgba(255,166,87,0.12)"
+                                stroke="var(--border)" stroke-width="0.5" />
+                            <text x="510" y="99" text-anchor="middle" font-size="12" fill="var(--accent4)">a</text>
+                            <rect x="481" y="106" width="58" height="22" fill="var(--bg4)" stroke="var(--border)"
+                                stroke-width="0.5" />
+                            <text x="510" y="121" text-anchor="middle" font-size="12" fill="var(--text3)">Z₀</text>
+                            <rect x="481" y="128" width="58" height="50" fill="var(--bg4)" stroke="var(--border)"
+                                stroke-width="0.5" />
+                            <text x="510" y="160" text-anchor="middle" font-size="11" fill="var(--text2)">...</text>
+                            <text x="510" y="192" text-anchor="middle" font-size="10"
+                                fill="var(--accent4)">bottom</text>
+
+                            <!-- FA to stack -->
+                            <line x1="420" y1="120" x2="478" y2="90" stroke="var(--accent4)" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="448" y="106" text-anchor="middle" font-size="9"
+                                fill="var(--accent4)">push/pop</text>
+                        </svg>
+                        <div class="diagram-caption">Figure 5.1 — PDA Architecture: Finite Control reads input tape and
+                            operates on a Stack (push/pop). Stack is LIFO — top is leftmost in notation.</div>
+                    </div>
+
+                    <div class="grid2">
+                        <div class="summary-card">
+                            <div class="sc-title">FA vs PDA</div>
+                            <ul>
+                                <li><strong>FA:</strong> Only states — finite memory</li>
+                                <li><strong>PDA:</strong> States + infinite stack</li>
+                                <li>FA cannot count aⁿbⁿ — no memory for n</li>
+                                <li>PDA can: push n A's, pop n A's</li>
+                                <li>PDA = FA + stack → more power</li>
+                            </ul>
+                        </div>
+                        <div class="summary-card">
+                            <div class="sc-title">Why PDA?</div>
+                            <ul>
+                                <li>Accepts exactly Context Free Languages</li>
+                                <li>Models syntax analysis in compilers</li>
+                                <li>Handles nested structures (parens, tags)</li>
+                                <li>Used in LL/LR parsers</li>
+                                <li>Every CFL has an equivalent PDA</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s1b">
+                    <div class="subsection-title">5.1.2 Formal Definition — 7-Tuple</div>
+                    <div class="def-box">
+                        <div class="def-label">PDA — 7-Tuple</div>
+                        <p>A Pushdown Automaton is formally defined as: <code>M = (Q, Σ, Γ, δ, q₀, Z₀, F)</code></p>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Symbol</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>Q</strong></td>
+                                    <td>States</td>
+                                    <td>Finite, non-empty set of all states</td>
+                                    <td>{q0, q1, q2}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Σ</strong></td>
+                                    <td>Input Alphabet</td>
+                                    <td>Finite set of input symbols</td>
+                                    <td>{a, b}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Γ</strong></td>
+                                    <td>Stack Alphabet</td>
+                                    <td>Finite set of symbols that can appear on the stack. Γ ⊇ Σ typically.</td>
+                                    <td>{A, Z₀}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>δ</strong></td>
+                                    <td>Transition Function</td>
+                                    <td>δ: Q × (Σ∪{ε}) × Γ → finite subsets of Q × Γ*</td>
+                                    <td>δ(q0,a,Z0)={(q0,aZ0)}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>q₀</strong></td>
+                                    <td>Start State</td>
+                                    <td>Initial state. q₀ ∈ Q</td>
+                                    <td>q0</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Z₀</strong></td>
+                                    <td>Initial Stack Symbol</td>
+                                    <td>Symbol initially on the bottom of the stack. Z₀ ∈ Γ</td>
+                                    <td>Z₀ or $</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>F</strong></td>
+                                    <td>Final States</td>
+                                    <td>Set of accepting states. F ⊆ Q (can be empty for empty stack acceptance)</td>
+                                    <td>{q2}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s1c">
+                    <div class="subsection-title">5.1.3 Transition Function δ in Detail</div>
+                    <div class="formula">δ(q, a, X) = {(p₁, γ₁), (p₂, γ₂), ...}</div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Part</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>q</strong></td>
+                                    <td>Current state</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>a</strong></td>
+                                    <td>Input symbol being read (or ε for empty move — no input consumed)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>X</strong></td>
+                                    <td>Current top symbol of the stack</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>p</strong></td>
+                                    <td>Next state to move to</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>γ</strong></td>
+                                    <td>String to replace X on top of stack (γ ∈ Γ*). Left end = top of stack.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="subsection-title" id="s1d" style="margin-top:20px;">5.1.4 Stack Operations Explained
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Operation</th>
+                                    <th>Meaning</th>
+                                    <th>δ notation</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>PUSH 'a'</strong></td>
+                                    <td>Add 'a' on top. X stays below.</td>
+                                    <td>δ(q, ?, X) = (p, aX)</td>
+                                    <td>Stack X → Stack aX (a on top)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>POP</strong></td>
+                                    <td>Remove top symbol X.</td>
+                                    <td>δ(q, ?, X) = (p, ε)</td>
+                                    <td>Stack aX → Stack X</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>NO-OP</strong></td>
+                                    <td>Leave stack unchanged.</td>
+                                    <td>δ(q, ?, X) = (p, X)</td>
+                                    <td>Stack stays same</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>REPLACE</strong></td>
+                                    <td>Replace top X with Y.</td>
+                                    <td>δ(q, ?, X) = (p, Y)</td>
+                                    <td>Stack X → Stack Y</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PUSH 3 symbols</strong></td>
+                                    <td>Push AAA on top of X.</td>
+                                    <td>δ(q, ?, X) = (p, AAAX)</td>
+                                    <td>Stack X → Stack AAAX</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-label">Stack Convention — TOP is LEFTMOST</div>
+                        <p>In PDA notation, the stack contents are written with the <strong>TOP on the LEFT</strong>. So
+                            if we write "aZ₀", it means 'a' is on top and Z₀ is at the bottom. Pushing 'a' onto a stack
+                            with Z₀ → write "aZ₀".</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     5.2 INSTANTANEOUS DESCRIPTION
+═══════════════════════════════ -->
+            <div class="section" id="s2">
+                <div class="section-title"><span class="num">5.2</span> Instantaneous Description (ID)</div>
+
+                <div class="subsection" id="s2a">
+                    <div class="subsection-title">5.2.1 ID Triple — (q, w, α)</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>An <strong>Instantaneous Description (ID)</strong> is a snapshot of the PDA at any point
+                            during computation. It captures everything needed to continue the computation.</p>
+                    </div>
+                    <div class="formula">ID = (q, w, α)</div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Meaning</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>q</strong></td>
+                                    <td>Current state of the PDA</td>
+                                    <td>q0, q1</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>w</strong></td>
+                                    <td>Remaining input string (yet to be read)</td>
+                                    <td>"bb" (means 'b' and 'b' still to process)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>α</strong></td>
+                                    <td>Current stack contents — TOP on LEFT</td>
+                                    <td>"aaZ₀" means 2 a's on stack with Z₀ at bottom</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s2b">
+                    <div class="subsection-title">5.2.2 Turnstile Notation</div>
+                    <div class="def-box">
+                        <div class="def-label">Notation</div>
+                        <p>The symbol <strong>⊢</strong> (turnstile) represents ONE move of the PDA. <strong>⊢*</strong>
+                            represents zero or more moves.</p>
+                    </div>
+                    <div class="formula">(q, aw, Xβ) ⊢ (p, w, γβ)</div>
+                    <div class="key-box">
+                        <div class="key-label">Reading the Turnstile Notation</div>
+                        <ul>
+                            <li><strong>q</strong> = current state, <strong>p</strong> = next state</li>
+                            <li><strong>a</strong> = input symbol consumed (or ε if no input consumed)</li>
+                            <li><strong>w</strong> = remaining input AFTER consuming 'a'</li>
+                            <li><strong>X</strong> = stack top symbol popped/replaced</li>
+                            <li><strong>β</strong> = rest of stack below X (stays unchanged)</li>
+                            <li><strong>γ</strong> = new string pushed on stack in place of X</li>
+                            <li>Condition: δ(q, a, X) must contain (p, γ)</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="ex-label">Example ID Trace — aⁿbⁿ PDA for input "aabb"</div>
+                        <div class="table-wrap" style="margin:8px 0 0;">
+                            <table class="id-table">
+                                <thead>
+                                    <tr>
+                                        <th>Step</th>
+                                        <th>Current ID (state, input, stack)</th>
+                                        <th>Move / Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="start-row">
+                                        <td>Start</td>
+                                        <td>(q0, aabb, Z₀)</td>
+                                        <td>Initial configuration</td>
+                                    </tr>
+                                    <tr class="normal-row">
+                                        <td>1 ⊢</td>
+                                        <td>(q0, abb, <strong>a</strong>Z₀)</td>
+                                        <td>Read 'a', push 'a' on Z₀</td>
+                                    </tr>
+                                    <tr class="normal-row">
+                                        <td>2 ⊢</td>
+                                        <td>(q0, bb, <strong>aa</strong>Z₀)</td>
+                                        <td>Read 'a', push another 'a'</td>
+                                    </tr>
+                                    <tr class="normal-row">
+                                        <td>3 ⊢</td>
+                                        <td>(q1, b, <strong>a</strong>Z₀)</td>
+                                        <td>Read 'b', pop 'a', change to q1</td>
+                                    </tr>
+                                    <tr class="normal-row">
+                                        <td>4 ⊢</td>
+                                        <td>(q1, ε, Z₀)</td>
+                                        <td>Read 'b', pop 'a'</td>
+                                    </tr>
+                                    <tr class="accept-row">
+                                        <td>5 ⊢</td>
+                                        <td>(q2, ε, ε)</td>
+                                        <td>ε-move, pop Z₀ → <strong>ACCEPT ✓</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p style="margin-top:8px;">Written compactly: (q0,aabb,Z₀) ⊢ (q0,abb,aZ₀) ⊢ (q0,bb,aaZ₀) ⊢
+                            (q1,b,aZ₀) ⊢ (q1,ε,Z₀) ⊢ (q2,ε,ε)</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     5.3 LANGUAGE ACCEPTANCE
+═══════════════════════════════ -->
+            <div class="section" id="s3">
+                <div class="section-title"><span class="num">5.3</span> Language Acceptance by PDA</div>
+
+                <div class="grid2">
+                    <div class="summary-card" id="s3a">
+                        <div class="sc-title" style="color:var(--accent2);">Acceptance by FINAL STATE</div>
+                        <ul>
+                            <li>PDA must reach a <strong>state in F</strong> after consuming all input.</li>
+                            <li>Stack content = <strong>doesn't matter</strong> (can be anything).</li>
+                            <li>Formula: (q₀, w, Z₀) ⊢* (qf, ε, γ) for some qf ∈ F, any γ</li>
+                            <li>F must be non-empty.</li>
+                            <li>More common in theoretical definitions.</li>
+                        </ul>
+                    </div>
+                    <div class="summary-card" id="s3b">
+                        <div class="sc-title" style="color:var(--cyan);">Acceptance by EMPTY STACK</div>
+                        <ul>
+                            <li>PDA must <strong>empty its stack completely</strong> after consuming all input.</li>
+                            <li>Final state = <strong>doesn't matter</strong> (any state is fine).</li>
+                            <li>Formula: (q₀, w, Z₀) ⊢* (q, ε, ε) for some q</li>
+                            <li>F can be empty set ∅.</li>
+                            <li>Simpler to design PDAs for this.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s3c">
+                    <div class="subsection-title">5.3.1 Equivalence of Both Acceptance Methods</div>
+                    <div class="key-box">
+                        <div class="key-label">Theorem — Both Methods Are Equivalent</div>
+                        <ul>
+                            <li>A language L is accepted by final state PDA ↔ L is accepted by empty stack PDA.</li>
+                            <li><strong>Empty Stack → Final State:</strong> Add new final state qf. From any state when
+                                stack has only Z₀, add ε-transition to qf.</li>
+                            <li><strong>Final State → Empty Stack:</strong> From every state qf ∈ F, add ε-transitions
+                                that pop all remaining stack symbols until empty.</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="ex-label">Comparison for L = {aⁿbⁿ | n ≥ 1}</div>
+                        <p><strong>Final State version:</strong> After matching all pairs, ε-transition from q1 to q2
+                            (final state) when Z₀ is on top.</p>
+                        <p><strong>Empty Stack version:</strong> After matching all pairs, pop Z₀ too. No need for q2 —
+                            accept when stack empty in q1.</p>
+                        <p>Both accept exactly the same strings "ab", "aabb", "aaabbb", ...</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     5.4 PDA DESIGN PROBLEMS
+═══════════════════════════════ -->
+            <div class="section" id="s4">
+                <div class="section-title"><span class="num">5.4</span> PDA Design — Solved Problems</div>
+
+
+                <a href="ch5_diagrams.html" target="_blank" style="display:flex;align-items:center;gap:14px;background:rgba(121,192,255,.08);border:1px solid rgba(121,192,255,.25);border-radius:10px;padding:14px 20px;margin:14px 0 22px;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='rgba(121,192,255,.15)'" onmouseout="this.style.background='rgba(121,192,255,.08)'">
+                  <span style="font-size:26px;">🗺️</span>
+                  <div>
+                    <div style="font-size:13px;font-weight:700;color:#79c0ff;">View All 10 PDA State Diagrams →</div>
+                    <div style="font-size:11px;color:#8b949e;margin-top:2px;">Visual state diagrams for P1–P10 with labelled transitions &amp; accept states (opens in new tab)</div>
+                  </div>
+                </a>
+                <!-- PDA 1: a^n b^n -->
+                <div class="pda-problem" id="p1">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P1</div>
+                        <div>
+                            <div class="prob-title">PDA for L = {aⁿbⁿ | n ≥ 1}</div>
+                            <div class="prob-lang">Language: equal number of a's followed by equal number of b's. e.g.
+                                ab, aabb, aaabbb</div>
+                        </div>
+                    </div>
+
+                    <p><strong>Strategy:</strong> Push one 'A' for each 'a' read. Pop one 'A' for each 'b' read. Accept
+                        when stack is empty (only Z₀).</p>
+
+                    <div class="grid2">
+                        <div>
+                            <p style="font-size:12.5px;color:var(--accent2);font-weight:700;margin-bottom:6px;">FINAL
+                                STATE VERSION — F = {q2}</p>
+                            <div class="trans-block">
+                                <div class="tr"><span class="state">δ(q0, a, Z₀)</span> = <span class="op">(q0,
+                                        AZ₀)</span> <span class="comment">// push A on Z₀</span></div>
+                                <div class="tr"><span class="state">δ(q0, a, A)</span> = <span class="op">(q0,
+                                        AA)</span> <span class="comment">// push another A</span></div>
+                                <div class="tr"><span class="state">δ(q0, b, A)</span> = <span class="op">(q1, ε)</span>
+                                    <span class="comment">// pop A, switch phase</span></div>
+                                <div class="tr"><span class="state">δ(q1, b, A)</span> = <span class="op">(q1, ε)</span>
+                                    <span class="comment">// continue popping</span></div>
+                                <div class="tr"><span class="state">δ(q1, ε, Z₀)</span> = <span class="op">(q2,
+                                        Z₀)</span> <span class="comment">// reach final state q2</span></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p style="font-size:12.5px;color:var(--cyan);font-weight:700;margin-bottom:6px;">EMPTY STACK
+                                VERSION — F = ∅</p>
+                            <div class="trans-block">
+                                <div class="tr"><span class="state">δ(q0, a, Z₀)</span> = <span class="op">(q0,
+                                        AZ₀)</span> <span class="comment">// push A</span></div>
+                                <div class="tr"><span class="state">δ(q0, a, A)</span> = <span class="op">(q0,
+                                        AA)</span> <span class="comment">// push A</span></div>
+                                <div class="tr"><span class="state">δ(q0, b, A)</span> = <span class="op">(q1, ε)</span>
+                                    <span class="comment">// pop A</span></div>
+                                <div class="tr"><span class="state">δ(q1, b, A)</span> = <span class="op">(q1, ε)</span>
+                                    <span class="comment">// pop A</span></div>
+                                <div class="tr"><span class="state">δ(q1, ε, Z₀)</span> = <span class="op">(q1,
+                                        ε)</span> <span class="comment">// pop Z₀ → empty!</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-box" style="margin-top:12px;">
+                        <div class="ex-label">ID Trace — "aaabbb" (n=3)</div>
+                        <table class="id-table">
+                            <thead>
+                                <tr>
+                                    <th>Step</th>
+                                    <th>State</th>
+                                    <th>Remaining Input</th>
+                                    <th>Stack (top→bottom)</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="start-row">
+                                    <td>Start</td>
+                                    <td>q0</td>
+                                    <td>aaabbb</td>
+                                    <td>Z₀</td>
+                                    <td>Init</td>
+                                </tr>
+                                <tr class="normal-row">
+                                    <td>1</td>
+                                    <td>q0</td>
+                                    <td>aabbb</td>
+                                    <td>AZ₀</td>
+                                    <td>Read 'a', push A</td>
+                                </tr>
+                                <tr class="normal-row">
+                                    <td>2</td>
+                                    <td>q0</td>
+                                    <td>abbb</td>
+                                    <td>AAZ₀</td>
+                                    <td>Read 'a', push A</td>
+                                </tr>
+                                <tr class="normal-row">
+                                    <td>3</td>
+                                    <td>q0</td>
+                                    <td>bbb</td>
+                                    <td>AAAZ₀</td>
+                                    <td>Read 'a', push A</td>
+                                </tr>
+                                <tr class="normal-row">
+                                    <td>4</td>
+                                    <td>q1</td>
+                                    <td>bb</td>
+                                    <td>AAZ₀</td>
+                                    <td>Read 'b', pop A → q1</td>
+                                </tr>
+                                <tr class="normal-row">
+                                    <td>5</td>
+                                    <td>q1</td>
+                                    <td>b</td>
+                                    <td>AZ₀</td>
+                                    <td>Read 'b', pop A</td>
+                                </tr>
+                                <tr class="normal-row">
+                                    <td>6</td>
+                                    <td>q1</td>
+                                    <td>ε</td>
+                                    <td>Z₀</td>
+                                    <td>Read 'b', pop A</td>
+                                </tr>
+                                <tr class="accept-row">
+                                    <td>7</td>
+                                    <td>q2</td>
+                                    <td>ε</td>
+                                    <td>Z₀</td>
+                                    <td>ε-move → <strong>ACCEPT ✓</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- PDA Diagram -->
+                    <div class="diagram-box">
+                        <svg width="100%" viewBox="0 0 580 160" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+                                    orient="auto">
+                                    <path d="M1 2L8 5L1 8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </marker>
+                            </defs>
+                            <line x1="20" y1="80" x2="62" y2="80" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="40" y="70" text-anchor="middle" font-size="10" fill="#8b949e">start</text>
+                            <!-- q0 -->
+                            <circle cx="100" cy="80" r="34" fill="rgba(121,192,255,.1)" stroke="#79c0ff"
+                                stroke-width="2" />
+                            <text x="100" y="85" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#79c0ff">q0</text>
+                            <!-- q1 -->
+                            <circle cx="290" cy="80" r="34" fill="rgba(255,166,87,.1)" stroke="#ffa657"
+                                stroke-width="2" />
+                            <text x="290" y="85" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#ffa657">q1</text>
+                            <!-- q2 accept -->
+                            <circle cx="480" cy="80" r="34" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2" />
+                            <circle cx="480" cy="80" r="26" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="480" y="85" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#3fb950">q2</text>
+
+                            <!-- q0 self-loop: a,Z₀/AZ₀ and a,A/AA -->
+                            <path d="M80 47 Q100 -8 120 47" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="100" y="-4" text-anchor="middle" font-size="11" fill="#3fb950">a,Z₀/AZ₀</text>
+                            <text x="100" y="10" text-anchor="middle" font-size="11" fill="#3fb950">a,A/AA</text>
+
+                            <!-- q0→q1: b,A/ε -->
+                            <line x1="135" y1="80" x2="254" y2="80" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="195" y="70" text-anchor="middle" font-size="11" fill="#3fb950">b,A/ε</text>
+
+                            <!-- q1 self-loop: b,A/ε -->
+                            <path d="M270 47 Q290 -8 310 47" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="290" y="-2" text-anchor="middle" font-size="11" fill="#3fb950">b,A/ε</text>
+
+                            <!-- q1→q2: ε,Z₀/Z₀ -->
+                            <line x1="325" y1="80" x2="444" y2="80" stroke="#3fb950" stroke-width="2"
+                                marker-end="url(#arr2)" />
+                            <text x="385" y="70" text-anchor="middle" font-size="11" fill="#3fb950">ε,Z₀/Z₀</text>
+
+                            <!-- legend -->
+                            <text x="290" y="148" text-anchor="middle" font-size="9" fill="#8b949e">Transition label
+                                format: input, stack-top / stack-replacement</text>
+                        </svg>
+                        <div class="diagram-caption">Figure 5.2 — PDA State Diagram for aⁿbⁿ. Label format: "input,
+                            stack-top / new-stack-top"</div>
+                    </div>
+                </div>
+
+                <!-- PDA 2: a^n c b^n -->
+                <div class="pda-problem" id="p2">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P2</div>
+                        <div>
+                            <div class="prob-title">PDA for L = {aⁿcbⁿ | n ≥ 1}</div>
+                            <div class="prob-lang">Language: n a's, then single 'c', then n b's. e.g. acb, aacbb,
+                                aaacbbb</div>
+                        </div>
+                    </div>
+                    <p><strong>Strategy:</strong> Push 'A' for each 'a'. The 'c' in the middle is the separator — switch
+                        states on 'c' without changing the stack. Pop 'A' for each 'b'.</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="state">δ(q0, a, Z₀)</span> = <span class="op">(q0, AZ₀)</span>
+                            <span class="comment">// push A, first 'a'</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, A)</span> = <span class="op">(q0, AA)</span> <span
+                                class="comment">// push A, more 'a's</span></div>
+                        <div class="tr"><span class="state">δ(q0, c, A)</span> = <span class="op">(q1, A)</span> <span
+                                class="comment">// read 'c', switch state, KEEP stack</span></div>
+                        <div class="tr"><span class="state">δ(q1, b, A)</span> = <span class="op">(q1, ε)</span> <span
+                                class="comment">// pop A for each 'b'</span></div>
+                        <div class="tr"><span class="state">δ(q1, ε, Z₀)</span> = <span class="op">(q2, Z₀)</span> <span
+                                class="comment">// accept when matched</span></div>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">ID Trace — "aacbb"</div>
+                        <p>(q0, aacbb, Z₀) ⊢ (q0, acbb, AZ₀) ⊢ (q0, cbb, AAZ₀) ⊢ (q1, bb, AAZ₀) ⊢ (q1, b, AZ₀) ⊢ (q1, ε,
+                            Z₀) ⊢ (q2, ε, Z₀) <span class="accept-chip">ACCEPT</span></p>
+                    </div>
+                </div>
+
+                <!-- PDA 3: 0^m 1^n 2^n -->
+                <div class="pda-problem" id="p3">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P3</div>
+                        <div>
+                            <div class="prob-title">PDA for L = {0ᵐ1ⁿ2ⁿ | m, n ≥ 0}</div>
+                            <div class="prob-lang">Language: any 0s, then equal 1s and 2s. e.g. ε, 00, 12, 1122, 001122
+                            </div>
+                        </div>
+                    </div>
+                    <p><strong>Strategy:</strong> Ignore 0s (no stack operation). Push 'A' for each '1'. Pop 'A' for
+                        each '2'. Accept when stack has only Z₀ after all 2s.</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="state">δ(q0, 0, Z₀)</span> = <span class="op">(q0, Z₀)</span> <span
+                                class="comment">// skip 0s, no stack change</span></div>
+                        <div class="tr"><span class="state">δ(q0, ε, Z₀)</span> = <span class="op">(q1, Z₀)</span> <span
+                                class="comment">// skip to 1-phase (handles m=0)</span></div>
+                        <div class="tr"><span class="state">δ(q1, 1, Z₀)</span> = <span class="op">(q1, AZ₀)</span>
+                            <span class="comment">// push A for first 1</span></div>
+                        <div class="tr"><span class="state">δ(q1, 1, A)</span> = <span class="op">(q1, AA)</span> <span
+                                class="comment">// push A for more 1s</span></div>
+                        <div class="tr"><span class="state">δ(q1, 2, A)</span> = <span class="op">(q2, ε)</span> <span
+                                class="comment">// pop A for each 2</span></div>
+                        <div class="tr"><span class="state">δ(q2, 2, A)</span> = <span class="op">(q2, ε)</span> <span
+                                class="comment">// continue popping</span></div>
+                        <div class="tr"><span class="state">δ(q2, ε, Z₀)</span> = <span class="op">(q3, Z₀)</span> <span
+                                class="comment">// accept when 1s = 2s</span></div>
+                        <div class="tr"><span class="state">δ(q1, ε, Z₀)</span> = <span class="op">(q3, Z₀)</span> <span
+                                class="comment">// accept n=0 (no 1s or 2s)</span></div>
+                    </div>
+                    <div class="key-box">
+                        <div class="key-label">Design Note</div>
+                        <ul>
+                            <li>The key insight: 0s are ignored — they don't affect the 1-2 counting.</li>
+                            <li>The ε-transition from q0 to q1 handles the case m=0 (no 0s).</li>
+                            <li>The ε-transition from q1 to q3 with Z₀ handles n=0 (no 1s or 2s, so empty second part).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PDA 4: a^n b^3n -->
+                <div class="pda-problem" id="p4">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P4</div>
+                        <div>
+                            <div class="prob-title">PDA for L = {aⁿb³ⁿ | n ≥ 1}</div>
+                            <div class="prob-lang">Language: n a's followed by 3n b's. e.g. abbb, aabbbbbb, aaabbbbbbbbb
+                            </div>
+                        </div>
+                    </div>
+                    <p><strong>Strategy:</strong> For each 'a', push 3 markers onto the stack. For each 'b', pop one
+                        marker. Since each transition only pushes one symbol, we use intermediate states to push 3 per
+                        'a'.</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="comment">// For each 'a', use 3 intermediate states to push 3
+                                A's:</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, Z₀)</span> = <span class="op">(q1, AZ₀)</span>
+                            <span class="comment">// read 'a', push 1st A</span></div>
+                        <div class="tr"><span class="state">δ(q1, ε, A)</span> = <span class="op">(q2, AA)</span> <span
+                                class="comment">// ε-move, push 2nd A</span></div>
+                        <div class="tr"><span class="state">δ(q2, ε, A)</span> = <span class="op">(q0, AA)</span> <span
+                                class="comment">// ε-move, push 3rd A, back to q0</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, A)</span> = <span class="op">(q1, AA)</span> <span
+                                class="comment">// another 'a', push 1st A of next group</span></div>
+                        <div class="tr"><span class="comment">// After all a's, pop one A per b:</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, A)</span> = <span class="op">(q3, ε)</span> <span
+                                class="comment">// first 'b', pop A, switch to q3</span></div>
+                        <div class="tr"><span class="state">δ(q3, b, A)</span> = <span class="op">(q3, ε)</span> <span
+                                class="comment">// continue popping</span></div>
+                        <div class="tr"><span class="state">δ(q3, ε, Z₀)</span> = <span class="op">(q4, Z₀)</span> <span
+                                class="comment">// accept</span></div>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Trace — "abbb" (n=1, 3n=3)</div>
+                        <p>q0 → read 'a' → q1 (push 1st A: AZ₀) → ε → q2 (push 2nd A: AAZ₀) → ε → q0 (push 3rd A: AAAZ₀)
+                            → read 'b' → q3 (pop: AAZ₀) → read 'b' → q3 (pop: AZ₀) → read 'b' → q3 (pop: Z₀) → ε → q4
+                            <span class="accept-chip">ACCEPT</span></p>
+                    </div>
+                </div>
+
+                <!-- PDA 5: Equal a's and b's -->
+                <div class="pda-problem" id="p5">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P5</div>
+                        <div>
+                            <div class="prob-title">PDA for L = {w ∈ {a,b}* | #a(w) = #b(w)}</div>
+                            <div class="prob-lang">Language: strings with equal number of a's and b's. e.g. ε, ab, ba,
+                                aabb, abba, baba</div>
+                        </div>
+                    </div>
+                    <p><strong>Strategy:</strong> Track "excess" symbols. Stack shows imbalance — if more a's seen,
+                        stack has A's; if more b's, stack has B's. When a cancels a B (or b cancels an A), pop.</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="comment">// More a's than b's so far — A's on stack:</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, Z₀)</span> = <span class="op">(q0, AZ₀)</span>
+                            <span class="comment">// first a</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, A)</span> = <span class="op">(q0, AA)</span> <span
+                                class="comment">// more a's: push A</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, A)</span> = <span class="op">(q0, ε)</span> <span
+                                class="comment">// b cancels one a: pop A</span></div>
+                        <div class="tr"><span class="comment">// More b's than a's so far — B's on stack:</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, Z₀)</span> = <span class="op">(q0, BZ₀)</span>
+                            <span class="comment">// first b</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, B)</span> = <span class="op">(q0, BB)</span> <span
+                                class="comment">// more b's: push B</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, B)</span> = <span class="op">(q0, ε)</span> <span
+                                class="comment">// a cancels one b: pop B</span></div>
+                        <div class="tr"><span class="comment">// Accept when equal (stack has only Z₀):</span></div>
+                        <div class="tr"><span class="state">δ(q0, ε, Z₀)</span> = <span class="op">(q1, Z₀)</span> <span
+                                class="comment">// equal count → accept</span></div>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Trace — "baba"</div>
+                        <p>(q0,baba,Z₀) ⊢ (q0,aba,BZ₀) ⊢ (q0,ba,Z₀) ⊢ (q0,a,BZ₀) ⊢ (q0,ε,Z₀) ⊢ (q1,ε,Z₀) <span
+                                class="accept-chip">ACCEPT</span></p>
+                    </div>
+                </div>
+
+                <!-- PDA 6: Palindromes -->
+                <div class="pda-problem" id="p6">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P6</div>
+                        <div>
+                            <div class="prob-title">PDA for L = {wwᴿ | w ∈ {a,b}*} — Even Palindromes</div>
+                            <div class="prob-lang">Language: strings that read the same forwards and backwards (even
+                                length). e.g. ε, abba, baab, aabbaa</div>
+                        </div>
+                    </div>
+                    <p><strong>Strategy:</strong> This requires <strong>nondeterminism</strong>. Push all symbols in the
+                        first half, then guess the midpoint and match/pop symbols in the second half.</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="comment">// PUSH phase — push every symbol read:</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, Z₀)</span> = <span class="op">{(q0, aZ₀)}</span>
+                            <span class="comment">// push a</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, Z₀)</span> = <span class="op">{(q0, bZ₀)}</span>
+                            <span class="comment">// push b</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, a)</span> = <span class="op">{(q0, aa)}</span>
+                            <span class="comment">// push a on top of a</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, b)</span> = <span class="op">{(q0, ab)}</span>
+                            <span class="comment">// push a on top of b</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, a)</span> = <span class="op">{(q0, ba)}</span>
+                            <span class="comment">// push b on top of a</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, b)</span> = <span class="op">{(q0, bb)}</span>
+                            <span class="comment">// push b on top of b</span></div>
+                        <div class="tr"><span class="comment">// GUESS middle (nondeterministic switch —
+                                ε-transition):</span></div>
+                        <div class="tr"><span class="state">δ(q0, ε, a)</span> = <span class="op">{(q1, a)}</span> <span
+                                class="comment">// guess: we're at midpoint</span></div>
+                        <div class="tr"><span class="state">δ(q0, ε, b)</span> = <span class="op">{(q1, b)}</span> <span
+                                class="comment">// guess: midpoint</span></div>
+                        <div class="tr"><span class="state">δ(q0, ε, Z₀)</span> = <span class="op">{(q1, Z₀)}</span>
+                            <span class="comment">// guess: empty string midpoint</span></div>
+                        <div class="tr"><span class="comment">// POP/MATCH phase — match input with stack:</span></div>
+                        <div class="tr"><span class="state">δ(q1, a, a)</span> = <span class="op">{(q1, ε)}</span> <span
+                                class="comment">// match 'a' with top 'a'</span></div>
+                        <div class="tr"><span class="state">δ(q1, b, b)</span> = <span class="op">{(q1, ε)}</span> <span
+                                class="comment">// match 'b' with top 'b'</span></div>
+                        <div class="tr"><span class="state">δ(q1, ε, Z₀)</span> = <span class="op">{(q2, ε)}</span>
+                            <span class="comment">// stack empty → ACCEPT</span></div>
+                    </div>
+                    <div class="note-box">
+                        <div class="note-label">Why Nondeterminism is Needed</div>
+                        <p>A deterministic PDA (DPDA) cannot recognize the language of all palindromes. The PDA must
+                            "guess" when it has reached the midpoint of the input — there's no way to know
+                            deterministically. This is a classic example where NPDA is strictly more powerful than DPDA.
+                        </p>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Trace — "abba"</div>
+                        <p>q0 push 'a': (q0,abba,Z₀)⊢(q0,bba,aZ₀) → push 'b': (q0,ba,baZ₀) → guess middle with ε:
+                            (q1,ba,baZ₀) → match 'b': (q1,a,aZ₀) → match 'a': (q1,ε,Z₀) → accept: (q2,ε,ε) <span
+                                class="accept-chip">ACCEPT</span></p>
+                    </div>
+                </div>
+
+                <!-- PDA 7: abⁿacabⁿa -->
+                <div class="pda-problem" id="p7">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P7</div>
+                        <div>
+                            <div class="prob-title">PDA for L = {abⁿacabⁿa | n ≥ 0}</div>
+                            <div class="prob-lang">Language: a(b*)a c a(b*)a where both b-runs have equal length. e.g.
+                                aaca (n=0), ababcaba... wait: abacaba (n=1)</div>
+                        </div>
+                    </div>
+                    <p><strong>Structure:</strong> a · bⁿ · a · c · a · bⁿ · a. Push B for each 'b' in first group, pop
+                        B for each 'b' in second group.</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="state">δ(q0, a, Z₀)</span> = <span class="op">(q1, Z₀)</span> <span
+                                class="comment">// read first 'a'</span></div>
+                        <div class="tr"><span class="state">δ(q1, b, Z₀)</span> = <span class="op">(q1, BZ₀)</span>
+                            <span class="comment">// push B for b's (n=0 case: no b's)</span></div>
+                        <div class="tr"><span class="state">δ(q1, b, B)</span> = <span class="op">(q1, BB)</span> <span
+                                class="comment">// push more B's</span></div>
+                        <div class="tr"><span class="state">δ(q1, a, Z₀)</span> = <span class="op">(q2, Z₀)</span> <span
+                                class="comment">// read 'a' after b's (n=0: stack=Z₀)</span></div>
+                        <div class="tr"><span class="state">δ(q1, a, B)</span> = <span class="op">(q2, B)</span> <span
+                                class="comment">// read 'a' after b's (keep stack)</span></div>
+                        <div class="tr"><span class="state">δ(q2, c, B)</span> = <span class="op">(q3, B)</span> <span
+                                class="comment">// read 'c' separator</span></div>
+                        <div class="tr"><span class="state">δ(q2, c, Z₀)</span> = <span class="op">(q3, Z₀)</span> <span
+                                class="comment">// read 'c' (n=0 case)</span></div>
+                        <div class="tr"><span class="state">δ(q3, a, B)</span> = <span class="op">(q4, B)</span> <span
+                                class="comment">// read 'a' after 'c'</span></div>
+                        <div class="tr"><span class="state">δ(q3, a, Z₀)</span> = <span class="op">(q4, Z₀)</span> <span
+                                class="comment">// read 'a' (n=0)</span></div>
+                        <div class="tr"><span class="state">δ(q4, b, B)</span> = <span class="op">(q4, ε)</span> <span
+                                class="comment">// pop B for each matched 'b'</span></div>
+                        <div class="tr"><span class="state">δ(q4, a, Z₀)</span> = <span class="op">(q5, ε)</span> <span
+                                class="comment">// read final 'a' → accept</span></div>
+                    </div>
+                </div>
+
+                <!-- PDA 8: i+j = k -->
+                <div class="pda-problem" id="p8">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P8</div>
+                        <div>
+                            <div class="prob-title">PDA for L = {aⁱbʲcᵏ | i, j, k ≥ 0 and i + j = k}</div>
+                            <div class="prob-lang">Language: a's and b's combined count equals c's count. e.g. ε, c, ac,
+                                bc, aaabcc (i=1,j=0,k=1)</div>
+                        </div>
+                    </div>
+                    <p><strong>Strategy:</strong> Push one marker (X) for each 'a' and each 'b'. Pop one X for each 'c'.
+                        Accept when stack is empty.</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="comment">// Phase 1: Push X for every 'a':</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, Z₀)</span> = <span class="op">(q0, XZ₀)</span>
+                            <span class="comment">// push X for a</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, X)</span> = <span class="op">(q0, XX)</span> <span
+                                class="comment">// push X for more a's</span></div>
+                        <div class="tr"><span class="comment">// Phase 2: Push X for every 'b' (switch to q1):</span>
+                        </div>
+                        <div class="tr"><span class="state">δ(q0, b, Z₀)</span> = <span class="op">(q1, XZ₀)</span>
+                            <span class="comment">// first b (no a's before)</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, X)</span> = <span class="op">(q1, XX)</span> <span
+                                class="comment">// first b (after a's)</span></div>
+                        <div class="tr"><span class="state">δ(q1, b, X)</span> = <span class="op">(q1, XX)</span> <span
+                                class="comment">// push X for more b's</span></div>
+                        <div class="tr"><span class="state">δ(q1, b, Z₀)</span> = <span class="op">(q1, XZ₀)</span>
+                            <span class="comment">// push X (no prev symbols)</span></div>
+                        <div class="tr"><span class="comment">// Phase 3: Pop X for every 'c':</span></div>
+                        <div class="tr"><span class="state">δ(q0, c, X)</span> = <span class="op">(q2, ε)</span> <span
+                                class="comment">// start popping (no b's case)</span></div>
+                        <div class="tr"><span class="state">δ(q1, c, X)</span> = <span class="op">(q2, ε)</span> <span
+                                class="comment">// start popping (after b's)</span></div>
+                        <div class="tr"><span class="state">δ(q2, c, X)</span> = <span class="op">(q2, ε)</span> <span
+                                class="comment">// continue popping</span></div>
+                        <div class="tr"><span class="state">δ(q2, ε, Z₀)</span> = <span class="op">(q3, Z₀)</span> <span
+                                class="comment">// accept: i+j = k</span></div>
+                        <div class="tr"><span class="comment">// Edge cases:</span></div>
+                        <div class="tr"><span class="state">δ(q0, ε, Z₀)</span> = <span class="op">(q3, Z₀)</span> <span
+                                class="comment">// accept ε (i=j=k=0)</span></div>
+                        <div class="tr"><span class="state">δ(q1, ε, Z₀)</span> = <span class="op">(q3, Z₀)</span> <span
+                                class="comment">// accept: all a's+b's, zero c's → only if i+j=0</span></div>
+                    </div>
+                </div>
+
+                <!-- PDA 9: a^n b^m c^m d^n -->
+                <div class="pda-problem" id="p9">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P9</div>
+                        <div>
+                            <div class="prob-title">PDA for L = {aⁿbᵐcᵐdⁿ | n, m ≥ 0}</div>
+                            <div class="prob-lang">Language: n a's, m b's, m c's, n d's. Matches a-d and b-c pairs. e.g.
+                                ε, ad, bc, abcd, aabcdd</div>
+                        </div>
+                    </div>
+                    <p><strong>Strategy:</strong> Push 'A' for each 'a'. Push 'B' for each 'b'. Pop 'B' for each 'c'.
+                        Pop 'A' for each 'd'. Stack ensures both counts match.</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="state">δ(q0, a, Z₀)</span> = <span class="op">(q0, AZ₀)</span>
+                            <span class="comment">// push A for a's</span></div>
+                        <div class="tr"><span class="state">δ(q0, a, A)</span> = <span class="op">(q0, AA)</span> <span
+                                class="comment">// push more A's</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, A)</span> = <span class="op">(q1, BA)</span> <span
+                                class="comment">// switch: push B on top of A</span></div>
+                        <div class="tr"><span class="state">δ(q0, b, Z₀)</span> = <span class="op">(q1, BZ₀)</span>
+                            <span class="comment">// push B (n=0 case)</span></div>
+                        <div class="tr"><span class="state">δ(q1, b, B)</span> = <span class="op">(q1, BB)</span> <span
+                                class="comment">// push more B's</span></div>
+                        <div class="tr"><span class="state">δ(q1, c, B)</span> = <span class="op">(q2, ε)</span> <span
+                                class="comment">// pop B for each 'c'</span></div>
+                        <div class="tr"><span class="state">δ(q2, c, B)</span> = <span class="op">(q2, ε)</span> <span
+                                class="comment">// continue popping B's</span></div>
+                        <div class="tr"><span class="state">δ(q2, d, A)</span> = <span class="op">(q3, ε)</span> <span
+                                class="comment">// pop A for each 'd'</span></div>
+                        <div class="tr"><span class="state">δ(q3, d, A)</span> = <span class="op">(q3, ε)</span> <span
+                                class="comment">// continue popping A's</span></div>
+                        <div class="tr"><span class="state">δ(q3, ε, Z₀)</span> = <span class="op">(q4, Z₀)</span> <span
+                                class="comment">// accept</span></div>
+                        <div class="tr"><span class="comment">// Handles n=0 and m=0 cases:</span></div>
+                        <div class="tr"><span class="state">δ(q0, ε, Z₀)</span> = <span class="op">(q4, Z₀)</span> <span
+                                class="comment">// accept ε</span></div>
+                        <div class="tr"><span class="state">δ(q0, c, A)</span> = <span class="op">(q2, A)</span> <span
+                                class="comment">// m=0: no b's, go to c phase</span></div>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Trace — "aabcdd" (n=2, m=1)</div>
+                        <p>(q0,aabcdd,Z₀) ⊢ (q0,abcdd,AZ₀) ⊢ (q0,bcdd,AAZ₀) ⊢ (q1,cdd,BAAZ₀) ⊢ (q2,dd,AAZ₀) ⊢ (q3,d,AZ₀)
+                            ⊢ (q3,ε,Z₀) ⊢ (q4,ε,Z₀) <span class="accept-chip">ACCEPT</span></p>
+                    </div>
+                </div>
+
+                <!-- PDA 10: Balanced Parentheses -->
+                <div class="pda-problem" id="p10">
+                    <div class="pda-problem-header">
+                        <div class="prob-num">P10</div>
+                        <div>
+                            <div class="prob-title">PDA for Language of Balanced Parentheses</div>
+                            <div class="prob-lang">Language: Σ = {(, )}. e.g. ε, (), (()), ()(), ((())), (()())</div>
+                        </div>
+                    </div>
+                    <p><strong>Strategy:</strong> Push '(' onto stack for every '(' read. Pop when we see ')'. Accept
+                        when stack is empty after all input.</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="state">δ(q0, (, Z₀)</span> = <span class="op">(q0, (Z₀)</span>
+                            <span class="comment">// push '(' on Z₀</span></div>
+                        <div class="tr"><span class="state">δ(q0, (, ()</span> = <span class="op">(q0, (()</span> <span
+                                class="comment">// push another '('</span></div>
+                        <div class="tr"><span class="state">δ(q0, ), ()</span> = <span class="op">(q0, ε)</span> <span
+                                class="comment">// ')' matches '(': pop</span></div>
+                        <div class="tr"><span class="state">δ(q0, ε, Z₀)</span> = <span class="op">(q1, Z₀)</span> <span
+                                class="comment">// empty stack → balanced → accept</span></div>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Trace — "(())"</div>
+                        <p>(q0,(()),Z₀) ⊢ (q0,()), (Z₀) ⊢ (q0,)), ((Z₀) ⊢ (q0,), (Z₀) ⊢ (q0,ε,Z₀) ⊢ (q1,ε,Z₀) <span
+                                class="accept-chip">ACCEPT</span></p>
+                        <p>String "()" fails: (q0,(,Z₀) ⊢ (q0,,Z₀)... wait stack has '('. On ')' pop. Stack = Z₀. Accept
+                            ✓</p>
+                        <p>String ")(": (q0,)(,Z₀) — δ(q0, ), Z₀) = undefined → <span class="reject-chip">REJECT</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     5.5 POWER OF PDA OVER FSM
+═══════════════════════════════ -->
+            <div class="section" id="s5">
+                <div class="section-title"><span class="num">5.5</span> Power of PDA over FSM</div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Capability</th>
+                                <th>FA (DFA/NFA)</th>
+                                <th>DPDA</th>
+                                <th>NPDA</th>
+                            </tr>
+                        </thead>
+                        <tbody class="td-normal">
+                            <tr>
+                                <td><strong>Count arbitrarily</strong></td>
+                                <td><span class="badge-no">✗ No</span></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Match aⁿbⁿ</strong></td>
+                                <td><span class="badge-no">✗ No</span></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Match nested structures</strong></td>
+                                <td><span class="badge-no">✗ No</span></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recognize all palindromes</strong></td>
+                                <td><span class="badge-no">✗ No</span></td>
+                                <td><span class="badge-no">✗ No</span></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recognize regular languages</strong></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                                <td><span class="badge-yes">✓ Yes</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recognize aⁿbⁿcⁿ</strong></td>
+                                <td><span class="badge-no">✗ No</span></td>
+                                <td><span class="badge-no">✗ No</span></td>
+                                <td><span class="badge-no">✗ No</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Memory type</strong></td>
+                                <td>Finite (states)</td>
+                                <td>Stack (LIFO)</td>
+                                <td>Stack (LIFO)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Memory size</strong></td>
+                                <td>Finite</td>
+                                <td>Infinite (stack)</td>
+                                <td>Infinite (stack)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="diagram-box">
+                    <svg width="100%" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Nested set diagram -->
+                        <ellipse cx="280" cy="110" rx="260" ry="80" fill="rgba(248,81,73,0.06)" stroke="#f85149"
+                            stroke-width="1.5" stroke-dasharray="6,3" />
+                        <text x="280" y="30" text-anchor="middle" font-size="11" fill="#f85149"
+                            font-weight="700">Context Sensitive Languages (Type 1 — LBA)</text>
+                        <ellipse cx="280" cy="120" rx="195" ry="58" fill="rgba(255,166,87,0.07)" stroke="#ffa657"
+                            stroke-width="1.5" stroke-dasharray="5,3" />
+                        <text x="280" y="68" text-anchor="middle" font-size="11" fill="#ffa657"
+                            font-weight="700">Context Free Languages (NPDA)</text>
+                        <ellipse cx="280" cy="128" rx="128" ry="38" fill="rgba(63,185,80,0.07)" stroke="#3fb950"
+                            stroke-width="1.5" stroke-dasharray="5,3" />
+                        <text x="280" y="102" text-anchor="middle" font-size="10" fill="#3fb950" font-weight="700">DCFL
+                            (DPDA)</text>
+                        <ellipse cx="280" cy="132" rx="68" ry="22" fill="rgba(121,192,255,0.12)" stroke="#79c0ff"
+                            stroke-width="2" />
+                        <text x="280" y="128" text-anchor="middle" font-size="10" fill="#79c0ff"
+                            font-weight="700">Regular</text>
+                        <text x="280" y="142" text-anchor="middle" font-size="9" fill="#79c0ff">(DFA/NFA)</text>
+                        <!-- examples -->
+                        <text x="480" y="110" text-anchor="middle" font-size="9" fill="#ffa657">aⁿbⁿcᵐ</text>
+                        <text x="480" y="124" text-anchor="middle" font-size="9" fill="#ffa657">Palindromes</text>
+                        <text x="148" y="114" text-anchor="middle" font-size="9" fill="#3fb950">aⁿbⁿ</text>
+                        <text x="148" y="126" text-anchor="middle" font-size="9" fill="#3fb950">Balanced ()</text>
+                    </svg>
+                    <div class="diagram-caption">Figure 5.3 — Language Hierarchy. Regular ⊂ DCFL ⊂ CFL ⊂ CSL. Each level
+                        adds expressive power.</div>
+                </div>
+
+                <div class="key-box">
+                    <div class="key-label">Key Relationships</div>
+                    <ul>
+                        <li>Every Regular Language is a CFL. PDA can simulate any DFA (just ignore the stack).</li>
+                        <li>aⁿbⁿ is CFL but NOT Regular — proves PDA is strictly more powerful than FA.</li>
+                        <li>Palindromes are CFL (via NPDA) but NOT recognizable by DPDA — NPDA is strictly more powerful
+                            than DPDA.</li>
+                        <li>aⁿbⁿcⁿ is NOT a CFL — proves PDA cannot do everything; Turing Machines are needed.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     5.6 CFG TO PDA
+═══════════════════════════════ -->
+            <div class="section" id="s6">
+                <div class="section-title"><span class="num">5.6</span> CFG to PDA Conversion</div>
+
+                <div class="def-box">
+                    <div class="def-label">Theorem</div>
+                    <p>Every CFG has an equivalent NPDA, and every NPDA has an equivalent CFG. The conversion is
+                        mechanical and straightforward.</p>
+                </div>
+
+                <div class="key-box">
+                    <div class="key-label">CFG → PDA Conversion Algorithm (Top-Down Parsing)</div>
+                    <ul>
+                        <li>Create a PDA with states: q_start, q_loop, q_accept.</li>
+                        <li><strong>Step 1:</strong> δ(q_start, ε, Z₀) = (q_loop, SZ₀) — push the start symbol S.</li>
+                        <li><strong>Step 2:</strong> For each production <code>A → α</code> in the CFG: add δ(q_loop, ε,
+                            A) = (q_loop, α) — replace A on stack with α.</li>
+                        <li><strong>Step 3:</strong> For each terminal 'a': add δ(q_loop, a, a) = (q_loop, ε) — if stack
+                            top matches input, pop both.</li>
+                        <li><strong>Step 4:</strong> δ(q_loop, ε, Z₀) = (q_accept, Z₀) — accept when stack is empty.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Example — CFG S → aSa | bSb | ε converted to PDA</div>
+                    <p><strong>CFG productions:</strong> S → aSa | bSb | ε</p>
+                    <div class="trans-block">
+                        <div class="tr"><span class="state">δ(q_s, ε, Z₀)</span> = <span class="op">(q_loop, SZ₀)</span>
+                            <span class="comment">// push start symbol S</span></div>
+                        <div class="tr"><span class="comment">// Production S → aSa:</span></div>
+                        <div class="tr"><span class="state">δ(q_loop, ε, S)</span> = <span class="op">(q_loop,
+                                aSa)</span> <span class="comment">// expand S → aSa</span></div>
+                        <div class="tr"><span class="comment">// Production S → bSb:</span></div>
+                        <div class="tr"><span class="state">δ(q_loop, ε, S)</span> = <span class="op">(q_loop,
+                                bSb)</span> <span class="comment">// expand S → bSb</span></div>
+                        <div class="tr"><span class="comment">// Production S → ε:</span></div>
+                        <div class="tr"><span class="state">δ(q_loop, ε, S)</span> = <span class="op">(q_loop, ε)</span>
+                            <span class="comment">// expand S → ε (pop S)</span></div>
+                        <div class="tr"><span class="comment">// Terminal matches:</span></div>
+                        <div class="tr"><span class="state">δ(q_loop, a, a)</span> = <span class="op">(q_loop, ε)</span>
+                            <span class="comment">// match 'a'</span></div>
+                        <div class="tr"><span class="state">δ(q_loop, b, b)</span> = <span class="op">(q_loop, ε)</span>
+                            <span class="comment">// match 'b'</span></div>
+                        <div class="tr"><span class="state">δ(q_loop, ε, Z₀)</span>= <span class="op">(q_acc, Z₀)</span>
+                            <span class="comment">// accept</span></div>
+                    </div>
+                    <p style="font-size:12.5px;color:var(--text2);">This PDA simulates leftmost derivation of the CFG.
+                        When a non-terminal is on top of the stack, it's expanded (ε-transition). When a terminal is on
+                        top and matches input, both are consumed.</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     5.7 PRACTICE QUESTIONS
+═══════════════════════════════ -->
+            <div class="section" id="s7">
+                <div class="section-title"><span class="num">5.7</span> Practice Questions</div>
+
+                <div class="practice-section">
+                    <div class="practice-title">PDA Design Questions</div>
+
+                    <div class="q-item">
+                        <div class="q-num">1</div>
+                        <div>
+                            <p>Design a PDA for L = {aⁿb²ⁿ | n ≥ 1}. Show transitions and trace for "abbb" (n=1).</p>
+                            <div class="q-ans">
+                                <strong>Strategy:</strong> Push 2 markers (AA) for each 'a'. Pop one A per 'b'.<br>
+                                δ(q0,a,Z₀) = (q1,AZ₀); δ(q1,ε,A) = (q0,AA) — push 2nd A; δ(q0,a,A) = (q1,AA) for more
+                                a's;<br>
+                                δ(q0,b,A) = (q2,ε); δ(q2,b,A) = (q2,ε); δ(q2,ε,Z₀) = (q3,Z₀) accept.<br>
+                                <strong>Trace "abbb":</strong>
+                                (q0,abbb,Z₀)⊢(q1,bbb,AZ₀)⊢(q0,bbb,AAZ₀)⊢(q2,bb,AZ₀)⊢(q2,b,Z₀)⊢... wait, only 2 A's
+                                popped by 2 b's, but input has 3 b's. n=1: a·b·b·b = "abbb" means 3 b's but 2n=2. So
+                                "abb" is correct for n=1. For "abbb" n must be 1.5 which is invalid → REJECT.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">2</div>
+                        <div>
+                            <p>Design a PDA for L = {wcwᴿ | w ∈ {a,b}*}. What's the difference from Problem P6
+                                (palindromes wwᴿ)?</p>
+                            <div class="q-ans">
+                                <strong>Strategy:</strong> Push all symbols before 'c'. After 'c', pop and match. No
+                                nondeterminism needed — 'c' is the deterministic separator.<br>
+                                δ(q0,a,Z₀)=(q0,aZ₀); δ(q0,b,Z₀)=(q0,bZ₀); δ(q0,a,a)=(q0,aa); δ(q0,a,b)=(q0,ab) etc.<br>
+                                δ(q0,c,a)=(q1,a); δ(q0,c,b)=(q1,b); δ(q0,c,Z₀)=(q1,Z₀) — switch on 'c'.<br>
+                                δ(q1,a,a)=(q1,ε); δ(q1,b,b)=(q1,ε); δ(q1,ε,Z₀)=(q2,Z₀) accept.<br>
+                                <strong>Key Diff:</strong> wcwᴿ → DPDA (deterministic — 'c' tells us midpoint). wwᴿ →
+                                NPDA only (must guess midpoint).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">3</div>
+                        <div>
+                            <p>Design a PDA for L = {aⁿbᵐ | n ≠ m, n, m ≥ 0}.</p>
+                            <div class="q-ans">
+                                <strong>Strategy:</strong> n ≠ m means either n &gt; m OR n &lt; m. Union of two
+                                cases.<br>
+                                <strong>Case 1 (n &gt; m):</strong> Push A for each 'a'. Pop A for each 'b'. Accept if
+                                stack still has A's left after all b's.<br>
+                                <strong>Case 2 (n &lt; m):</strong> Push A for each 'a'. Pop A for each 'b'. Accept if
+                                stack goes empty before all b's are read.<br>
+                                Both branches run nondeterministically. δ(q0,a,Z₀)=(q0,AZ₀); δ(q0,a,A)=(q0,AA);
+                                δ(q0,b,A)=(q1,ε); δ(q1,b,A)=(q1,ε);<br>
+                                Case 1: δ(q1,ε,A)=(q2,A) accept (A's remain → more a's). Case 2: δ(q1,b,Z₀)=(q1,Z₀)...
+                                need 'b' remaining after stack empty.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">4</div>
+                        <div>
+                            <p>Convert CFG G: S → aSb | ε to an equivalent PDA and trace "aaabbb".</p>
+                            <div class="q-ans">
+                                <strong>PDA (3-state, top-down):</strong><br>
+                                δ(q0,ε,Z₀)=(q1,SZ₀) — init push S.<br>
+                                δ(q1,ε,S)=(q1,aSb) — expand S→aSb.<br>
+                                δ(q1,ε,S)=(q1,ε) — expand S→ε (pop S).<br>
+                                δ(q1,a,a)=(q1,ε) — match 'a'. δ(q1,b,b)=(q1,ε) — match 'b'.<br>
+                                δ(q1,ε,Z₀)=(q2,Z₀) — accept.<br>
+                                <strong>Trace "aabb":</strong> Push S → expand S→aSb: stack=aSbZ₀ → match a: stack=SbZ₀
+                                → expand S→aSb: aSbbZ₀ → match a: SbbZ₀ → expand S→ε: bbZ₀ → match b: bZ₀ → match b: Z₀
+                                → accept ✓
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">5</div>
+                        <div>
+                            <p>Construct a PDA for L = {w | w ∈ {a,b}*, na(w) = 2×nb(w)} — a's are twice the b's.</p>
+                            <div class="q-ans">
+                                <strong>Strategy:</strong> For each 'b', push 2 A's. For each 'a', pop 1 A. Accept when
+                                stack empty.<br>
+                                δ(q0,b,Z₀)=(q0,AAZ₀); δ(q0,b,A)=(q0,AAA) — push 2 A's per b;<br>
+                                δ(q0,a,A)=(q0,ε) — pop 1 A per a;<br>
+                                δ(q0,ε,Z₀)=(q1,Z₀) — accept when balanced.<br>
+                                <strong>Example:</strong> "aab" — push 2A (b): AAZ₀ → pop 1A (a): AZ₀ → pop 1A (a): Z₀ →
+                                accept ✓ (2 a's = 2×1 b)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">Theory Questions</div>
+
+                    <div class="q-item">
+                        <div class="q-num">6</div>
+                        <div>
+                            <p>What are the two methods of acceptance by PDA? Write their formal definitions and explain
+                                the difference.</p>
+                            <div class="q-ans">
+                                <strong>1. Final State:</strong> L(M) = {w | (q0,w,Z₀) ⊢* (qf,ε,γ) for some qf ∈ F, any
+                                stack γ}. PDA reaches a final state; stack content doesn't matter.<br>
+                                <strong>2. Empty Stack:</strong> N(M) = {w | (q0,w,Z₀) ⊢* (q,ε,ε) for any state q}.
+                                Stack is completely empty; final state doesn't matter.<br>
+                                <strong>Difference:</strong> Final state focuses on which state we end in; empty stack
+                                focuses on having emptied the stack. Both methods are equivalent in power.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">7</div>
+                        <div>
+                            <p>Prove that every Regular Language is a CFL (i.e., every DFA can be simulated by a PDA).
+                            </p>
+                            <div class="q-ans">
+                                <strong>Construction:</strong> Given DFA M = (Q, Σ, δ_FA, q0, F), construct PDA M' = (Q,
+                                Σ, {Z₀}, δ_PDA, q0, Z₀, F) where:<br>
+                                For every DFA transition δ_FA(q,a)=p, add PDA transition δ_PDA(q,a,Z₀)={(p,Z₀)} — state
+                                changes same as DFA, stack never changes (just keep Z₀).<br>
+                                The PDA ignores its stack completely and behaves exactly like the DFA.<br>
+                                <strong>Result:</strong> L(M') = L(M). Since every Regular Language has a DFA, every
+                                Regular Language has a PDA → every RL is a CFL. RL ⊂ CFL □
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">8</div>
+                        <div>
+                            <p>Explain why NPDA can recognize palindromes but DPDA cannot. Give a formal argument.</p>
+                            <div class="q-ans">
+                                <strong>NPDA:</strong> Uses ε-transitions to nondeterministically guess the midpoint of
+                                the string. At any point, it can switch from push-phase to match-phase. Since at least
+                                one branch will guess correctly, the NPDA accepts all palindromes.<br>
+                                <strong>DPDA cannot:</strong> A DPDA must make deterministic choices. For string "abba",
+                                when reading 'a', it cannot know if this 'a' is the first character of "abba" (which
+                                should be pushed) or if it's being confirmed after "abb". There's no way to
+                                deterministically identify the midpoint without seeing all input — but stack isn't
+                                reversible. Formal proof uses the fact that language of all even palindromes is not a
+                                Deterministic CFL.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">9</div>
+                        <div>
+                            <p>Why can't a PDA recognize L = {aⁿbⁿcⁿ | n ≥ 1}?</p>
+                            <div class="q-ans">
+                                <strong>Proof using Pumping Lemma for CFLs:</strong><br>
+                                Assume L is a CFL with pumping length p. Choose w = aᵖbᵖcᵖ ∈ L (|w| = 3p ≥ p).<br>
+                                Split w = uvxyz with |vy| ≥ 1 and |vxy| ≤ p.<br>
+                                Since |vxy| ≤ p, the substring vxy spans at most 2 types of symbols (can't span all
+                                three types a, b, c simultaneously).<br>
+                                Pumping (i=2): uv²xy²z has more of 1-2 symbol types but not all three equally.<br>
+                                So uv²xy²z ∉ L → contradiction. L is NOT a CFL → PDA cannot recognize it. □<br>
+                                <strong>Intuition:</strong> The stack is LIFO — you can match a's with b's OR b's with
+                                c's, but not both simultaneously.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     5.8 QUICK REVISION
+═══════════════════════════════ -->
+            <div class="section" id="s8">
+                <div class="section-title"><span class="num">5.8</span> Quick Revision — Chapter 5</div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concept</th>
+                                <th>Key Fact</th>
+                            </tr>
+                        </thead>
+                        <tbody class="td-normal">
+                            <tr>
+                                <td><strong>PDA = ?</strong></td>
+                                <td>Finite State Machine + Infinite Stack (LIFO). 7-tuple: (Q, Σ, Γ, δ, q₀, Z₀, F)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>7-Tuple</strong></td>
+                                <td>Q=states, Σ=input alphabet, Γ=stack alphabet, δ=transition, q₀=start, Z₀=initial
+                                    stack, F=final states</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Transition δ</strong></td>
+                                <td>δ: Q×(Σ∪{ε})×Γ → finite subsets of Q×Γ*. Maps (state, input/ε, stack-top) →
+                                    (next-state, new-stack-top)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Stack notation</strong></td>
+                                <td>TOP is on the LEFT. "aZ₀" = 'a' on top, Z₀ at bottom. Push 'a' onto Z₀ → "aZ₀".</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PUSH</strong></td>
+                                <td>δ(q,a,X) = (p, YX) — replace X with YX (Y on top)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>POP</strong></td>
+                                <td>δ(q,a,X) = (p, ε) — remove X (stack shrinks)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NO-OP</strong></td>
+                                <td>δ(q,a,X) = (p, X) — X remains on top</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ID Triple</strong></td>
+                                <td>(q, w, α) = current state, remaining input, stack contents (top-left)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Turnstile ⊢</strong></td>
+                                <td>One PDA move. ⊢* = zero or more moves.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Final State acceptance</strong></td>
+                                <td>(q₀,w,Z₀) ⊢* (qf,ε,γ) for qf ∈ F. Stack content doesn't matter.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Empty Stack acceptance</strong></td>
+                                <td>(q₀,w,Z₀) ⊢* (q,ε,ε). Final state doesn't matter. Stack must be empty.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Both equivalent</strong></td>
+                                <td>Final state ≡ Empty stack. Can convert between them.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>aⁿbⁿ PDA</strong></td>
+                                <td>Push A for each 'a'. Pop A for each 'b'. Accept on empty stack.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Equal a's & b's</strong></td>
+                                <td>Push A (excess a), push B (excess b), pop on opposite symbol. Accept when Z₀ only.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Palindromes</strong></td>
+                                <td>Nondeterministically guess middle. Push first half, match+pop second half.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>wcwᴿ</strong></td>
+                                <td>Push before 'c'. Match+pop after 'c'. Deterministic (DPDA possible).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>i+j=k</strong></td>
+                                <td>Push X for each a and b. Pop X for each c.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>aⁿbᵐcᵐdⁿ</strong></td>
+                                <td>Push A for a's. Push B for b's (on top of A's). Pop B for c's. Pop A for d's.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NPDA &gt; DPDA</strong></td>
+                                <td>Palindromes: NPDA yes, DPDA no. Every DPDA is a NPDA, not vice versa.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PDA &gt; FA</strong></td>
+                                <td>aⁿbⁿ: PDA yes, FA no. Every FA is a PDA (ignore stack). Not vice versa.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PDA cannot do</strong></td>
+                                <td>aⁿbⁿcⁿ (needs LBA/TM). Any language requiring TWO stacks simultaneously.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CFG → PDA</strong></td>
+                                <td>3 states. Push start symbol. For each production A→α: ε-transition replaces A on
+                                    stack with α. For each terminal: pop when matched.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="key-box" style="margin-top:22px;">
+                    <div class="key-label">🎯 Exam Must-Remember</div>
+                    <ul>
+                        <li>PDA is 7-tuple — not 5-tuple like DFA. Extra components: Γ (stack alphabet) and Z₀ (initial
+                            stack symbol).</li>
+                        <li>Stack TOP is on the LEFT in all notation. "aZ₀" = a is on top.</li>
+                        <li>Push: δ(q,a,X) = (p, newX) where new has MORE symbols. Pop: δ(q,a,X) = (p, ε) — replaces X
+                            with nothing.</li>
+                        <li>ID trace format: (state, remaining-input, stack-top-to-bottom). Show every ⊢ step.</li>
+                        <li>Final state acceptance: stack can have anything. Empty stack acceptance: stack must be
+                            completely empty.</li>
+                        <li>aⁿbⁿ: classic PDA — push for a's, pop for b's. 2 states + final.</li>
+                        <li>Equal a's & b's: need TWO marker types (A and B) to track excess of either.</li>
+                        <li>wcwᴿ (DPDA) vs wwᴿ (NPDA only) — KNOW this distinction!</li>
+                        <li>aⁿbᵐcᵐdⁿ: push A's then B's, pop B's for c's, pop A's for d's. Stack order matters.</li>
+                        <li>CFG → PDA: push start symbol S, ε-expand non-terminals, match+pop terminals.</li>
+                    </ul>
+                </div>
+
+                <div
+                    style="margin-top:28px;padding:18px 22px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;text-align:center;">
+                    <div style="font-size:12px;color:var(--text2);margin-bottom:5px;">END OF CHAPTER 5</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--cyan);">Theory of Computation — NMIMS MPSTME
+                        · B.Tech CSE</div>
+                    <div style="font-size:12px;color:var(--text2);margin-top:5px;">Next: Chapter 6 — Turing Machine
+                        (Definition, Examples, Halting Problem, Church-Turing Hypothesis)</div>
+                </div>
+            </div>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+
+  <footer style="text-align:center;padding:28px 40px;border-top:1px solid #30363d;font-size:13px;color:#8b949e;background:#0d1117;margin-top:40px;">
+    <p>TCS Notes &middot; <span style="color:#79c0ff;font-weight:600;">NMIMS MPSTME</span> &middot; B.Tech CSE Sem 4 &middot; Theory of Computation</p>
+    <p style="margin-top:6px;">Made by <span style="color:#79c0ff;font-weight:600;">Jay Naik</span></p>
+  </footer>
+    <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const sections = document.querySelectorAll('[id^="s"],[id^="p"]');
+        const navItems = document.querySelectorAll('.nav-item');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) current = s.id; });
+            navItems.forEach(n => { n.classList.remove('active'); if (n.getAttribute('href') === '#' + current) n.classList.add('active'); });
+        });
+    </script>
+</body>
+
+</html>

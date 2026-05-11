@@ -15,6 +15,7 @@
     { "source": "/ch3", "destination": "/ch3.html" },
     { "source": "/ch4", "destination": "/ch4.html" },
     { "source": "/ch5", "destination": "/ch5.html" },
+    { "source": "/ch5/diagrams", "destination": "/ch5_diagrams.html" },
     { "source": "/ch6", "destination": "/ch6.html" }
   ]
 }
