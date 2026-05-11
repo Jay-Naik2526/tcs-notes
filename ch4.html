@@ -1,0 +1,2466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCS Notes — Chapter 4: Context Free Grammar</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg2: #161b22;
+            --bg3: #1c2128;
+            --bg4: #21262d;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent2: #3fb950;
+            --accent3: #ff7b72;
+            --accent4: #ffa657;
+            --accent5: #d2a8ff;
+            --text: #e6edf3;
+            --text2: #8b949e;
+            --text3: #c9d1d9;
+            --red: #f85149;
+            --yellow: #e3b341;
+            --green: #3fb950;
+            --purple: #d2a8ff;
+            --teal: #39d353;
+            --pink: #f778ba;
+            --orange: #ffa657;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 255px;
+            height: 100vh;
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            z-index: 100;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-brand {
+            padding: 18px 18px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-brand .course {
+            font-size: 10px;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 3px;
+        }
+
+        .sidebar-brand .title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--orange);
+            line-height: 1.3;
+        }
+
+        .sidebar-brand .ch {
+            font-size: 11px;
+            color: var(--accent4);
+            margin-top: 3px;
+        }
+
+        .nav-section {
+            padding: 12px 10px 4px 18px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 6px 18px 6px 22px;
+            font-size: 12px;
+            color: var(--text3);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all .15s;
+        }
+
+        .nav-item:hover {
+            color: var(--orange);
+            background: rgba(255, 166, 87, .06);
+            border-left-color: var(--orange);
+        }
+
+        .nav-item.active {
+            color: var(--orange);
+            border-left-color: var(--orange);
+            background: rgba(255, 166, 87, .1);
+        }
+
+        .nav-sub {
+            padding-left: 34px;
+            font-size: 11.5px;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 255px;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .chapter-header {
+            background: linear-gradient(135deg, #0d1117 0%, #1a1408 50%, #1f1a0d 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 55px 60px 45px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 166, 87, .08) 0%, transparent 70%);
+        }
+
+        .ch-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(255, 166, 87, .12);
+            border: 1px solid rgba(255, 166, 87, .3);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--orange);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .chapter-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .chapter-header h1 span {
+            color: var(--orange);
+        }
+
+        .chapter-header p {
+            font-size: 14px;
+            color: var(--text2);
+            max-width: 640px;
+            position: relative;
+        }
+
+        .ch-meta {
+            display: flex;
+            gap: 14px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .ch-meta-item {
+            padding: 9px 16px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .ch-meta-item .label {
+            color: var(--text2);
+            margin-bottom: 2px;
+        }
+
+        .ch-meta-item .value {
+            color: var(--accent4);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 45px 60px;
+            max-width: 980px;
+        }
+
+        .section {
+            margin-bottom: 56px;
+        }
+
+        .section-title {
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .num {
+            background: var(--orange);
+            color: #0d1117;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .subsection {
+            margin: 26px 0;
+        }
+
+        .subsection-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent4);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 15px;
+            background: var(--accent4);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: var(--text3);
+        }
+
+        /* BOXES */
+        .def-box {
+            background: rgba(255, 166, 87, .06);
+            border: 1px solid rgba(255, 166, 87, .25);
+            border-left: 3px solid var(--orange);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 14px 0;
+        }
+
+        .def-box .def-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--orange);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .def-box p {
+            color: var(--text3);
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .key-box {
+            background: rgba(88, 166, 255, .06);
+            border: 1px solid rgba(88, 166, 255, .2);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .key-box .key-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .key-box ul {
+            padding-left: 17px;
+        }
+
+        .key-box li {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin-bottom: 5px;
+        }
+
+        .example-box {
+            background: rgba(63, 185, 80, .05);
+            border: 1px solid rgba(63, 185, 80, .2);
+            border-left: 3px solid var(--accent2);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .example-box .ex-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent2);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .example-box p {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin-bottom: 5px;
+        }
+
+        .note-box {
+            background: rgba(248, 81, 73, .06);
+            border: 1px solid rgba(248, 81, 73, .2);
+            border-left: 3px solid var(--red);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .note-box .note-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--red);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .note-box p {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin: 0;
+        }
+
+        .prob-box {
+            background: rgba(210, 168, 255, .05);
+            border: 1px solid rgba(210, 168, 255, .2);
+            border-left: 3px solid var(--purple);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .prob-box .prob-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--purple);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .prob-box p {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin-bottom: 4px;
+        }
+
+        .warn-box {
+            background: rgba(227, 179, 65, .06);
+            border: 1px solid rgba(227, 179, 65, .25);
+            border-left: 3px solid var(--yellow);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .warn-box .warn-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--yellow);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .warn-box p {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin: 0;
+        }
+
+        /* GRAMMAR BLOCK */
+        .grammar {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 13.5px;
+            margin: 12px 0;
+            line-height: 2.1;
+        }
+
+        .grammar .nt {
+            color: var(--orange);
+        }
+
+        .grammar .t {
+            color: var(--accent2);
+        }
+
+        .grammar .arrow {
+            color: var(--text2);
+        }
+
+        .grammar .new {
+            color: var(--accent);
+            background: rgba(88, 166, 255, .1);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        .grammar .removed {
+            color: var(--red);
+            text-decoration: line-through;
+            opacity: .6;
+        }
+
+        /* PARSE TREE */
+        .tree-box {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--orange);
+            line-height: 1.9;
+            margin: 12px 0;
+        }
+
+        /* STEP BLOCK */
+        .step-block {
+            display: flex;
+            gap: 14px;
+            margin: 9px 0;
+        }
+
+        .step-num {
+            min-width: 28px;
+            height: 28px;
+            background: rgba(255, 166, 87, .15);
+            border: 1px solid rgba(255, 166, 87, .3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--orange);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-body {
+            font-size: 13.5px;
+            color: var(--text3);
+            padding-top: 4px;
+        }
+
+        .step-body code {
+            font-family: 'Courier New', monospace;
+            font-size: 12.5px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--accent5);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        /* TABLE */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead tr {
+            background: var(--bg3);
+        }
+
+        thead th {
+            padding: 11px 14px;
+            text-align: left;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background .1s;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 166, 87, .03);
+        }
+
+        tbody td {
+            padding: 10px 14px;
+            color: var(--text3);
+            vertical-align: top;
+        }
+
+        tbody td:first-child {
+            color: var(--orange);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .td-normal td:first-child {
+            color: var(--text3);
+            font-family: inherit;
+            font-weight: 400;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 12.5px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--accent5);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        /* DIVIDER */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 38px 0;
+        }
+
+        /* BADGE */
+        .badge {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: 10.5px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .badge-blue {
+            background: rgba(88, 166, 255, .2);
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, .3);
+        }
+
+        .badge-green {
+            background: rgba(63, 185, 80, .15);
+            color: var(--accent2);
+            border: 1px solid rgba(63, 185, 80, .3);
+        }
+
+        .badge-red {
+            background: rgba(248, 81, 73, .15);
+            color: var(--red);
+            border: 1px solid rgba(248, 81, 73, .3);
+        }
+
+        .badge-orange {
+            background: rgba(255, 166, 87, .15);
+            color: var(--accent4);
+            border: 1px solid rgba(255, 166, 87, .3);
+        }
+
+        .badge-purple {
+            background: rgba(210, 168, 255, .15);
+            color: var(--purple);
+            border: 1px solid rgba(210, 168, 255, .3);
+        }
+
+        .badge-yes {
+            background: rgba(63, 185, 80, .15);
+            color: var(--accent2);
+            border: 1px solid rgba(63, 185, 80, .3);
+            padding: 3px 10px;
+        }
+
+        .badge-no {
+            background: rgba(248, 81, 73, .15);
+            color: var(--red);
+            border: 1px solid rgba(248, 81, 73, .3);
+            padding: 3px 10px;
+        }
+
+        /* GRID */
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 14px 0;
+        }
+
+        .summary-card {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 13px 15px;
+        }
+
+        .summary-card .sc-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent4);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+
+        .summary-card p,
+        .summary-card li {
+            font-size: 12.5px;
+            color: var(--text2);
+        }
+
+        .summary-card ul {
+            padding-left: 15px;
+        }
+
+        .summary-card li {
+            margin-bottom: 3px;
+        }
+
+        /* FORMULA */
+        .formula {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 13.5px;
+            color: var(--accent5);
+            margin: 12px 0;
+            line-height: 1.9;
+        }
+
+        /* PRACTICE */
+        .practice-section {
+            background: rgba(210, 168, 255, .05);
+            border: 1px solid rgba(210, 168, 255, .2);
+            border-radius: 10px;
+            padding: 22px 26px;
+            margin: 28px 0;
+        }
+
+        .practice-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .practice-title::before {
+            content: '✦';
+            font-size: 12px;
+        }
+
+        .q-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(210, 168, 255, .1);
+            font-size: 13.5px;
+            color: var(--text3);
+        }
+
+        .q-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .q-num {
+            min-width: 26px;
+            height: 26px;
+            background: rgba(210, 168, 255, .15);
+            border: 1px solid rgba(210, 168, 255, .25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--purple);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .q-ans {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 9px 13px;
+            margin-top: 7px;
+            font-size: 13px;
+            color: var(--text2);
+        }
+
+        .q-ans strong {
+            color: var(--accent2);
+        }
+
+        .q-ans .grammar-inline {
+            font-family: 'Courier New', monospace;
+            font-size: 12.5px;
+            color: var(--orange);
+        }
+
+        /* PHASE BANNER */
+        .phase-banner {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin: 18px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .phase-num {
+            min-width: 32px;
+            height: 32px;
+            background: var(--orange);
+            color: #0d1117;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .phase-text {
+            font-size: 13.5px;
+            color: var(--text3);
+        }
+
+        .phase-text strong {
+            color: var(--orange);
+        }
+
+        /* SCROLL TOP */
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            background: var(--orange);
+            color: #0d1117;
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 17px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(255, 166, 87, .3);
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 28px 22px;
+            }
+
+            .chapter-header {
+                padding: 36px 22px;
+            }
+
+            .grid2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <div class="course">NMIMS MPSTME · B.Tech CSE · Sem 4</div>
+            <div class="title">Theory of Computation</div>
+            <div class="ch">Chapter 4 — Context Free Grammar</div>
+        </div>
+        <div class="nav-section">Contents</div>
+        <a class="nav-item active" href="#s1">4.1 Introduction to CFG</a>
+        <a class="nav-item nav-sub" href="#s1a">→ Formal Definition</a>
+        <a class="nav-item nav-sub" href="#s1b">→ CFG Examples</a>
+        <a class="nav-item nav-sub" href="#s1c">→ Derivation Trees</a>
+        <a class="nav-item" href="#s2">4.2 Ambiguous CFG</a>
+        <a class="nav-item" href="#s3">4.3 Grammar Simplification</a>
+        <a class="nav-item nav-sub" href="#s3a">→ Remove Useless Symbols</a>
+        <a class="nav-item nav-sub" href="#s3b">→ Remove ε-Productions</a>
+        <a class="nav-item nav-sub" href="#s3c">→ Remove Unit Productions</a>
+        <a class="nav-item nav-sub" href="#s3d">→ Full Worked Example</a>
+        <a class="nav-item" href="#s4">4.4 Chomsky Normal Form</a>
+        <a class="nav-item nav-sub" href="#s4a">→ Definition & Algorithm</a>
+        <a class="nav-item nav-sub" href="#s4b">→ CNF Problems 1–4</a>
+        <a class="nav-item" href="#s5">4.5 Greibach Normal Form</a>
+        <a class="nav-item nav-sub" href="#s5a">→ Definition & Algorithm</a>
+        <a class="nav-item nav-sub" href="#s5b">→ GNF Solved Example</a>
+        <a class="nav-item" href="#s6">4.6 Closure Properties of CFL</a>
+        <a class="nav-item" href="#s7">4.7 Practice Questions</a>
+        <a class="nav-item" href="#s8">4.8 Quick Revision</a>
+    </nav>
+
+    <!-- MAIN -->
+    <div class="main">
+        <div class="chapter-header">
+            <div class="ch-badge">Unit 4 · 5 Lectures</div>
+            <h1>Context Free <span>Grammar</span></h1>
+            <p>Basic concepts of CFG and CFL, Ambiguous CFG, Simplification of CFG, Chomsky's Normal Form (CNF),
+                Greibach Normal Form (GNF), and Closure Properties of CFL.</p>
+            <div class="ch-meta">
+                <div class="ch-meta-item">
+                    <div class="label">Duration</div>
+                    <div class="value">05 Lectures</div>
+                </div>
+                <div class="ch-meta-item">
+                    <div class="label">Type</div>
+                    <div class="value">Type 2 Grammar</div>
+                </div>
+                <div class="ch-meta-item">
+                    <div class="label">Automaton</div>
+                    <div class="value">Pushdown Automaton (PDA)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- ═══════════════════════════════
+     4.1 INTRODUCTION
+═══════════════════════════════ -->
+            <div class="section" id="s1">
+                <div class="section-title"><span class="num">4.1</span> Introduction to Context Free Grammar</div>
+
+                <div class="subsection" id="s1a">
+                    <div class="subsection-title">4.1.1 Position in Chomsky Hierarchy</div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Attribute</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>Grammar Type</strong></td>
+                                    <td>Type 2 — Context Free Grammar (CFG)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Language Generated</strong></td>
+                                    <td>Context Free Language (CFL)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Automaton to Accept</strong></td>
+                                    <td>Pushdown Automaton (PDA)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Production Form</strong></td>
+                                    <td><code>A → α</code> — Single non-terminal on LHS, any string on RHS</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Why "Context Free"?</strong></td>
+                                    <td>Non-terminal A can be replaced by α <em>regardless</em> of surrounding symbols —
+                                        no context needed.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="def-box">
+                        <div class="def-label">Formal Definition — 4-Tuple</div>
+                        <p>A <strong>Context Free Grammar G</strong> is a 4-tuple: <code>G = (V, T, P, S)</code></p>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Symbol</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>V</strong></td>
+                                    <td>Variables / Non-Terminals</td>
+                                    <td>Symbols that can be replaced. LHS of productions.</td>
+                                    <td>S, A, B</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>T</strong></td>
+                                    <td>Terminals</td>
+                                    <td>Actual language symbols. Cannot be replaced. V ∩ T = ∅</td>
+                                    <td>a, b, 0, 1</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>P</strong></td>
+                                    <td>Productions / Rules</td>
+                                    <td>Rules of the form A → α where A ∈ V, α ∈ (V ∪ T)*</td>
+                                    <td>S → aSb | ε</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>S</strong></td>
+                                    <td>Start Symbol</td>
+                                    <td>The starting non-terminal. S ∈ V</td>
+                                    <td>S</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="key-box">
+                        <div class="key-label">Critical Constraint — LHS Must Be Single Non-Terminal</div>
+                        <ul>
+                            <li>In CFG, <strong>every production has exactly ONE non-terminal on the Left Hand
+                                    Side</strong>.</li>
+                            <li>The RHS (α) can be any string of terminals and non-terminals — including ε.</li>
+                            <li>This is what distinguishes CFG (Type 2) from CSG (Type 1) where LHS can have context
+                                symbols.</li>
+                            <li>V ∩ T = ∅ — Variables and Terminals must be disjoint sets.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s1b">
+                    <div class="subsection-title">4.1.2 CFG Examples — Standard Languages</div>
+
+                    <p><strong>1. CFG for (a + b)*abb</strong> — all strings ending with "abb"</p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span><span
+                            class="t">abb</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">b</span><span class="nt">A</span> | <span
+                            class="t">ε</span>
+                    </div>
+
+                    <p><strong>2. CFG for abb(a + b)*</strong> — all strings starting with "abb"</p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">abb</span><span
+                            class="nt">A</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">b</span><span class="nt">A</span> | <span
+                            class="t">ε</span>
+                    </div>
+
+                    <p><strong>3. CFG for Palindromes over {a, b}</strong> — strings w = reverse(w)</p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">S</span><span class="t">a</span> | <span class="t">b</span><span
+                            class="nt">S</span><span class="t">b</span> | <span class="t">a</span> | <span
+                            class="t">b</span> | <span class="t">ε</span>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Palindrome Derivation — "abba"</div>
+                        <p>S ⇒ aSa ⇒ abSba ⇒ ab<strong>ε</strong>ba ⇒ abba ✓</p>
+                        <p>S ⇒ aSa ⇒ aaSaa ⇒ aa<strong>ε</strong>aa ⇒ aaaa ✓</p>
+                    </div>
+
+                    <p><strong>4. CFG for L = {aⁿbⁿ | n ≥ 1}</strong> — equal a's and b's (no ε)</p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">S</span><span class="t">b</span> | <span class="t">ab</span>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Derivation — "aaabbb" (n=3)</div>
+                        <p>S ⇒ aSb ⇒ aaSbb ⇒ aaabbb ✓</p>
+                    </div>
+
+                    <p><strong>5. CFG for L = {aⁿbⁿ | n ≥ 0}</strong> — equal a's and b's (including ε)</p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">S</span><span class="t">b</span> | <span class="t">ε</span>
+                    </div>
+
+                    <p><strong>6. CFG for L = {aⁿbᵐ | n ≤ m + 3}</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">aaa</span><span
+                            class="nt">A</span> | <span class="t">aa</span><span class="nt">A</span> | <span
+                            class="t">a</span><span class="nt">A</span> | <span class="nt">A</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span><span class="t">b</span> | <span class="nt">B</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="nt">B</span><span
+                            class="t">b</span> | <span class="t">ε</span>
+                    </div>
+
+                    <p><strong>7. CFG for L = {aⁿbⁿcᵐdᵐ | n, m ≥ 0}</strong> — two independent counters</p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">AB</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span><span class="t">b</span> | <span class="t">ε</span> &nbsp;&nbsp;&nbsp;
+                        <span style="color:var(--text2);font-size:12px;">(generates aⁿbⁿ)</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">c</span><span
+                            class="nt">B</span><span class="t">d</span> | <span class="t">ε</span> &nbsp;&nbsp;&nbsp;
+                        <span style="color:var(--text2);font-size:12px;">(generates cᵐdᵐ)</span>
+                    </div>
+
+                    <p><strong>8. CFG for L = {w ∈ {a,b}* | #a = #b}</strong> — equal number of a's and b's</p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">S</span><span class="t">b</span> | <span class="t">b</span><span
+                            class="nt">S</span><span class="t">a</span> | <span class="nt">SS</span> | <span
+                            class="t">ε</span>
+                    </div>
+
+                    <div class="note-box">
+                        <div class="note-label">NOT a CFL — Classic Trap</div>
+                        <p><strong>L = {aⁿbⁿcⁿ | n ≥ 1}</strong> is NOT context-free. A CFG cannot handle three-way
+                            equal counting. This requires a CSG (Type 1). Use the Pumping Lemma for CFLs to prove it's
+                            not a CFL.</p>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s1c">
+                    <div class="subsection-title">4.1.3 Derivations and Derivation Trees</div>
+                    <div class="grid2">
+                        <div class="summary-card">
+                            <div class="sc-title">Types of Derivation</div>
+                            <ul>
+                                <li><strong>Leftmost:</strong> Always replace the LEFTMOST non-terminal first.</li>
+                                <li><strong>Rightmost:</strong> Always replace the RIGHTMOST non-terminal first.</li>
+                                <li>Both may yield different derivation orders but same tree for unambiguous grammars.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="summary-card">
+                            <div class="sc-title">Derivation Tree (Parse Tree)</div>
+                            <ul>
+                                <li>Root = Start symbol S</li>
+                                <li>Leaf nodes = Terminals or ε</li>
+                                <li>Internal nodes = Non-terminals</li>
+                                <li>Children of A = RHS of production used for A</li>
+                                <li>Yield (leaves left-to-right) = derived string</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="ex-label">Parse Tree — "aab" from S → aS | bS | a | b</div>
+                        <div class="tree-box">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;a &nbsp;&nbsp;S<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a &nbsp;&nbsp;S<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b
+                        </div>
+                        <p>Leftmost derivation: S ⇒ aS ⇒ aaS ⇒ aab</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     4.2 AMBIGUOUS CFG
+═══════════════════════════════ -->
+            <div class="section" id="s2">
+                <div class="section-title"><span class="num">4.2</span> Ambiguous CFG</div>
+
+                <div class="def-box">
+                    <div class="def-label">Definition</div>
+                    <p>A CFG is <strong>ambiguous</strong> if there exists at least one string in L(G) that has
+                        <strong>two or more distinct parse trees</strong> (equivalently, two or more distinct leftmost
+                        derivations).</p>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Classic Ambiguous Grammar — Arithmetic Expressions</div>
+                    <p><strong>Grammar:</strong> E → E + E | E * E | id</p>
+                    <p><strong>String:</strong> id + id * id</p>
+                    <p>This has <strong>two different parse trees</strong>:</p>
+                </div>
+
+                <div class="grid2">
+                    <div class="summary-card">
+                        <div class="sc-title" style="color:var(--red);">Parse Tree 1 — (id+id)*id</div>
+                        <div class="tree-box" style="font-size:12px;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;E<br>
+                            &nbsp;&nbsp;&nbsp;/|\<br>
+                            &nbsp;&nbsp;E * E<br>
+                            &nbsp;/|\ &nbsp; |<br>
+                            E + E &nbsp;id<br>
+                            |&nbsp;&nbsp;&nbsp;&nbsp;|<br>
+                            id &nbsp; id
+                        </div>
+                        <p style="font-size:12px;color:var(--text2);margin-top:6px;">Adds first, then multiplies</p>
+                    </div>
+                    <div class="summary-card">
+                        <div class="sc-title" style="color:var(--accent2);">Parse Tree 2 — id+(id*id)</div>
+                        <div class="tree-box" style="font-size:12px;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;E<br>
+                            &nbsp;&nbsp;&nbsp;/|\<br>
+                            &nbsp;&nbsp;E + E<br>
+                            &nbsp;&nbsp;| &nbsp;/|\<br>
+                            &nbsp;&nbsp;id E * E<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;|<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;id &nbsp; id
+                        </div>
+                        <p style="font-size:12px;color:var(--text2);margin-top:6px;">Multiplies first, then adds ✓
+                            (correct)</p>
+                    </div>
+                </div>
+
+                <div class="key-box">
+                    <div class="key-label">Removing Grammar Ambiguity — Unambiguous Equivalent</div>
+                    <ul>
+                        <li>Introduce <strong>precedence</strong>: * binds tighter than +.</li>
+                        <li>Introduce <strong>associativity</strong>: left-to-right evaluation.</li>
+                    </ul>
+                </div>
+                <p><strong>Unambiguous grammar for arithmetic expressions:</strong></p>
+                <div class="grammar">
+                    <span class="nt">E</span> <span class="arrow">→</span> <span class="nt">E</span> + <span
+                        class="nt">T</span> | <span class="nt">T</span> &nbsp;&nbsp;&nbsp;&nbsp; <span
+                        style="color:var(--text2);font-size:12px;">(+ is lowest precedence, left-associative)</span><br>
+                    <span class="nt">T</span> <span class="arrow">→</span> <span class="nt">T</span> * <span
+                        class="nt">F</span> | <span class="nt">F</span> &nbsp;&nbsp;&nbsp;&nbsp; <span
+                        style="color:var(--text2);font-size:12px;">(* is higher precedence)</span><br>
+                    <span class="nt">F</span> <span class="arrow">→</span> <span class="t">id</span> | (<span
+                        class="nt">E</span>)&nbsp;&nbsp;&nbsp;&nbsp; <span
+                        style="color:var(--text2);font-size:12px;">(highest precedence — atom)</span>
+                </div>
+                <div class="note-box">
+                    <div class="note-label">Inherent Ambiguity</div>
+                    <p>Some languages are <strong>inherently ambiguous</strong> — every grammar that generates them is
+                        ambiguous. Ambiguity cannot be removed for such languages, only for the grammar.</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     4.3 GRAMMAR SIMPLIFICATION
+═══════════════════════════════ -->
+            <div class="section" id="s3">
+                <div class="section-title"><span class="num">4.3</span> Grammar Simplification (Reduction)</div>
+
+                <div class="def-box">
+                    <div class="def-label">Definition</div>
+                    <p><strong>Grammar simplification</strong> removes unnecessary productions and symbols from a CFG
+                        without changing the language L(G). It is a <strong>required prerequisite</strong> before
+                        converting to CNF or GNF.</p>
+                </div>
+
+                <div class="key-box">
+                    <div class="key-label">Three Simplification Steps — Always in this Order</div>
+                    <ul>
+                        <li><strong>Step 1:</strong> Remove Useless Symbols (non-terminating + unreachable)</li>
+                        <li><strong>Step 2:</strong> Remove ε-Productions (A → ε)</li>
+                        <li><strong>Step 3:</strong> Remove Unit Productions (A → B)</li>
+                    </ul>
+                </div>
+
+                <!-- STEP 1: USELESS SYMBOLS -->
+                <div class="subsection" id="s3a">
+                    <div class="subsection-title">4.3.1 Step 1 — Remove Useless Symbols</div>
+
+                    <div class="def-box">
+                        <div class="def-label">What is a Useless Symbol?</div>
+                        <p>A symbol X is <strong>useless</strong> if it is <strong>non-terminating</strong> (never leads
+                            to a terminal string) OR <strong>unreachable</strong> (cannot be reached from start symbol
+                            S).</p>
+                    </div>
+
+                    <div class="phase-banner">
+                        <div class="phase-num">1a</div>
+                        <div class="phase-text"><strong>Find Non-Terminating Symbols:</strong> A non-terminal is
+                            terminating if it can derive some string of ONLY terminals. Mark each symbol as terminating
+                            or not. Remove those that never terminate.</div>
+                    </div>
+                    <div class="phase-banner">
+                        <div class="phase-num">1b</div>
+                        <div class="phase-text"><strong>Find Unreachable Symbols:</strong> Starting from S, mark all
+                            symbols reachable via productions. Any symbol NOT reachable from S is useless. Remove it.
+                        </div>
+                    </div>
+
+                    <div class="prob-box">
+                        <div class="prob-label">Problem 4.1 — Remove useless symbols</div>
+                        <p>Given grammar:</p>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">a</span> | <span class="nt">B</span><span
+                            class="t">b</span> | <span class="t">c</span><span class="nt">C</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">B</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">a</span> | <span
+                            class="nt">A</span><span class="t">a</span><br>
+                        <span class="nt">C</span> <span class="arrow">→</span> <span class="t">c</span><span
+                            class="nt">C</span><span class="nt">D</span><br>
+                        <span class="nt">D</span> <span class="arrow">→</span> <span class="t">ddd</span>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">1a</div>
+                        <div class="step-body"><strong>Non-terminating check:</strong> D → ddd ✓ terminating. C → cCD —
+                            contains C (recursive, never resolves to only terminals) ✗ C is non-terminating. B → a ✓. A
+                            → aB ✓. S has alternatives without C ✓.<br>Remove C and all productions containing C: remove
+                            <code>S → cC</code> and <code>C → cCD</code>.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">1b</div>
+                        <div class="step-body"><strong>Reachability check after removing C:</strong> From S: reach A, B.
+                            From A: reach B. D is not reachable from S → remove D and <code>D → ddd</code>.</div>
+                    </div>
+
+                    <p><strong>Simplified Grammar:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">a</span> | <span class="nt">B</span><span
+                            class="t">b</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">B</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">a</span> | <span
+                            class="nt">A</span><span class="t">a</span>
+                    </div>
+
+                    <div class="prob-box" style="margin-top:20px;">
+                        <div class="prob-label">Problem 4.2 — Remove useless symbols</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">ε</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">A</span>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">1a</div>
+                        <div class="step-body">All symbols terminate (A → ε, B → bA, S → A). No non-terminating symbols.
+                        </div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">1b</div>
+                        <div class="step-body">From S: reach A. <strong>B is unreachable</strong>. Remove B → bA.</div>
+                    </div>
+                    <p><strong>Result:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">ε</span>
+                    </div>
+                    <p style="font-size:12.5px;color:var(--text2);">Note: S → A is a unit production. We remove it next
+                        (Step 3), resulting in S → aS | ε.</p>
+                </div>
+
+                <!-- STEP 2: EPSILON -->
+                <div class="subsection" id="s3b">
+                    <div class="subsection-title">4.3.2 Step 2 — Remove ε-Productions</div>
+
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>An <strong>ε-production</strong> is any production of the form <code>A → ε</code>. We remove
+                            ALL ε-productions, except <code>S → ε</code> if ε ∈ L(G).</p>
+                    </div>
+
+                    <div class="phase-banner">
+                        <div class="phase-num">1</div>
+                        <div class="phase-text"><strong>Find Nullable Symbols:</strong> A non-terminal X is nullable if
+                            X ⇒* ε (can derive ε).</div>
+                    </div>
+                    <div class="phase-banner">
+                        <div class="phase-num">2</div>
+                        <div class="phase-text"><strong>Create New Productions:</strong> For each production containing
+                            nullable symbols, create all possible combinations with those symbols optionally removed.
+                        </div>
+                    </div>
+                    <div class="phase-banner">
+                        <div class="phase-num">3</div>
+                        <div class="phase-text"><strong>Remove ε-productions:</strong> Delete all A → ε. Add S → ε back
+                            ONLY if ε ∈ L(G).</div>
+                    </div>
+
+                    <div class="prob-box">
+                        <div class="prob-label">Problem 4.3 — Eliminate ε from:</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span><span
+                            class="t">b</span><span class="nt">B</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">ε</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">B</span> | <span class="t">a</span><span class="nt">B</span> | <span
+                            class="t">ε</span>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">1</div>
+                        <div class="step-body"><strong>Nullable:</strong> A → ε ✓, B → ε ✓. S? S → AbB — if A=ε, B=ε: S
+                            → εbε = b ≠ ε, so S NOT nullable.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">2</div>
+                        <div class="step-body">For <code>S → AbB</code> (A and B nullable): Remove A → S → bB. Remove B
+                            → S → Ab. Remove both → S → b.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">2</div>
+                        <div class="step-body">For <code>A → aA</code> (A nullable): Remove right A → A → a.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">2</div>
+                        <div class="step-body">For <code>B → bB</code> (B nullable): Remove B → B → b. For
+                            <code>B → aB</code>: Remove B → B → a.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">3</div>
+                        <div class="step-body">Remove A → ε and B → ε. ε ∉ L(G) originally (S not nullable), so no S → ε
+                            added.</div>
+                    </div>
+
+                    <p><strong>Result after ε-elimination:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span><span
+                            class="t">b</span><span class="nt">B</span> | <span class="t">b</span><span
+                            class="nt">B</span> | <span class="nt">A</span><span class="t">b</span> | <span
+                            class="t">b</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">a</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">B</span> | <span class="t">a</span><span class="nt">B</span> | <span
+                            class="t">b</span> | <span class="t">a</span>
+                    </div>
+
+                    <div class="prob-box" style="margin-top:20px;">
+                        <div class="prob-label">Problem 4.4 — Eliminate ε from: (harder case with S nullable)</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span><span
+                            class="nt">B</span><span class="nt">A</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">ε</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">B</span> | <span class="t">ε</span>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">1</div>
+                        <div class="step-body"><strong>Nullable:</strong> A ✓, B ✓. S → ABA: if A=ε, B=ε, S → ε·ε·A → ε
+                            (via A→ε). So S is also nullable.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">2</div>
+                        <div class="step-body">For <code>S → ABA</code> (all three nullable), generate all 2³-1 = 7
+                            combinations without ε-form:<br>
+                            S → ABA | BA | AB | AA | A | B (and S→ε which we handle separately)</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">2</div>
+                        <div class="step-body">For <code>A → aA</code>: A → a. For <code>B → bB</code>: B → b.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">3</div>
+                        <div class="step-body">Remove A→ε, B→ε. Since ε ∈ L(G), add S → ε.</div>
+                    </div>
+                    <p><strong>Result:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">ABA</span> | <span
+                            class="nt">BA</span> | <span class="nt">AB</span> | <span class="nt">AA</span> | <span
+                            class="nt">A</span> | <span class="nt">B</span> | <span class="t">ε</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">a</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">B</span> | <span class="t">b</span>
+                    </div>
+                    <p style="font-size:12.5px;color:var(--text2);">Note: S → A and S → B are unit productions — will be
+                        removed in Step 3.</p>
+                </div>
+
+                <!-- STEP 3: UNIT PRODUCTIONS -->
+                <div class="subsection" id="s3c">
+                    <div class="subsection-title">4.3.3 Step 3 — Remove Unit Productions</div>
+
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>A <strong>unit production</strong> is any production of the form <code>A → B</code> where
+                            both A and B are non-terminals (single non-terminal on both sides).</p>
+                    </div>
+
+                    <div class="phase-banner">
+                        <div class="phase-num">1</div>
+                        <div class="phase-text"><strong>Find Unit Pairs:</strong> (A, B) is a unit pair if A ⇒* B using
+                            only unit productions. Compute the transitive closure.</div>
+                    </div>
+                    <div class="phase-banner">
+                        <div class="phase-num">2</div>
+                        <div class="phase-text"><strong>Add Non-Unit Productions:</strong> For each unit pair (A, B),
+                            add all non-unit productions of B to A.</div>
+                    </div>
+                    <div class="phase-banner">
+                        <div class="phase-num">3</div>
+                        <div class="phase-text"><strong>Remove All Unit Productions.</strong></div>
+                    </div>
+
+                    <div class="prob-box">
+                        <div class="prob-label">Problem 4.5 — Remove unit productions</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span> | <span
+                            class="t">bb</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="nt">B</span> | <span
+                            class="t">b</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="nt">S</span> | <span
+                            class="t">a</span>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">1</div>
+                        <div class="step-body"><strong>Unit pairs (transitive closure):</strong><br>
+                            Direct: S→A, A→B, B→S.<br>
+                            S ⇒* A, S ⇒* B, S ⇒* S (cycle: S→A→B→S).<br>
+                            A ⇒* B, A ⇒* S, A ⇒* A. B ⇒* S, B ⇒* A, B ⇒* B.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">2</div>
+                        <div class="step-body">Non-unit: S→bb, A→b, B→a.<br>
+                            S gets from {S,A,B}: S→bb, S→b, S→a.<br>
+                            A gets from {S,A,B}: A→bb, A→b, A→a.<br>
+                            B gets from {S,A,B}: B→bb, B→b, B→a.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">3</div>
+                        <div class="step-body">Remove S→A, A→B, B→S. Check reachability: A and B unreachable from S →
+                            remove them.</div>
+                    </div>
+                    <p><strong>Final simplified grammar:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">a</span> | <span
+                            class="t">b</span> | <span class="t">bb</span>
+                    </div>
+
+                    <div class="prob-box" style="margin-top:20px;">
+                        <div class="prob-label">Problem 4.6 — Remove unit productions</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">0</span><span
+                            class="nt">A</span> | <span class="t">1</span><span class="nt">B</span> | <span
+                            class="nt">C</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">0</span><span
+                            class="nt">S</span> | <span class="t">00</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">1</span> | <span
+                            class="nt">A</span><br>
+                        <span class="nt">C</span> <span class="arrow">→</span> <span class="t">01</span>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">1</div>
+                        <div class="step-body">Unit pairs: S ⇒* C, B ⇒* A.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">2</div>
+                        <div class="step-body">S gets from C: S → 01. B gets from A: B → 0S | 00.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">3</div>
+                        <div class="step-body">Remove S→C, B→A. Check reachability: C is no longer reachable → remove C
+                            → 01.</div>
+                    </div>
+                    <p><strong>Final grammar:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">0</span><span
+                            class="nt">A</span> | <span class="t">1</span><span class="nt">B</span> | <span
+                            class="t">01</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">0</span><span
+                            class="nt">S</span> | <span class="t">00</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">1</span> | <span
+                            class="t">0</span><span class="nt">S</span> | <span class="t">00</span>
+                    </div>
+                </div>
+
+                <!-- FULL WORKED EXAMPLE -->
+                <div class="subsection" id="s3d">
+                    <div class="subsection-title">4.3.4 Complete Simplification — Full Worked Example</div>
+                    <div class="prob-box">
+                        <div class="prob-label">Problem 4.7 — Apply all 3 simplification steps</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span><span
+                            class="t">b</span> | <span class="t">aB</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">ε</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">B</span> | <span class="nt">A</span> | <span class="t">b</span>
+                    </div>
+
+                    <p><strong>Step 1 — Useless symbols:</strong> All symbols reachable from S. All terminate (A→ε, B→b,
+                        S has alternatives). No useless symbols. <em>Skip.</em></p>
+
+                    <p><strong>Step 2 — Remove ε:</strong> Nullable: A. For S → Ab: remove A → S → b. For B → A: remove
+                        A → B → ε... wait, A→ε is what we're removing. B → A: A nullable → B → ε? No — B → A means B can
+                        derive whatever A derives. A derives ε, so B is also nullable!</p>
+
+                    <div class="step-block">
+                        <div class="step-num">2a</div>
+                        <div class="step-body">Nullable: A ✓. B → A (A nullable) → B ✓ nullable. S → Ab (A nullable) → S
+                            → b, NOT ε (b remains). S → aB (B nullable) → S → a. S is NOT nullable.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">2b</div>
+                        <div class="step-body">
+                            For S → Ab: remove A → S → b.<br>
+                            For S → aB: remove B → S → a.<br>
+                            For A → aA: remove A → A → a.<br>
+                            For B → bB: remove B → B → b (already exists).<br>
+                            Remove A → ε and B → ε (B was nullable through A).
+                        </div>
+                    </div>
+                    <p><strong>After ε-removal:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span><span
+                            class="t">b</span> | <span class="t">b</span> | <span class="t">a</span><span
+                            class="nt">B</span> | <span class="t">a</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">a</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">B</span> | <span class="nt">A</span> | <span class="t">b</span>
+                    </div>
+
+                    <p><strong>Step 3 — Remove unit productions:</strong> Unit production: B → A. Unit pair: B ⇒* A.</p>
+                    <div class="step-block">
+                        <div class="step-num">3</div>
+                        <div class="step-body">B gets A's non-unit productions: B → aA | a. Remove B → A.</div>
+                    </div>
+                    <p><strong>Final simplified grammar:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">A</span><span
+                            class="t">b</span> | <span class="t">b</span> | <span class="t">a</span><span
+                            class="nt">B</span> | <span class="t">a</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A</span> | <span class="t">a</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">B</span> | <span class="t">a</span><span class="nt">A</span> | <span
+                            class="t">a</span> | <span class="t">b</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     4.4 CNF
+═══════════════════════════════ -->
+            <div class="section" id="s4">
+                <div class="section-title"><span class="num">4.4</span> Chomsky Normal Form (CNF)</div>
+
+                <div class="subsection" id="s4a">
+                    <div class="subsection-title">4.4.1 Definition &amp; Algorithm</div>
+
+                    <div class="def-box">
+                        <div class="def-label">Chomsky Normal Form — Definition</div>
+                        <p>A CFG is in <strong>CNF</strong> if every production is of exactly one of these forms:</p>
+                    </div>
+
+                    <div class="grid2">
+                        <div class="summary-card">
+                            <div class="sc-title" style="color:var(--accent2);">Form 1: A → BC</div>
+                            <p>Exactly <strong>two non-terminals</strong> on RHS. Both A, B, C must be non-terminals.
+                            </p>
+                            <p>Examples: S → AB, E → CF, X → YZ</p>
+                        </div>
+                        <div class="summary-card">
+                            <div class="sc-title" style="color:var(--accent);">Form 2: A → a</div>
+                            <p>Exactly <strong>one terminal</strong> on RHS. A is a non-terminal, a is a terminal.</p>
+                            <p>Examples: A → a, B → 0, C → b</p>
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <div class="note-label">Special Case for ε</div>
+                        <p>If ε ∈ L(G), then <strong>S → ε</strong> is allowed, BUT S must NOT appear on the RHS of any
+                            production.</p>
+                    </div>
+
+                    <div class="key-box">
+                        <div class="key-label">CNF Conversion Algorithm — 3 Phases</div>
+                        <ul>
+                            <li><strong>Phase 0 (prerequisite):</strong> Fully simplify grammar (remove useless, ε, unit
+                                productions).</li>
+                            <li><strong>Phase 1:</strong> Replace terminals in long RHS (length ≥ 2) with new
+                                non-terminals. For each terminal 'a' appearing in a multi-symbol RHS, create
+                                <code>Xₐ → a</code> and replace 'a' with Xₐ.</li>
+                            <li><strong>Phase 2:</strong> Break any RHS with more than 2 symbols. For A → B₁B₂B₃...Bₙ (n
+                                > 2), introduce new non-terminals to make it binary:
+                                <code>A → B₁C₁, C₁ → B₂C₂, ..., Cₙ₋₂ → Bₙ₋₁Bₙ</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s4b">
+                    <div class="subsection-title">4.4.2 CNF Conversion — Solved Problems</div>
+
+                    <div class="prob-box">
+                        <div class="prob-label">CNF Problem 1 — Simple conversion</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">a</span> | <span
+                            class="t">b</span> | <span class="t">c</span><span class="nt">SS</span>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">1</div>
+                        <div class="step-body">Already simplified. No ε, no unit, no useless.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">P1</div>
+                        <div class="step-body">In S → cSS: terminal 'c' in multi-symbol RHS. Create <code>C → c</code>.
+                            Replace: S → CSS.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">P2</div>
+                        <div class="step-body">S → CSS has 3 symbols. Create <code>D → SS</code>. Replace: S → CD.</div>
+                    </div>
+                    <p><strong>Final CNF:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">CD</span> | <span
+                            class="t">a</span> | <span class="t">b</span><br>
+                        <span class="nt">C</span> <span class="arrow">→</span> <span class="t">c</span><br>
+                        <span class="nt">D</span> <span class="arrow">→</span> <span class="nt">SS</span>
+                    </div>
+                    <p style="font-size:12.5px;color:var(--text2);">Verify: S→CD (2 NTs ✓), S→a (1 terminal ✓), C→c (1
+                        terminal ✓), D→SS (2 NTs ✓). All CNF.</p>
+
+                    <div class="prob-box" style="margin-top:20px;">
+                        <div class="prob-label">CNF Problem 2 — Palindromes over {a, b}</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">S</span><span class="t">a</span> | <span class="t">b</span><span
+                            class="nt">S</span><span class="t">b</span> | <span class="t">a</span> | <span
+                            class="t">b</span> | <span class="t">aa</span> | <span class="t">bb</span>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">P1</div>
+                        <div class="step-body">Create <code>A → a</code> and <code>B → b</code> for terminals in
+                            multi-symbol productions.<br>
+                            S → aSa becomes S → ASA. S → bSb becomes S → BSB. S → aa becomes S → AA. S → bb becomes S →
+                            BB.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">P2</div>
+                        <div class="step-body">S → ASA has 3 symbols. Create <code>C → SA</code>. S → AC.<br>S → BSB has
+                            3 symbols. Create <code>D → SB</code>. S → BD.</div>
+                    </div>
+                    <p><strong>Final CNF:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">AC</span> | <span
+                            class="nt">BD</span> | <span class="nt">AA</span> | <span class="nt">BB</span> | <span
+                            class="t">a</span> | <span class="t">b</span><br>
+                        <span class="nt">C</span> <span class="arrow">→</span> <span class="nt">SA</span><br>
+                        <span class="nt">D</span> <span class="arrow">→</span> <span class="nt">SB</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span>
+                    </div>
+
+                    <div class="prob-box" style="margin-top:20px;">
+                        <div class="prob-label">CNF Problem 3 — After ε and unit removal (from S → AB | aB, A → aab | ε,
+                            B → bbA)</div>
+                    </div>
+                    <p>After simplification (ε-removal then unit-removal):</p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">AB</span> | <span
+                            class="t">a</span><span class="nt">B</span> | <span class="t">bb</span><span
+                            class="nt">A</span> | <span class="t">bb</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">aab</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">bb</span><span
+                            class="nt">A</span> | <span class="t">bb</span>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">P1</div>
+                        <div class="step-body">Create <code>C → a</code>, <code>D → b</code>. Replace in multi-symbol
+                            RHS:<br>
+                            S → aB → S → CB. S → bbA → S → DDA. S → bb → S → DD. A → aab → A → CCD. B → bbA → B → DDA. B
+                            → bb → B → DD.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">P2</div>
+                        <div class="step-body">S → DDA (3 symbols): Create <code>E → DA</code>. S → DE. A → CCD (3
+                            symbols): Create <code>F → CD</code>. A → CF. B → DDA: B → DE.</div>
+                    </div>
+                    <p><strong>Final CNF:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">AB</span> | <span
+                            class="nt">CB</span> | <span class="nt">DE</span> | <span class="nt">DD</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="nt">CF</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="nt">DE</span> | <span
+                            class="nt">DD</span><br>
+                        <span class="nt">E</span> <span class="arrow">→</span> <span class="nt">DA</span><br>
+                        <span class="nt">F</span> <span class="arrow">→</span> <span class="nt">CD</span><br>
+                        <span class="nt">C</span> <span class="arrow">→</span> <span class="t">a</span><br>
+                        <span class="nt">D</span> <span class="arrow">→</span> <span class="t">b</span>
+                    </div>
+
+                    <div class="prob-box" style="margin-top:20px;">
+                        <div class="prob-label">CNF Problem 4 — S → aSb | ab</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">P1</div>
+                        <div class="step-body">Create <code>A → a</code>, <code>B → b</code>. S → aSb → S → ASB. S → ab
+                            → S → AB.</div>
+                    </div>
+                    <div class="step-block">
+                        <div class="step-num">P2</div>
+                        <div class="step-body">S → ASB (3 symbols): Create <code>C → SB</code>. S → AC.</div>
+                    </div>
+                    <p><strong>Final CNF:</strong></p>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">AC</span> | <span
+                            class="nt">AB</span><br>
+                        <span class="nt">C</span> <span class="arrow">→</span> <span class="nt">SB</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">a</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">b</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     4.5 GNF
+═══════════════════════════════ -->
+            <div class="section" id="s5">
+                <div class="section-title"><span class="num">4.5</span> Greibach Normal Form (GNF)</div>
+
+                <div class="subsection" id="s5a">
+                    <div class="subsection-title">4.5.1 Definition &amp; Algorithm</div>
+
+                    <div class="def-box">
+                        <div class="def-label">Greibach Normal Form — Definition</div>
+                        <p>A CFG is in <strong>GNF</strong> if every production is of the form: <code>A → a α</code>
+                            where A is a non-terminal, <strong>a is a single terminal</strong>, and α is a (possibly
+                            empty) string of non-terminals.</p>
+                    </div>
+
+                    <div class="grid2">
+                        <div class="summary-card">
+                            <div class="sc-title">Valid GNF Productions</div>
+                            <ul>
+                                <li><code>A → aBC</code> — terminal then 2 NTs</li>
+                                <li><code>A → a</code> — just a terminal</li>
+                                <li><code>A → aB</code> — terminal then 1 NT</li>
+                                <li><code>A → abcBC</code> — ✗ WRONG — only ONE terminal at start</li>
+                            </ul>
+                        </div>
+                        <div class="summary-card">
+                            <div class="sc-title">Why GNF?</div>
+                            <ul>
+                                <li>Every production STARTS with a terminal.</li>
+                                <li>Makes grammar analysis easier.</li>
+                                <li>Used in PDA construction (each production pops one stack symbol).</li>
+                                <li>Every CFL (without ε) has an equivalent GNF grammar.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="key-box">
+                        <div class="key-label">GNF Conversion Algorithm</div>
+                        <ul>
+                            <li><strong>Step 1:</strong> Simplify grammar. Convert to CNF first (or at least simplify).
+                            </li>
+                            <li><strong>Step 2:</strong> Rename non-terminals as A₁, A₂, A₃, ... (A₁ = S).</li>
+                            <li><strong>Step 3:</strong> Make all productions satisfy: Aᵢ → Aⱼα where j &gt; i, OR Aᵢ →
+                                aα. Use substitution to achieve this — if Aᵢ → Aⱼα and j ≤ i, substitute the productions
+                                of Aⱼ.</li>
+                            <li><strong>Step 4:</strong> Eliminate <strong>direct left recursion</strong>. If Aᵢ → Aᵢα
+                                (bad!), use the standard algorithm:<br>
+                                Convert: A → Aα₁ | Aα₂ | β₁ | β₂ to:<br>
+                                A → β₁ | β₂ | β₁A' | β₂A' and A' → α₁ | α₂ | α₁A' | α₂A'</li>
+                            <li><strong>Step 5:</strong> Substitute backwards so all productions start with a terminal.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s5b">
+                    <div class="subsection-title">4.5.2 GNF Conversion — Solved Example</div>
+
+                    <div class="prob-box">
+                        <div class="prob-label">GNF Problem 1 — Convert to GNF</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">AB</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="nt">BS</span> | <span
+                            class="t">a</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="nt">SA</span> | <span
+                            class="t">b</span>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">1</div>
+                        <div class="step-body"><strong>Rename:</strong> A₁ = S, A₂ = A, A₃ = B.
+                            <div class="grammar" style="margin-top:6px;">
+                                <span class="nt">A₁</span> <span class="arrow">→</span> <span class="nt">A₂A₃</span><br>
+                                <span class="nt">A₂</span> <span class="arrow">→</span> <span class="nt">A₃A₁</span> |
+                                <span class="t">a</span><br>
+                                <span class="nt">A₃</span> <span class="arrow">→</span> <span class="nt">A₁A₂</span> |
+                                <span class="t">b</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">2</div>
+                        <div class="step-body"><strong>Check ordering:</strong><br>
+                            A₁ → A₂A₃: j=2 &gt; i=1 ✓<br>
+                            A₂ → A₃A₁: j=3 &gt; i=2 ✓<br>
+                            A₂ → a: terminal ✓<br>
+                            A₃ → A₁A₂: j=1 &lt; i=3 ✗ PROBLEM<br>
+                            A₃ → b: terminal ✓</div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">3</div>
+                        <div class="step-body"><strong>Fix A₃ → A₁A₂:</strong> Substitute A₁ (A₁ → A₂A₃):
+                            <code>A₃ → A₂A₃A₂ | bA₂ ... wait, also A₃ → b is fine.</code><br>
+                            Now substitute A₂ in A₃ → A₂A₃A₂ (A₂ → A₃A₁ | a):<br>
+                            A₃ → A₃A₁A₃A₂ | aA₃A₂<br>
+                            Plus original A₃ → b.<br>
+                            A₃ now has LEFT RECURSION (A₃ → A₃A₁A₃A₂).
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">4</div>
+                        <div class="step-body"><strong>Eliminate left recursion from A₃:</strong><br>
+                            A₃ → A₃(A₁A₃A₂) | aA₃A₂ | b<br>
+                            α = A₁A₃A₂, β₁ = aA₃A₂, β₂ = b<br>
+                            Create new non-terminal Z:<br>
+                            A₃ → aA₃A₂ | b | aA₃A₂Z | bZ<br>
+                            Z → A₁A₃A₂ | A₁A₃A₂Z</div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">5</div>
+                        <div class="step-body"><strong>Substitute to make Z start with terminal:</strong><br>
+                            Z → A₁A₃A₂ — A₁ = A₂A₃ — A₂ → A₃A₁ | a.<br>
+                            Eventually all productions of Z start with 'a' or 'b' (terminal).</div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">6</div>
+                        <div class="step-body"><strong>Back-substitute A₁ and A₂:</strong><br>
+                            A₁ → A₂A₃ — A₂ → A₃A₁ | a → substitute → A₁ → A₃A₁A₃ | aA₃.<br>
+                            Then A₃ → aA₃A₂ | b | ... → substitute → A₁ → aA₃A₂A₁A₃ | bA₁A₃ | aA₃.</div>
+                    </div>
+
+                    <p><strong>Final GNF grammar</strong> (all productions start with terminal):</p>
+                    <div class="grammar">
+                        <span class="nt">A₁</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A₃A₂A₁A₃</span> | <span class="t">b</span><span class="nt">A₁A₃</span> | <span
+                            class="t">a</span><span class="nt">A₃</span><br>
+                        <span class="nt">A₂</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A₃A₂A₁</span> | <span class="t">b</span><span class="nt">A₁</span> | <span
+                            class="t">a</span><br>
+                        <span class="nt">A₃</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A₃A₂</span> | <span class="t">b</span> | <span class="t">a</span><span
+                            class="nt">A₃A₂Z</span> | <span class="t">b</span><span class="nt">Z</span><br>
+                        <span class="nt">Z</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">A₃A₂A₁A₃A₂</span> | <span class="t">b</span><span class="nt">A₁A₃A₂</span> | ...
+                        <span style="color:var(--text2);">(all start with terminal)</span>
+                    </div>
+
+                    <div class="prob-box" style="margin-top:20px;">
+                        <div class="prob-label">GNF Problem 2 — Simpler direct substitution</div>
+                    </div>
+                    <div class="grammar">
+                        <span class="nt">S</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">A</span> | <span class="t">a</span><span class="nt">B</span><br>
+                        <span class="nt">A</span> <span class="arrow">→</span> <span class="t">b</span><span
+                            class="nt">AA</span> | <span class="t">a</span><span class="nt">S</span> | <span
+                            class="t">a</span><br>
+                        <span class="nt">B</span> <span class="arrow">→</span> <span class="t">a</span><span
+                            class="nt">BB</span> | <span class="t">b</span><span class="nt">S</span> | <span
+                            class="t">b</span>
+                    </div>
+                    <p>This grammar is <strong>already in GNF</strong>! Every production starts with a terminal (a or
+                        b):</p>
+                    <div class="example-box">
+                        <div class="ex-label">Verification</div>
+                        <p>S → bA: starts with 'b' ✓ | S → aB: starts with 'a' ✓</p>
+                        <p>A → bAA: starts with 'b' ✓ | A → aS: starts with 'a' ✓ | A → a: terminal only ✓</p>
+                        <p>B → aBB: starts with 'a' ✓ | B → bS: starts with 'b' ✓ | B → b: terminal only ✓</p>
+                        <p><strong>All productions are in GNF form A → a α.</strong> This grammar is ready.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     4.6 CLOSURE PROPERTIES
+═══════════════════════════════ -->
+            <div class="section" id="s6">
+                <div class="section-title"><span class="num">4.6</span> Closure Properties of Context Free Languages
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operation</th>
+                                <th>Regular Languages</th>
+                                <th>Context Free Languages</th>
+                                <th>Proof Method</th>
+                            </tr>
+                        </thead>
+                        <tbody class="td-normal">
+                            <tr>
+                                <td><strong>Union — L₁ ∪ L₂</strong></td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td>Add new start: S → S₁ | S₂</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Concatenation — L₁ · L₂</strong></td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td>Add new start: S → S₁S₂</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kleene Star — L*</strong></td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td>S₁ → SS₁ | ε</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Complement — L̄</strong></td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td><span class="badge badge-no">✗ NO</span></td>
+                                <td>No general construction works for PDA</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Intersection — L₁ ∩ L₂</strong></td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td><span class="badge badge-no">✗ NO</span></td>
+                                <td>Counterexample exists (see below)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Difference — L₁ − L₂</strong></td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td><span class="badge badge-no">✗ NO</span></td>
+                                <td>L₁ − L₂ = L₁ ∩ L̄₂; since ∩ fails, difference fails</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CFL ∩ Regular Language</strong></td>
+                                <td>—</td>
+                                <td><span class="badge badge-yes">✓ YES</span></td>
+                                <td>Special case: intersection of CFL with RL is always CFL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">4.6.1 Proof — Union (CFGs)</div>
+                    <div class="key-box">
+                        <div class="key-label">Proof by Grammar Construction</div>
+                        <ul>
+                            <li>L₁ = L(G₁) with start S₁. L₂ = L(G₂) with start S₂.</li>
+                            <li>Create new grammar G with: New start S → S₁ | S₂, plus all productions of G₁ and G₂.
+                            </li>
+                            <li>L(G) = L₁ ∪ L₂ — S chooses to derive either S₁'s language or S₂'s language.</li>
+                        </ul>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Example — L₁ = palindromes, L₂ = {aⁿbⁿ}</div>
+                        <div class="grammar">
+                            <span class="nt">S</span> <span class="arrow">→</span> <span class="nt">S₁</span> | <span
+                                class="nt">S₂</span><br>
+                            <span class="nt">S₁</span> <span class="arrow">→</span> <span class="t">a</span><span
+                                class="nt">S₁</span><span class="t">a</span> | <span class="t">b</span><span
+                                class="nt">S₁</span><span class="t">b</span> | <span class="t">a</span> | <span
+                                class="t">b</span> | <span class="t">ε</span><br>
+                            <span class="nt">S₂</span> <span class="arrow">→</span> <span class="t">a</span><span
+                                class="nt">S₂</span><span class="t">b</span> | <span class="t">ε</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">4.6.2 Proof — Concatenation (CFGs)</div>
+                    <div class="key-box">
+                        <div class="key-label">Proof by Grammar Construction</div>
+                        <ul>
+                            <li>New start: S → S₁S₂ (S derives something from L₁ followed by something from L₂).</li>
+                            <li>Plus all productions of G₁ and G₂.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">4.6.3 Proof — Kleene Star (CFGs)</div>
+                    <div class="key-box">
+                        <div class="key-label">Proof by Grammar Construction</div>
+                        <ul>
+                            <li>New start S₁: S₁ → SS₁ | ε (zero or more repetitions of L).</li>
+                            <li>S is the original start. L* = zero or more strings from L.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">4.6.4 NOT Closed — Intersection Counterexample</div>
+                    <div class="note-box">
+                        <div class="note-label">Counterexample — CFLs NOT Closed Under Intersection</div>
+                        <p><strong>L₁ = {aⁿbⁿcᵐ | n, m ≥ 1}</strong> — CFL (grammar: S → AB, A → aAb | ab, B → cB | c)
+                        </p>
+                        <p><strong>L₂ = {aᵐbⁿcⁿ | n, m ≥ 1}</strong> — CFL (grammar: S → AB, A → aA | a, B → bBc | bc)
+                        </p>
+                        <p><strong>L₁ ∩ L₂ = {aⁿbⁿcⁿ | n ≥ 1}</strong> — NOT a CFL! (requires counting all three equally
+                            — needs Type 1)</p>
+                        <p>Therefore, CFLs are NOT closed under intersection. □</p>
+                    </div>
+
+                    <div class="note-box" style="margin-top:12px;">
+                        <div class="note-label">Corollary — NOT Closed Under Complement</div>
+                        <p>If CFLs were closed under complement, then L₁ ∩ L₂ = (L̄₁ ∪ L̄₂) — would be CFL (by De Morgan
+                            + union). But we just showed L₁ ∩ L₂ is not a CFL. Contradiction. So CFLs are NOT closed
+                            under complement either.</p>
+                    </div>
+
+                    <div class="key-box">
+                        <div class="key-label">Special Case — CFL ∩ Regular = CFL (Always Closed!)</div>
+                        <ul>
+                            <li>The intersection of a CFL with a <strong>Regular Language</strong> is always a CFL.</li>
+                            <li>Proof: Use product construction of PDA and DFA. The resulting PDA accepts the
+                                intersection.</li>
+                            <li>Example: {aⁿbⁿ | n ≥ 1} ∩ (a+b)* (regular) = {aⁿbⁿ | n ≥ 1} (still CFL) ✓</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     4.7 PRACTICE QUESTIONS
+═══════════════════════════════ -->
+            <div class="section" id="s7">
+                <div class="section-title"><span class="num">4.7</span> Practice Questions</div>
+
+                <div class="practice-section">
+                    <div class="practice-title">CFG Construction</div>
+
+                    <div class="q-item">
+                        <div class="q-num">1</div>
+                        <div>
+                            <p>Construct a CFG for L = {w ∈ {a,b}* | #a = #b}. Give a derivation for "aabb".</p>
+                            <div class="q-ans">
+                                <span class="grammar-inline">S → aSbS | bSaS | ε</span> &nbsp; OR &nbsp; <span
+                                    class="grammar-inline">S → aSb | bSa | SS | ε</span><br>
+                                <strong>Derivation "aabb":</strong> S ⇒ aSb ⇒ aaSbb ⇒ aaεbb = aabb ✓<br>
+                                (Using S → aSb | ε)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">2</div>
+                        <div>
+                            <p>Write a CFG for L = {aⁿbᵐ | m &gt; n ≥ 0} — more b's than a's.</p>
+                            <div class="q-ans">
+                                <strong>Analysis:</strong> m = n + k where k ≥ 1. So strings are aⁿbⁿbᵏ (k ≥ 1).<br>
+                                <span class="grammar-inline">S → AB, A → aAb | ε, B → bB | b</span><br>
+                                A generates equal a's and b's (including ε). B generates one or more extra b's.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">3</div>
+                        <div>
+                            <p>Is L = {aⁿbⁿcⁿ | n ≥ 1} a CFL? Justify using the Pumping Lemma for CFLs.</p>
+                            <div class="q-ans">
+                                <strong>NOT a CFL.</strong> By Pumping Lemma for CFLs: w = aⁿbⁿcⁿ, |w| ≥ p. Split w =
+                                uvxyz with |vy| ≥ 1, |vxy| ≤ p.<br>
+                                vxy can span at most TWO symbol types (since |vxy| ≤ p). Pumping (i=2) increases only 1
+                                or 2 symbol counts, not all three equally. So uv²xy²z ∉ L. Contradiction. L is NOT a
+                                CFL. □
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">4</div>
+                        <div>
+                            <p>Show that grammar G: S → aS | Sa | a is ambiguous. Give two parse trees for "aaa".</p>
+                            <div class="q-ans">
+                                <strong>Tree 1 (left-first):</strong> S ⇒ aS ⇒ a(Sa) ⇒ a(aa) = aaa.<br>
+                                <strong>Tree 2 (right-first):</strong> S ⇒ Sa ⇒ (aS)a ⇒ (aa)a = aaa.<br>
+                                Two distinct leftmost derivations → grammar is AMBIGUOUS.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">Simplification Problems</div>
+
+                    <div class="q-item">
+                        <div class="q-num">5</div>
+                        <div>
+                            <p>Remove useless symbols from: S → AB | CA, A → a, B → BC | AB, C → aB | b</p>
+                            <div class="q-ans">
+                                <strong>Step 1a (non-terminating):</strong> A → a ✓. C → aB | b ✓ (b terminal). B → BC |
+                                AB — B contains B (recursive). Check: B → AB → aB → aBC → ... never terminates! B is
+                                NON-TERMINATING.<br>
+                                Remove all productions containing B: remove S → AB, remove B → BC | AB, remove C →
+                                aB.<br>
+                                <strong>After Step 1a:</strong> S → CA, A → a, C → b.<br>
+                                <strong>Step 1b (reachability):</strong> From S: reach C, A. All remaining symbols
+                                reachable.<br>
+                                <strong>Final:</strong> S → CA, A → a, C → b.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">6</div>
+                        <div>
+                            <p>Eliminate ε-productions from: S → aSb | A, A → aA | ε</p>
+                            <div class="q-ans">
+                                <strong>Nullable:</strong> A (directly). Does S become nullable? S → A → ε: YES, S is
+                                nullable.<br>
+                                <strong>New productions:</strong> From S → aSb: S not in RHS... wait, a and b are
+                                terminals, only S appears. S is nullable but removing S from aSb → aSb still has 'a' and
+                                'b'. No change to S → aSb.<br>
+                                From S → A: A nullable → S → ε (S is nullable, add S → ε since ε ∈ L).<br>
+                                From A → aA: Remove A → A → a.<br>
+                                Remove A → ε. Keep S → ε since ε ∈ L.<br>
+                                <strong>Final:</strong> S → aSb | A | ε, A → aA | a.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">7</div>
+                        <div>
+                            <p>Remove unit productions from: S → A | 0B1, A → B | 1, B → S | 0</p>
+                            <div class="q-ans">
+                                <strong>Unit pairs:</strong> S→A, A→B, B→S. Transitive: S⇒*A,B,S; A⇒*B,S,A;
+                                B⇒*S,A,B.<br>
+                                <strong>Non-unit:</strong> S→0B1, A→1, B→0.<br>
+                                S gets from {S,A,B}: S→0B1, S→1, S→0.<br>
+                                A gets from {S,A,B}: A→0B1, A→1, A→0.<br>
+                                B gets from {S,A,B}: B→0B1, B→1, B→0.<br>
+                                <strong>Final (after removing unreachables A,B):</strong> S → 0B1 | 1 | 0, B → 0B1 | 1 |
+                                0.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">CNF &amp; GNF Problems</div>
+
+                    <div class="q-item">
+                        <div class="q-num">8</div>
+                        <div>
+                            <p>Convert S → aS | a | Sb to CNF.</p>
+                            <div class="q-ans">
+                                <strong>Simplify:</strong> No ε, no unit, no useless.<br>
+                                <strong>Phase 1:</strong> Create A → a, B → b. S → AS | a | SB.<br>
+                                <strong>Phase 2:</strong> All productions already have ≤ 2 symbols on RHS.<br>
+                                <strong>Final CNF:</strong> S → AS | a | SB, A → a, B → b. ✓
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">9</div>
+                        <div>
+                            <p>Convert S → ASA | aB, A → B | S, B → b | ε to CNF. (First simplify!)</p>
+                            <div class="q-ans">
+                                <strong>Step 1 (ε):</strong> B→ε: B nullable. A→B: A nullable? A→B→ε: YES. S? ASA→ε·S·ε:
+                                still has S, not nullable.<br>
+                                New: S→ASA|SA|AS|S (unit)|aB|a. A→B|S|ε... wait A→ε: A nullable confirmed. B→b.<br>
+                                After removing A→ε, B→ε: S→ASA|SA|AS|S|aB|a; A→B|S; B→b.<br>
+                                <strong>Step 2 (units):</strong> S→S trivial (remove), S⇒*A⇒*B. A⇒*B,S. Get non-units
+                                into S: S→ASA|SA|AS|aB|a|b. A→b|{S's non-units}→A→ASA|SA|AS|aB|a|b. Remove unit
+                                productions.<br>
+                                <strong>Step 3 (CNF Phase 1):</strong> Create C→a, D→b. S→ASA: replace to S→ASA→ use new
+                                NT.<br>
+                                <strong>Phase 2:</strong> S→ASA (3 syms): S→AE, E→SA. <strong>Final CNF:</strong>
+                                S→AE|SA|AS|CB|a|b, A→AE|SA|AS|CB|a|b, E→SA, C→a, D→b(=B), B→b.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">10</div>
+                        <div>
+                            <p>Is the grammar S → bA | aB, A → bAA | aS | a, B → aBB | bS | b already in GNF? If yes,
+                                verify.</p>
+                            <div class="q-ans">
+                                <strong>YES, it is in GNF.</strong><br>
+                                S→bA: starts with 'b', followed by NT A ✓. S→aB: starts with 'a', followed by NT B
+                                ✓.<br>
+                                A→bAA: starts with 'b', followed by NTs AA ✓. A→aS: starts with 'a', followed by NT S ✓.
+                                A→a: single terminal ✓.<br>
+                                B→aBB: starts with 'a', followed by NTs BB ✓. B→bS: starts with 'b', followed by NT S ✓.
+                                B→b: single terminal ✓.<br>
+                                <strong>All productions: A → a α format. Grammar is in GNF.</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">Closure Properties</div>
+
+                    <div class="q-item">
+                        <div class="q-num">11</div>
+                        <div>
+                            <p>Prove that CFLs are closed under reversal (Lᴿ = {wᴿ | w ∈ L}).</p>
+                            <div class="q-ans">
+                                <strong>Proof by grammar construction:</strong> Given CFG G with productions P,
+                                construct G' by reversing each production's RHS: if A → X₁X₂...Xₙ ∈ P, add A → Xₙ...X₂X₁
+                                to G'. The start symbol and terminals/non-terminals remain the same. L(G') = L(G)ᴿ.
+                                Since G' is a valid CFG, L(G)ᴿ is a CFL. □
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">12</div>
+                        <div>
+                            <p>True or False: The intersection of two CFLs is always a CFL.</p>
+                            <div class="q-ans">
+                                <strong>FALSE.</strong> Counterexample: L₁ = {aⁿbⁿcᵐ | n,m ≥ 1} (CFL) and L₂ = {aᵐbⁿcⁿ |
+                                n,m ≥ 1} (CFL). Their intersection = {aⁿbⁿcⁿ | n ≥ 1} which is NOT a CFL (proven by
+                                Pumping Lemma). However, the intersection of a CFL with a REGULAR language is always a
+                                CFL (special case).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ═══════════════════════════════
+     4.8 QUICK REVISION
+═══════════════════════════════ -->
+            <div class="section" id="s8">
+                <div class="section-title"><span class="num">4.8</span> Quick Revision — Chapter 4</div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concept</th>
+                                <th>Key Fact</th>
+                            </tr>
+                        </thead>
+                        <tbody class="td-normal">
+                            <tr>
+                                <td><strong>CFG = Type 2</strong></td>
+                                <td>4-tuple (V, T, P, S). LHS = single non-terminal. Generates CFLs. Accepted by PDA.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Context Free</strong></td>
+                                <td>A → α regardless of surrounding symbols — no context needed for replacement.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Palindromes</strong></td>
+                                <td>S → aSa | bSb | a | b | ε</td>
+                            </tr>
+                            <tr>
+                                <td><strong>aⁿbⁿ (n≥1)</strong></td>
+                                <td>S → aSb | ab</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ambiguous Grammar</strong></td>
+                                <td>At least ONE string has TWO or more parse trees. Arithmetic: E→E+E|E*E|id is
+                                    classic.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Unambiguous fix</strong></td>
+                                <td>E→E+T|T, T→T*F|F, F→id enforces precedence + associativity.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Simplification order</strong></td>
+                                <td>1) Useless symbols (non-terminating then unreachable) 2) ε-productions 3) Unit
+                                    productions.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nullable symbol</strong></td>
+                                <td>X is nullable if X ⇒* ε. For ε-removal: generate all combos with nullable symbols
+                                    removed.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Unit production</strong></td>
+                                <td>A → B (both non-terminals). Remove by transitive closure: add non-unit productions
+                                    of B to A.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CNF forms</strong></td>
+                                <td>A → BC (exactly 2 NTs) OR A → a (exactly 1 terminal). No mixing, no length &gt; 2.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>CNF Algorithm</strong></td>
+                                <td>Phase 1: replace terminals in long RHS. Phase 2: break RHS &gt; 2 symbols with new
+                                    NTs.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GNF form</strong></td>
+                                <td>A → a α (single terminal first, then 0+ non-terminals). Every production starts with
+                                    terminal.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GNF Algorithm</strong></td>
+                                <td>Rename NTs, ensure Aᵢ→Aⱼα with j&gt;i, eliminate left recursion, back-substitute.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>CFL closed under</strong></td>
+                                <td>Union ✓, Concatenation ✓, Kleene Star ✓, Reversal ✓, CFL∩Regular ✓</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CFL NOT closed under</strong></td>
+                                <td>Complement ✗, Intersection of two CFLs ✗, Difference ✗</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NOT a CFL</strong></td>
+                                <td>aⁿbⁿcⁿ — equal counting of 3 symbols requires Type 1 (CSG). Classic non-CFL example.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>aⁿbⁿcⁿ counterexample</strong></td>
+                                <td>Proves CFLs not closed under intersection: {aⁿbⁿcᵐ} ∩ {aᵐbⁿcⁿ} = {aⁿbⁿcⁿ} (not CFL).
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Inherently ambiguous</strong></td>
+                                <td>Some languages are inherently ambiguous — no unambiguous grammar exists for them.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="key-box" style="margin-top:22px;">
+                    <div class="key-label">🎯 Exam Must-Remember</div>
+                    <ul>
+                        <li>CFG LHS = SINGLE non-terminal. If LHS has context (α₁Aα₂), it's CSG (Type 1).</li>
+                        <li>Simplification order is CRITICAL: useless → ε → unit. Wrong order gives wrong results.</li>
+                        <li>For ε-removal: when all symbols in a RHS are nullable, generate 2ⁿ-1 new productions (all
+                            subsets except the ε case itself).</li>
+                        <li>For unit removal: transitive closure matters — S→A→B means S⇒*B, so S gets B's productions
+                            too.</li>
+                        <li>CNF: EVERY production must be A→BC or A→a. Check each one. No terminals in A→BC, no NTs in
+                            A→a.</li>
+                        <li>GNF: EVERY production must start with EXACTLY ONE terminal, followed by zero or more NTs.
+                        </li>
+                        <li>CFLs are NOT closed under intersection or complement. Regular sets ARE closed under both.
+                        </li>
+                        <li>CFL ∩ Regular = CFL (ALWAYS). This special case IS closed.</li>
+                        <li>Ambiguity check: find a string with two different leftmost derivations or two different
+                            parse trees.</li>
+                    </ul>
+                </div>
+
+                <div
+                    style="margin-top:28px;padding:18px 22px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;text-align:center;">
+                    <div style="font-size:12px;color:var(--text2);margin-bottom:5px;">END OF CHAPTER 4</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--orange);">Theory of Computation — NMIMS
+                        MPSTME · B.Tech CSE</div>
+                    <div style="font-size:12px;color:var(--text2);margin-top:5px;">Next: Chapter 5 — Pushdown Automata
+                        (PDA, CFL Design, Power over FSM, Closure)</div>
+                </div>
+            </div>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+
+    <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const sections = document.querySelectorAll('[id^="s"]');
+        const navItems = document.querySelectorAll('.nav-item');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+            navItems.forEach(n => { n.classList.remove('active'); if (n.getAttribute('href') === '#' + current) n.classList.add('active'); });
+        });
+    </script>
+
+  <footer style="text-align:center;padding:28px 40px;border-top:1px solid #30363d;font-size:13px;color:#8b949e;background:#0d1117;margin-top:40px;">
+    <p>TCS Notes &middot; <span style="color:#ffa657;font-weight:600;">NMIMS MPSTME</span> &middot; B.Tech CSE Sem 4 &middot; Theory of Computation</p>
+    <p style="margin-top:6px;">Made by <span style="color:#ffa657;font-weight:600;">Jay Naik</span></p>
+  </footer>
+</body>
+
+</html>

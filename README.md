@@ -20,7 +20,7 @@
 | Chapter 01 | Introduction to Automata Theory | 3 hrs | ✅ Ready |
 | Chapter 02 | Finite State Machine & Regular Set | 8 hrs | ✅ Ready |
 | Chapter 03 | Moore and Mealy Machine | 3 hrs | ✅ Ready |
-| Chapter 04 | Context Free Grammar | 5 hrs | 🔒 Coming Soon |
+| Chapter 04 | Context Free Grammar | 5 hrs | ✅ Ready |
 | Chapter 05 | Push Down Automata | 5 hrs | 🔒 Coming Soon |
 | Chapter 06 | Turing Machine | 6 hrs | 🔒 Coming Soon |
 
