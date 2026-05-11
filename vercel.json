@@ -1,0 +1,20 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/ch1", "destination": "/ch1.html" },
+    { "source": "/ch2", "destination": "/ch2.html" },
+    { "source": "/ch3", "destination": "/ch3.html" },
+    { "source": "/ch4", "destination": "/ch4.html" },
+    { "source": "/ch5", "destination": "/ch5.html" },
+    { "source": "/ch6", "destination": "/ch6.html" }
+  ]
+}

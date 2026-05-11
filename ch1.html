@@ -1,0 +1,2465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCS Notes — Chapter 1: Introduction to Automata Theory</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg2: #161b22;
+            --bg3: #1c2128;
+            --bg4: #21262d;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent2: #3fb950;
+            --accent3: #ff7b72;
+            --accent4: #ffa657;
+            --accent5: #d2a8ff;
+            --text: #e6edf3;
+            --text2: #8b949e;
+            --text3: #c9d1d9;
+            --red: #f85149;
+            --yellow: #e3b341;
+            --green: #3fb950;
+            --purple: #d2a8ff;
+            --teal: #39d353;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            z-index: 100;
+            padding: 0 0 40px;
+        }
+
+        .sidebar-brand {
+            padding: 20px 18px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-brand .course {
+            font-size: 10px;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-brand .title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.3;
+        }
+
+        .sidebar-brand .ch {
+            font-size: 11px;
+            color: var(--accent4);
+            margin-top: 3px;
+        }
+
+        .nav-section {
+            padding: 14px 10px 4px 18px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 7px 18px 7px 22px;
+            font-size: 12.5px;
+            color: var(--text3);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all 0.15s;
+        }
+
+        .nav-item:hover {
+            color: var(--accent);
+            background: rgba(88, 166, 255, 0.06);
+            border-left-color: var(--accent);
+        }
+
+        .nav-item.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+            background: rgba(88, 166, 255, 0.1);
+        }
+
+        .nav-sub {
+            padding-left: 34px;
+            font-size: 12px;
+        }
+
+        /* ── MAIN ── */
+        .main {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        /* ── CHAPTER HEADER ── */
+        .chapter-header {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f29 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 60px 60px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(88, 166, 255, 0.08) 0%, transparent 70%);
+        }
+
+        .chapter-header::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: 40%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(63, 185, 80, 0.06) 0%, transparent 70%);
+        }
+
+        .ch-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(88, 166, 255, 0.15);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .chapter-header h1 {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .chapter-header h1 span {
+            color: var(--accent);
+        }
+
+        .chapter-header p {
+            font-size: 15px;
+            color: var(--text2);
+            max-width: 620px;
+            position: relative;
+        }
+
+        .ch-meta {
+            display: flex;
+            gap: 24px;
+            margin-top: 24px;
+            position: relative;
+        }
+
+        .ch-meta-item {
+            padding: 10px 18px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .ch-meta-item .label {
+            color: var(--text2);
+            margin-bottom: 2px;
+        }
+
+        .ch-meta-item .value {
+            color: var(--accent4);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* ── CONTENT ── */
+        .content {
+            padding: 50px 60px;
+            max-width: 960px;
+        }
+
+        /* ── SECTION ── */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .num {
+            background: var(--accent);
+            color: #0d1117;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .subsection {
+            margin: 30px 0;
+        }
+
+        .subsection-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent4);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 16px;
+            background: var(--accent4);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: var(--text3);
+        }
+
+        /* ── DEF BOX ── */
+        .def-box {
+            background: rgba(88, 166, 255, 0.06);
+            border: 1px solid rgba(88, 166, 255, 0.25);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+
+        .def-box .def-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .def-box p {
+            color: var(--text3);
+            margin: 0;
+            font-size: 14.5px;
+        }
+
+        /* ── FORMULA BOX ── */
+        .formula {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            color: var(--accent5);
+            margin: 14px 0;
+            letter-spacing: 0.3px;
+        }
+
+        /* ── KEY POINT ── */
+        .key-box {
+            background: rgba(255, 166, 87, 0.07);
+            border: 1px solid rgba(255, 166, 87, 0.25);
+            border-left: 3px solid var(--accent4);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+
+        .key-box .key-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent4);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .key-box ul {
+            padding-left: 18px;
+        }
+
+        .key-box li {
+            color: var(--text3);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        /* ── EXAMPLE BOX ── */
+        .example-box {
+            background: rgba(63, 185, 80, 0.05);
+            border: 1px solid rgba(63, 185, 80, 0.2);
+            border-left: 3px solid var(--accent2);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+
+        .example-box .ex-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent2);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .example-box p {
+            color: var(--text3);
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .example-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ── WARN / NOTE BOX ── */
+        .note-box {
+            background: rgba(248, 81, 73, 0.06);
+            border: 1px solid rgba(248, 81, 73, 0.2);
+            border-left: 3px solid var(--red);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+
+        .note-box .note-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--red);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .note-box p {
+            color: var(--text3);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* ── TABLE ── */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 16px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+        }
+
+        thead tr {
+            background: var(--bg3);
+        }
+
+        thead th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.1s;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(88, 166, 255, 0.04);
+        }
+
+        tbody td {
+            padding: 11px 16px;
+            color: var(--text3);
+            vertical-align: top;
+        }
+
+        tbody td:first-child {
+            color: var(--accent5);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .td-normal td:first-child {
+            color: var(--text3);
+            font-family: inherit;
+            font-weight: 400;
+        }
+
+        /* ── CODE / MONO ── */
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--accent5);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        /* ── GRAMMAR RULE ── */
+        .grammar-rule {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 12px 0;
+            line-height: 2;
+        }
+
+        .grammar-rule .rule-line {
+            color: var(--accent5);
+        }
+
+        .grammar-rule .terminal {
+            color: var(--accent2);
+        }
+
+        .grammar-rule .nonterminal {
+            color: var(--accent4);
+        }
+
+        .grammar-rule .arrow {
+            color: var(--text2);
+        }
+
+        /* ── DERIVATION TREE ── */
+        .tree-box {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 14px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13.5px;
+            color: var(--accent5);
+            line-height: 1.9;
+        }
+
+        /* ── HIERARCHY DIAGRAM ── */
+        .hierarchy-diagram {
+            margin: 20px 0;
+            padding: 24px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        /* ── BADGE ── */
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .badge-blue {
+            background: rgba(88, 166, 255, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+        }
+
+        .badge-green {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--accent2);
+            border: 1px solid rgba(63, 185, 80, 0.3);
+        }
+
+        .badge-red {
+            background: rgba(248, 81, 73, 0.15);
+            color: var(--red);
+            border: 1px solid rgba(248, 81, 73, 0.3);
+        }
+
+        .badge-purple {
+            background: rgba(210, 168, 255, 0.15);
+            color: var(--purple);
+            border: 1px solid rgba(210, 168, 255, 0.3);
+        }
+
+        .badge-orange {
+            background: rgba(255, 166, 87, 0.15);
+            color: var(--accent4);
+            border: 1px solid rgba(255, 166, 87, 0.3);
+        }
+
+        /* ── PRACTICE SECTION ── */
+        .practice-section {
+            background: rgba(210, 168, 255, 0.05);
+            border: 1px solid rgba(210, 168, 255, 0.2);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 30px 0;
+        }
+
+        .practice-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .practice-title::before {
+            content: '✦';
+            font-size: 12px;
+        }
+
+        .q-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(210, 168, 255, 0.1);
+            font-size: 14px;
+            color: var(--text3);
+        }
+
+        .q-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .q-num {
+            min-width: 26px;
+            height: 26px;
+            background: rgba(210, 168, 255, 0.15);
+            border: 1px solid rgba(210, 168, 255, 0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--purple);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .q-ans {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-top: 8px;
+            font-size: 13.5px;
+            color: var(--text2);
+            font-style: italic;
+        }
+
+        .q-ans strong {
+            color: var(--accent2);
+            font-style: normal;
+        }
+
+        /* ── CHOMSKY CARDS ── */
+        .chomsky-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .chomsky-card {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 20px;
+            transition: border-color 0.2s;
+        }
+
+        .chomsky-card:hover {
+            border-color: var(--accent);
+        }
+
+        .cc-type {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text2);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .cc-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .cc-lang {
+            font-size: 12px;
+            color: var(--text2);
+            margin-bottom: 12px;
+        }
+
+        .cc-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            padding: 5px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cc-row:last-child {
+            border-bottom: none;
+        }
+
+        .cc-row .cc-k {
+            color: var(--text2);
+        }
+
+        .cc-row .cc-v {
+            color: var(--text3);
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            text-align: right;
+            max-width: 60%;
+        }
+
+        .t0 .cc-name {
+            color: var(--red);
+        }
+
+        .t1 .cc-name {
+            color: var(--accent4);
+        }
+
+        .t2 .cc-name {
+            color: var(--accent2);
+        }
+
+        .t3 .cc-name {
+            color: var(--accent);
+        }
+
+        /* ── COMPILER TABLE ── */
+        .compiler-table {
+            margin: 16px 0;
+        }
+
+        /* ── SCROLL TOP ── */
+        .scroll-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--accent);
+            color: #0d1117;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(88, 166, 255, 0.3);
+            transition: opacity 0.2s;
+        }
+
+        .scroll-top:hover {
+            opacity: 0.85;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 40px 0;
+        }
+
+        /* ── GRID 2 COL ── */
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 14px 0;
+        }
+
+        /* ── SUMMARY CARD ── */
+        .summary-card {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+
+        .summary-card .sc-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent4);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .summary-card p,
+        .summary-card li {
+            font-size: 13px;
+            color: var(--text2);
+        }
+
+        .summary-card ul {
+            padding-left: 16px;
+        }
+
+        .summary-card li {
+            margin-bottom: 3px;
+        }
+
+        /* ── RELATION CHAIN ── */
+        .relation-chain {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+            padding: 16px 20px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+        }
+
+        .rc-item {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .rc-arrow {
+            color: var(--text2);
+            font-size: 18px;
+        }
+
+        .rc-subset {
+            color: var(--text2);
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 30px 24px;
+            }
+
+            .chapter-header {
+                padding: 40px 24px;
+            }
+
+            .chomsky-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid2 {
+                grid-template-columns: 1fr;
+            }
+
+            .ch-meta {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ══ SIDEBAR ══════════════════════════════════ -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <div class="course">NMIMS MPSTME · B.Tech CSE · Sem 5</div>
+            <div class="title">Theory of Computation</div>
+            <div class="ch">Chapter 1 — Introduction to Automata</div>
+        </div>
+
+        <div class="nav-section">Contents</div>
+        <a class="nav-item active" href="#s1">1.1 What is TCS?</a>
+        <a class="nav-item" href="#s2">1.2 Symbols, Alphabets, Strings</a>
+        <a class="nav-item nav-sub" href="#s2a">→ Symbols</a>
+        <a class="nav-item nav-sub" href="#s2b">→ Alphabets</a>
+        <a class="nav-item nav-sub" href="#s2c">→ Strings & Length</a>
+        <a class="nav-item nav-sub" href="#s2d">→ Empty String ε</a>
+        <a class="nav-item nav-sub" href="#s2e">→ Prefix, Suffix, Substring</a>
+        <a class="nav-item nav-sub" href="#s2f">→ Powers of Σ</a>
+        <a class="nav-item nav-sub" href="#s2g">→ Kleene & Positive Closure</a>
+        <a class="nav-item" href="#s3">1.3 Formal Language</a>
+        <a class="nav-item nav-sub" href="#s3a">→ Operations on Languages</a>
+        <a class="nav-item" href="#s4">1.4 Set Theory Basics</a>
+        <a class="nav-item" href="#s5">1.5 Grammar (4-Tuple)</a>
+        <a class="nav-item" href="#s6">1.6 Chomsky Hierarchy</a>
+        <a class="nav-item nav-sub" href="#s6a">→ Type 0</a>
+        <a class="nav-item nav-sub" href="#s6b">→ Type 1 (CSG)</a>
+        <a class="nav-item nav-sub" href="#s6c">→ Type 2 (CFG)</a>
+        <a class="nav-item nav-sub" href="#s6d">→ Type 3 (Regular)</a>
+        <a class="nav-item" href="#s7">1.7 Derivation Tree</a>
+        <a class="nav-item" href="#s8">1.8 TCS in Compilers</a>
+        <a class="nav-item" href="#s9">1.9 Language–Grammar–Automata</a>
+        <a class="nav-item" href="#s10">1.10 Practice Questions</a>
+        <a class="nav-item" href="#s11">1.11 Quick Revision</a>
+    </nav>
+
+    <!-- ══ MAIN ════════════════════════════════════ -->
+    <div class="main">
+
+        <!-- CHAPTER HEADER -->
+        <div class="chapter-header">
+            <div class="ch-badge">Unit 1 · 3 Lectures</div>
+            <h1>Introduction to <span>Automata Theory</span></h1>
+            <p>Basic concepts of Strings, Formal Languages, Chomsky Hierarchy, Grammar and its Types, Derivation Trees,
+                and Application in Compiler Construction.</p>
+            <div class="ch-meta">
+                <div class="ch-meta-item">
+                    <div class="label">Subject</div>
+                    <div class="value">Theory of Computation (TCS)</div>
+                </div>
+                <div class="ch-meta-item">
+                    <div class="label">Duration</div>
+                    <div class="value">03 Lectures</div>
+                </div>
+                <div class="ch-meta-item">
+                    <div class="label">Textbook</div>
+                    <div class="value">Linz, 6e · Kulkarni, 1e</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.1 — WHAT IS TCS
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s1">
+                <div class="section-title">
+                    <span class="num">1.1</span> What is Theoretical Computer Science (TCS)?
+                </div>
+
+                <div class="def-box">
+                    <div class="def-label">Definition</div>
+                    <p><strong>Theoretical Computer Science (TCS)</strong> — also called <em>Theory of Computation</em>
+                        or <em>Automata Theory</em> — is defined as: <em>"Mathematically modeling a machine and doing
+                            the theoretical study of that machine."</em></p>
+                </div>
+
+                <p>TCS is a subset of Computer Science and Mathematics. It focuses on abstract aspects of computing
+                    rather than physical implementation.</p>
+
+                <div class="subsection">
+                    <div class="subsection-title">Three Major Branches of TCS</div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Branch</th>
+                                    <th>What It Studies</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>Automata Theory & Languages</strong></td>
+                                    <td>Abstract machines (automata) and the problems they solve. Types: Finite
+                                        Automaton (FA), Pushdown Automaton (PDA), Turing Machine (TM).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Computability Theory</strong></td>
+                                    <td>What CAN and CANNOT be computed by machines (Recursion Theory).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Computational Complexity Theory</strong></td>
+                                    <td>How EFFICIENTLY problems can be solved — in terms of time and space resources.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">Why Study TCS? (Real Applications)</div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Application</th>
+                                    <th>TCS Concept Used</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td>1</td>
+                                    <td><strong>Compiler Construction</strong></td>
+                                    <td>FA for tokens, CFG for syntax</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td><strong>Search Engines</strong></td>
+                                    <td>Finite automata for pattern matching and indexing</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td><strong>Communication Protocols</strong></td>
+                                    <td>FA models protocols and electronic circuits</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td><strong>Natural Language Processing (NLP)</strong></td>
+                                    <td>Automata models for language analysis</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td><strong>Undecidable Problems</strong></td>
+                                    <td>TCS proves that no program can ever solve certain problems</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td><strong>Intractable Problems</strong></td>
+                                    <td>Programs exist but are too slow (NP-Hard, NP-Complete)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Simple Example</div>
+                    <p>A light switch can be either <strong>ON</strong> or <strong>OFF</strong>. We can model this as a
+                        finite automaton with 2 states. Pressing the switch changes the state. This is the most basic
+                        example of a finite automaton modeling a real-world machine.</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.2 — SYMBOLS, ALPHABETS, STRINGS
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s2">
+                <div class="section-title">
+                    <span class="num">1.2</span> Basic Concepts: Symbols, Alphabets & Strings
+                </div>
+                <p>These are the <strong>foundational building blocks</strong> of formal language theory. Everything in
+                    TCS is built from these primitives.</p>
+
+                <!-- 1.2.1 SYMBOLS -->
+                <div class="subsection" id="s2a">
+                    <div class="subsection-title">1.2.1 Symbols</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p><strong>Symbols</strong> are the smallest building blocks — atomic units. They are individual
+                            characters that cannot be broken down further.</p>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Examples of Symbols</div>
+                        <p>English letters: <code>a</code>, <code>b</code>, <code>c</code>, ..., <code>z</code></p>
+                        <p>Digits: <code>0</code>, <code>1</code>, <code>2</code>, ..., <code>9</code></p>
+                        <p>Special characters: <code>$</code>, <code>#</code>, <code>@</code>, <code>&amp;</code></p>
+                        <p>Notation: If <code>a</code> is in set V → write <code>a ∈ V</code>. If not → write
+                            <code>b ∉ V</code>.</p>
+                    </div>
+                </div>
+
+                <!-- 1.2.2 ALPHABETS -->
+                <div class="subsection" id="s2b">
+                    <div class="subsection-title">1.2.2 Alphabets (Σ)</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>An <strong>alphabet</strong> is a <em>finite, non-empty set of symbols</em>. Denoted by
+                            <strong>Σ</strong> (Sigma). Empty set ∅ is NOT a valid alphabet.</p>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Alphabet (Σ)</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{0, 1}</td>
+                                    <td>Binary alphabet — most common in TCS</td>
+                                </tr>
+                                <tr>
+                                    <td>{0, 1, 2, ..., 7}</td>
+                                    <td>Octal digit set</td>
+                                </tr>
+                                <tr>
+                                    <td>{a, b, c, ..., z}</td>
+                                    <td>English lowercase letters</td>
+                                </tr>
+                                <tr>
+                                    <td>{a, b}</td>
+                                    <td>Simple two-symbol alphabet (used in most examples)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 1.2.3 STRINGS -->
+                <div class="subsection" id="s2c">
+                    <div class="subsection-title">1.2.3 Strings / Words</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>A <strong>string</strong> is a <em>finite sequence of symbols</em> chosen from an alphabet Σ.
+                            Denoted by lowercase letters: <strong>w, x, y, z</strong>.</p>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Examples</div>
+                        <p><code>w = 1001</code> over Σ = {0, 1}</p>
+                        <p><code>w = abba</code> over Σ = {a, b}</p>
+                        <p><code>w = aaabcabcb</code> over Σ = {a, b, c}</p>
+                    </div>
+
+                    <div class="subsection-title" style="margin-top:20px;">Length of a String — |w|</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>The <strong>length of a string</strong> is the total count of symbols in it. Denoted by
+                            <code>|w|</code>.</p>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Example — w = "aaabcabcb"</div>
+                        <p><code>|w| = 9</code> → total length</p>
+                        <p><code>|w|ₐ = 4</code> → count of 'a' symbols</p>
+                        <p><code>|w|_b = 3</code> → count of 'b' symbols</p>
+                        <p><code>|w|_c = 2</code> → count of 'c' symbols</p>
+                        <p>Check: 4 + 3 + 2 = 9 ✓</p>
+                    </div>
+                </div>
+
+                <!-- 1.2.4 EMPTY STRING -->
+                <div class="subsection" id="s2d">
+                    <div class="subsection-title">1.2.4 Empty String (ε)</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>The <strong>empty string</strong> (also called null string) is a string with <em>zero
+                                occurrences</em> of symbols. Denoted by <strong>ε (epsilon)</strong> or
+                            <strong>ϵ</strong>.</p>
+                    </div>
+                    <div class="key-box">
+                        <div class="key-label">Key Properties of ε</div>
+                        <ul>
+                            <li><strong>|ε| = 0</strong> — length is zero</li>
+                            <li>ε is a valid string over <strong>ANY</strong> alphabet</li>
+                            <li>Concatenation: w · ε = ε · w = w (identity element)</li>
+                            <li>ε ∈ Σ* always (for any Σ)</li>
+                            <li>ε ∉ Σ⁺ (not in positive closure)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 1.2.5 PREFIX SUFFIX SUBSTRING -->
+                <div class="subsection" id="s2e">
+                    <div class="subsection-title">1.2.5 Prefix, Suffix, and Substring</div>
+                    <p>For a string <code>w = "abc"</code>:</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition</th>
+                                    <th>Examples for w = "abc"</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>Prefix</strong></td>
+                                    <td>Remove zero or more <em>trailing</em> symbols from w</td>
+                                    <td><code>ε, a, ab, abc</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Suffix</strong></td>
+                                    <td>Remove zero or more <em>leading</em> symbols from w</td>
+                                    <td><code>ε, c, bc, abc</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Substring</strong></td>
+                                    <td>Remove a prefix AND a suffix from w</td>
+                                    <td><code>ε, a, b, c, ab, bc, abc</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="key-box">
+                        <div class="key-label">Important Relationship</div>
+                        <ul>
+                            <li>Every <strong>prefix</strong> is a substring. Every <strong>suffix</strong> is a
+                                substring.</li>
+                            <li>NOT every substring is a prefix or suffix (e.g., "b" in "abc" is a substring but neither
+                                prefix nor suffix).</li>
+                            <li>For w of length n: number of prefixes = n+1, suffixes = n+1, substrings ≤ n(n+1)/2 + 1.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 1.2.6 POWERS OF SIGMA -->
+                <div class="subsection" id="s2f">
+                    <div class="subsection-title">1.2.6 Powers of an Alphabet (Σᵏ)</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p><strong>Σᵏ</strong> is the set of ALL strings of <em>exactly length k</em> that can be formed
+                            from Σ.</p>
+                    </div>
+                    <p>For Σ = {a, b}:</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Power</th>
+                                    <th>Meaning</th>
+                                    <th>Set of Strings</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Σ⁰</td>
+                                    <td>Strings of length 0</td>
+                                    <td><code>{ε}</code></td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>Σ¹</td>
+                                    <td>Strings of length 1</td>
+                                    <td><code>{a, b}</code></td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>Σ²</td>
+                                    <td>Strings of length 2</td>
+                                    <td><code>{aa, ab, ba, bb}</code></td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Σ³</td>
+                                    <td>Strings of length 3</td>
+                                    <td><code>{aaa, aab, aba, abb, baa, bab, bba, bbb}</code></td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>Σⁿ</td>
+                                    <td>Strings of length n</td>
+                                    <td>All n-length strings</td>
+                                    <td>2ⁿ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="formula">|Σᵏ| = |Σ|ᵏ &nbsp; (for alphabet of size |Σ|)</div>
+                </div>
+
+                <!-- 1.2.7 KLEENE & POSITIVE CLOSURE -->
+                <div class="subsection" id="s2g">
+                    <div class="subsection-title">1.2.7 Kleene Closure (Σ*) and Positive Closure (Σ⁺)</div>
+
+                    <div class="def-box">
+                        <div class="def-label">Kleene Closure — Σ*</div>
+                        <p><strong>Σ*</strong> is the set of ALL possible strings (including ε) that can be formed from
+                            Σ.</p>
+                    </div>
+                    <div class="formula">Σ* = Σ⁰ ∪ Σ¹ ∪ Σ² ∪ Σ³ ∪ ...&nbsp;&nbsp; (infinite set)</div>
+                    <div class="example-box">
+                        <div class="ex-label">Example — Σ = {a, b}</div>
+                        <p><code>Σ* = {ε, a, b, aa, ab, ba, bb, aaa, aab, aba, abb, baa, bab, bba, bbb, ...}</code></p>
+                    </div>
+
+                    <div class="def-box" style="margin-top:18px;">
+                        <div class="def-label">Positive Closure — Σ⁺</div>
+                        <p><strong>Σ⁺</strong> is the set of ALL non-empty strings formed from Σ. ε is EXCLUDED.</p>
+                    </div>
+                    <div class="formula">Σ⁺ = Σ¹ ∪ Σ² ∪ Σ³ ∪ ... = Σ* − {ε}</div>
+                    <div class="example-box">
+                        <div class="ex-label">Example — Σ = {a, b}</div>
+                        <p><code>Σ⁺ = {a, b, aa, ab, ba, bb, aaa, aab, aba, abb, ...}</code></p>
+                    </div>
+
+                    <div class="table-wrap" style="margin-top:16px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Σ*</th>
+                                    <th>Σ⁺</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td>Includes ε?</td>
+                                    <td>✅ Yes</td>
+                                    <td>❌ No</td>
+                                </tr>
+                                <tr>
+                                    <td>Finite or Infinite?</td>
+                                    <td>Infinite</td>
+                                    <td>Infinite</td>
+                                </tr>
+                                <tr>
+                                    <td>Relation</td>
+                                    <td>Σ* = Σ⁺ ∪ {ε}</td>
+                                    <td>Σ⁺ = Σ* − {ε}</td>
+                                </tr>
+                                <tr>
+                                    <td>Starts from</td>
+                                    <td>Σ⁰ (length 0)</td>
+                                    <td>Σ¹ (length 1)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="note-box">
+                        <div class="note-label">Common Exam Trap</div>
+                        <p>If Σ = ∅ (empty alphabet), then Σ* = {ε} and Σ⁺ = ∅. An empty alphabet is NOT allowed in
+                            practice, but this is a common trick question.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.3 — FORMAL LANGUAGE
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s3">
+                <div class="section-title">
+                    <span class="num">1.3</span> Formal Language
+                </div>
+
+                <div class="def-box">
+                    <div class="def-label">Definition</div>
+                    <p>A <strong>formal language L</strong> over alphabet Σ is any <em>subset of Σ*</em>. That is:
+                        <strong>L ⊆ Σ*</strong>. A language is simply a SET of strings that follow specific rules.</p>
+                </div>
+
+                <div class="key-box">
+                    <div class="key-label">Important Points</div>
+                    <ul>
+                        <li>Σ* itself is a language (the universal language over Σ).</li>
+                        <li><code>{ε}</code> is a valid language (contains only empty string).</li>
+                        <li><code>∅</code> (empty set) is a valid language (the empty language — no strings accepted).
+                        </li>
+                        <li>Note: <code>{ε} ≠ ∅</code> — do not confuse them!</li>
+                    </ul>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Language</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>L = {0, 1, 00, 11, 01, 10, ...}</td>
+                                <td>All binary strings (= Σ* for Σ={0,1})</td>
+                            </tr>
+                            <tr>
+                                <td>L = {0ⁿ1ⁿ | n ≥ 0}</td>
+                                <td>n zeros followed by n ones: ε, 01, 0011, 000111, ...</td>
+                            </tr>
+                            <tr>
+                                <td>L = {w ∈ {a,b}* | |w| is even}</td>
+                                <td>All even-length strings over {a,b}</td>
+                            </tr>
+                            <tr>
+                                <td>L = {w ∈ {a,b}* | #a is divisible by 2}</td>
+                                <td>Strings where count of 'a' is even</td>
+                            </tr>
+                            <tr>
+                                <td>L = {w ∈ {a,b}* | #b is divisible by 3}</td>
+                                <td>Strings where count of 'b' is multiple of 3</td>
+                            </tr>
+                            <tr>
+                                <td>L = ∅</td>
+                                <td>Empty language — accepts nothing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Operations -->
+                <div class="subsection" id="s3a">
+                    <div class="subsection-title">1.3.1 Operations on Languages</div>
+                    <p>Since languages are sets, all standard set operations apply:</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Operation</th>
+                                    <th>Notation</th>
+                                    <th>Meaning</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>Union</strong></td>
+                                    <td>L₁ ∪ L₂</td>
+                                    <td>Strings in L₁ OR L₂</td>
+                                    <td>{a} ∪ {b} = {a,b}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Intersection</strong></td>
+                                    <td>L₁ ∩ L₂</td>
+                                    <td>Strings in BOTH L₁ AND L₂</td>
+                                    <td>{a,b} ∩ {b,c} = {b}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Difference</strong></td>
+                                    <td>L₁ − L₂</td>
+                                    <td>Strings in L₁ but NOT in L₂</td>
+                                    <td>{a,b} − {b} = {a}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Complement</strong></td>
+                                    <td>L̄ or L'</td>
+                                    <td>All strings in Σ* that are NOT in L</td>
+                                    <td>L̄ = Σ* − L</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Concatenation</strong></td>
+                                    <td>L₁ · L₂</td>
+                                    <td>{xy | x ∈ L₁, y ∈ L₂}</td>
+                                    <td>{a}{b} = {ab}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Kleene Closure</strong></td>
+                                    <td>L*</td>
+                                    <td>Zero or more concatenations of L</td>
+                                    <td>{a}* = {ε,a,aa,aaa,...}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Positive Closure</strong></td>
+                                    <td>L⁺</td>
+                                    <td>One or more concatenations of L</td>
+                                    <td>{a}⁺ = {a,aa,aaa,...}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Language from Grammar -->
+                <div class="subsection">
+                    <div class="subsection-title">1.3.2 Language Defined by Grammar</div>
+                    <p>A formal language is defined by a <strong>grammar</strong> — a set of production rules. The
+                        language L(G) is the set of all strings derivable from the start symbol.</p>
+                    <div class="example-box">
+                        <div class="ex-label">Example — Grammar G for "all strings over {a, b} without ε"</div>
+                        <div class="grammar-rule">
+                            <span class="nonterminal">S</span> <span class="arrow">→</span> <span
+                                class="terminal">a</span><span class="nonterminal">S</span> | <span
+                                class="terminal">b</span><span class="nonterminal">S</span> | <span
+                                class="terminal">a</span> | <span class="terminal">b</span>
+                        </div>
+                        <p>This generates: L(G) = {a, b, aa, ab, ba, bb, aaa, aab, ...} = Σ⁺ for Σ = {a,b}</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.4 — SET THEORY
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s4">
+                <div class="section-title">
+                    <span class="num">1.4</span> Basic Set Theory Concepts
+                </div>
+                <p>These are the mathematical foundations needed to understand languages and automata.</p>
+
+                <div class="grid2">
+                    <div class="summary-card">
+                        <div class="sc-title">Methods of Set Representation</div>
+                        <ul>
+                            <li><strong>Listing:</strong> E = {0, 2, 4, ..., 50}</li>
+                            <li><strong>Set Builder:</strong> V = {x | x is a vowel}</li>
+                            <li><strong>Recursion:</strong> A = {x | x = n², x &lt; 100}</li>
+                        </ul>
+                    </div>
+                    <div class="summary-card">
+                        <div class="sc-title">Subset & Power Set</div>
+                        <ul>
+                            <li>A ⊆ B → every element of A is in B</li>
+                            <li>∅ ⊆ every set; every set ⊆ itself</li>
+                            <li>Power set P(A): all subsets of A</li>
+                            <li>|P(A)| = <strong>2ⁿ</strong> (n = |A|)</li>
+                        </ul>
+                    </div>
+                    <div class="summary-card">
+                        <div class="sc-title">Set Operations</div>
+                        <ul>
+                            <li><strong>A ∪ B</strong> — elements in A or B</li>
+                            <li><strong>A ∩ B</strong> — elements in both</li>
+                            <li><strong>A − B</strong> — in A but not B</li>
+                            <li><strong>Ā = U − A</strong> — complement</li>
+                        </ul>
+                    </div>
+                    <div class="summary-card">
+                        <div class="sc-title">Cartesian Product</div>
+                        <p>A × B = {(a,b) | a ∈ A and b ∈ B}</p>
+                        <p style="margin-top:6px;">Example: {1,2} × {x,y} = {(1,x),(1,y),(2,x),(2,y)}</p>
+                        <p style="margin-top:4px;"><strong>|A × B| = |A| × |B|</strong></p>
+                    </div>
+                </div>
+
+                <div class="example-box" style="margin-top:16px;">
+                    <div class="ex-label">Power Set Example</div>
+                    <p>For A = {0, 1, 2}, |A| = 3 → |P(A)| = 2³ = 8</p>
+                    <p>P(A) = {∅, {0}, {1}, {2}, {0,1}, {0,2}, {1,2}, {0,1,2}}</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.5 — GRAMMAR
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s5">
+                <div class="section-title">
+                    <span class="num">1.5</span> Grammar (Formal Definition)
+                </div>
+
+                <div class="def-box">
+                    <div class="def-label">Definition</div>
+                    <p>A <strong>grammar G</strong> is a set of production rules used to generate strings of a language.
+                        It is formally defined as a <strong>4-tuple</strong>: <code>G = (V, T, P, S)</code></p>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>V</td>
+                                <td>Variables / Non-Terminals</td>
+                                <td>Symbols that can be replaced by production rules</td>
+                                <td>S, A, B</td>
+                            </tr>
+                            <tr>
+                                <td>T</td>
+                                <td>Terminals</td>
+                                <td>Actual symbols of the language (cannot be replaced)</td>
+                                <td>a, b, 0, 1</td>
+                            </tr>
+                            <tr>
+                                <td>P</td>
+                                <td>Productions</td>
+                                <td>Rules of the form α → β (replace α with β)</td>
+                                <td>S → aS | b</td>
+                            </tr>
+                            <tr>
+                                <td>S</td>
+                                <td>Start Symbol</td>
+                                <td>The starting variable; S ∈ V</td>
+                                <td>S</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Example — Grammar for (a+b)*abb</div>
+                    <p>G = (V, T, P, S) where V = {S, A}, T = {a, b}, S = S</p>
+                    <div class="grammar-rule">
+                        <span class="nonterminal">S</span> <span class="arrow">→</span> <span
+                            class="nonterminal">A</span><span class="terminal">abb</span><br>
+                        <span class="nonterminal">A</span> <span class="arrow">→</span> <span
+                            class="terminal">a</span><span class="nonterminal">A</span> | <span
+                            class="terminal">b</span><span class="nonterminal">A</span> | <span
+                            class="terminal">ε</span>
+                    </div>
+                    <p>This generates: abb, aabb, babb, aaabb, ababb, ...</p>
+                </div>
+
+                <div class="key-box">
+                    <div class="key-label">Note — V ∩ T = ∅</div>
+                    <ul>
+                        <li>Non-terminals and terminals must be <strong>disjoint sets</strong> — a symbol is either a
+                            variable OR a terminal, never both.</li>
+                        <li>Strings derived from S that contain ONLY terminals form the language L(G).</li>
+                        <li>A string in derivation that contains at least one non-terminal is called a
+                            <strong>sentential form</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.6 — CHOMSKY HIERARCHY
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s6">
+                <div class="section-title">
+                    <span class="num">1.6</span> Chomsky Hierarchy
+                </div>
+
+                <p>In 1957, <strong>Noam Chomsky</strong> classified formal grammars into four types in his work
+                    "Syntactic Structures". This classification is called the <strong>Chomsky Hierarchy</strong>.</p>
+
+                <div class="key-box">
+                    <div class="key-label">Notation used in production rules</div>
+                    <ul>
+                        <li><strong>A, B</strong> — Non-terminals (single variables)</li>
+                        <li><strong>a, b</strong> — Terminals (single symbols)</li>
+                        <li><strong>α, β, γ</strong> — Sentential forms (strings of terminals and/or non-terminals)</li>
+                        <li><strong>ε</strong> — Empty string</li>
+                    </ul>
+                </div>
+
+                <!-- TYPE 0 -->
+                <div class="subsection" id="s6a">
+                    <div class="subsection-title">Type 0 — Unrestricted Grammar</div>
+                    <div class="chomsky-grid" style="grid-template-columns: 1fr;">
+                        <div class="chomsky-card t0">
+                            <div class="cc-type">Type 0</div>
+                            <div class="cc-name">Unrestricted Grammar</div>
+                            <div class="cc-lang">Recursively Enumerable Language</div>
+                            <div class="cc-row"><span class="cc-k">Automaton</span><span class="cc-v">Turing Machine
+                                    (TM)</span></div>
+                            <div class="cc-row"><span class="cc-k">Production Form</span><span class="cc-v">α → β &nbsp;
+                                    (α ≠ ε)</span></div>
+                            <div class="cc-row"><span class="cc-k">Restriction</span><span class="cc-v">None — LHS
+                                    cannot be ε only</span></div>
+                            <div class="cc-row"><span class="cc-k">Most general?</span><span class="cc-v">YES — includes
+                                    all other types</span></div>
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Type 0 Production Examples</div>
+                        <div class="grammar-rule">
+                            <span class="nonterminal">A</span> → <span class="nonterminal">AB</span><br>
+                            <span class="nonterminal">AB</span> → <span class="nonterminal">BC</span><br>
+                            <span class="nonterminal">B</span> → <span class="terminal">a</span><span
+                                class="nonterminal">c</span><span class="nonterminal">D</span><br>
+                            <span class="nonterminal">Ac</span> → <span class="terminal">abc</span><br>
+                            <span class="nonterminal">D</span> → <span class="terminal">ε</span>
+                        </div>
+                        <p>No restrictions on how many symbols appear on LHS or RHS.</p>
+                    </div>
+                </div>
+
+                <!-- TYPE 1 -->
+                <div class="subsection" id="s6b">
+                    <div class="subsection-title">Type 1 — Context Sensitive Grammar (CSG)</div>
+                    <div class="chomsky-grid" style="grid-template-columns: 1fr;">
+                        <div class="chomsky-card t1">
+                            <div class="cc-type">Type 1</div>
+                            <div class="cc-name">Context Sensitive Grammar</div>
+                            <div class="cc-lang">Context Sensitive Language (CSL)</div>
+                            <div class="cc-row"><span class="cc-k">Automaton</span><span class="cc-v">Linear Bounded
+                                    Automaton (LBA)</span></div>
+                            <div class="cc-row"><span class="cc-k">Production Form</span><span class="cc-v">α₁Aα₂ →
+                                    α₁βα₂ &nbsp; (β ≠ ε)</span></div>
+                            <div class="cc-row"><span class="cc-k">Constraint</span><span class="cc-v">|RHS| ≥ |LHS|
+                                    (non-contracting)</span></div>
+                            <div class="cc-row"><span class="cc-k">Exception</span><span class="cc-v">S → ε allowed if S
+                                    not in any RHS</span></div>
+                        </div>
+                    </div>
+                    <div class="key-box">
+                        <div class="key-label">Why "Context Sensitive"?</div>
+                        <ul>
+                            <li>Variable A can be replaced by β ONLY when it appears in the <em>context</em> of α₁ on
+                                the left and α₂ on the right.</li>
+                            <li>The replacement depends on the surrounding symbols — hence "context sensitive".</li>
+                            <li>Length of RHS ≥ Length of LHS — the grammar never contracts (except S → ε).</li>
+                        </ul>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Type 1 Example</div>
+                        <div class="grammar-rule">
+                            <span class="nonterminal">A</span> → <span class="nonterminal">AB</span> &nbsp;|&nbsp;
+                            <span class="nonterminal">AB</span> → <span class="nonterminal">AC</span> &nbsp;|&nbsp;
+                            <span class="nonterminal">AC</span> → <span class="terminal">ab</span>
+                        </div>
+                        <p>Classic CSL example: L = {aⁿbⁿcⁿ | n ≥ 1} — equal numbers of a, b, c.</p>
+                    </div>
+                </div>
+
+                <!-- TYPE 2 -->
+                <div class="subsection" id="s6c">
+                    <div class="subsection-title">Type 2 — Context Free Grammar (CFG)</div>
+                    <div class="chomsky-grid" style="grid-template-columns: 1fr;">
+                        <div class="chomsky-card t2">
+                            <div class="cc-type">Type 2</div>
+                            <div class="cc-name">Context Free Grammar</div>
+                            <div class="cc-lang">Context Free Language (CFL)</div>
+                            <div class="cc-row"><span class="cc-k">Automaton</span><span class="cc-v">Pushdown Automaton
+                                    (PDA)</span></div>
+                            <div class="cc-row"><span class="cc-k">Production Form</span><span class="cc-v">A → α &nbsp;
+                                    (single non-terminal on LHS)</span></div>
+                            <div class="cc-row"><span class="cc-k">Context needed?</span><span class="cc-v">NO — LHS is
+                                    always a single variable</span></div>
+                            <div class="cc-row"><span class="cc-k">Used in?</span><span class="cc-v">Syntax of
+                                    programming languages, parsers</span></div>
+                        </div>
+                    </div>
+                    <div class="key-box">
+                        <div class="key-label">Why "Context Free"?</div>
+                        <ul>
+                            <li>LHS of every production is a <strong>single non-terminal</strong>.</li>
+                            <li>A can be replaced by α regardless of what surrounds it — no context needed.</li>
+                            <li>CFGs are used to define the syntax of programming languages (C, Java, Python).</li>
+                            <li>Parsers in compilers (LL, LR) are implementations of PDAs.</li>
+                        </ul>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Type 2 Example — Palindromes over {a,b}</div>
+                        <div class="grammar-rule">
+                            <span class="nonterminal">S</span> → <span class="terminal">a</span><span
+                                class="nonterminal">S</span><span class="terminal">a</span> | <span
+                                class="terminal">b</span><span class="nonterminal">S</span><span
+                                class="terminal">b</span> | <span class="terminal">a</span> | <span
+                                class="terminal">b</span> | <span class="terminal">ε</span>
+                        </div>
+                        <p>Generates: ε, a, b, aa, bb, aba, bab, aaa, aba, bbb, abba, baab, ...</p>
+                        <p>All strings w such that w = reverse(w).</p>
+                    </div>
+                </div>
+
+                <!-- TYPE 3 -->
+                <div class="subsection" id="s6d">
+                    <div class="subsection-title">Type 3 — Regular Grammar</div>
+                    <div class="chomsky-grid" style="grid-template-columns: 1fr;">
+                        <div class="chomsky-card t3">
+                            <div class="cc-type">Type 3</div>
+                            <div class="cc-name">Regular Grammar</div>
+                            <div class="cc-lang">Regular Language</div>
+                            <div class="cc-row"><span class="cc-k">Automaton</span><span class="cc-v">Finite State
+                                    Machine (DFA / NFA)</span></div>
+                            <div class="cc-row"><span class="cc-k">Right Linear</span><span class="cc-v">A → aB or A →
+                                    a</span></div>
+                            <div class="cc-row"><span class="cc-k">Left Linear</span><span class="cc-v">A → Ba or A →
+                                    a</span></div>
+                            <div class="cc-row"><span class="cc-k">Most restricted?</span><span class="cc-v">YES — most
+                                    restricted grammar type</span></div>
+                        </div>
+                    </div>
+                    <div class="key-box">
+                        <div class="key-label">Right Linear vs Left Linear</div>
+                        <ul>
+                            <li><strong>Right Linear:</strong> Non-terminal appears at the RIGHT end of RHS → A → aB or
+                                A → a</li>
+                            <li><strong>Left Linear:</strong> Non-terminal appears at the LEFT end of RHS → A → Ba or A
+                                → a</li>
+                            <li>CANNOT MIX left and right linear rules in the same grammar.</li>
+                            <li>Both generate exactly the <strong>Regular Languages</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Right Linear Grammar Example — strings ending in 'b' over {a,b}</div>
+                        <div class="grammar-rule">
+                            <span class="nonterminal">S</span> → <span class="terminal">a</span><span
+                                class="nonterminal">S</span> | <span class="terminal">b</span><span
+                                class="nonterminal">S</span> | <span class="terminal">b</span>
+                        </div>
+                        <p>Generates: b, ab, bb, aab, abb, bab, bbb, aaab, ...</p>
+                    </div>
+                    <div class="example-box">
+                        <div class="ex-label">Left Linear Grammar Example</div>
+                        <div class="grammar-rule">
+                            <span class="nonterminal">S</span> → <span class="nonterminal">C</span><span
+                                class="terminal">a</span> | <span class="nonterminal">B</span><span
+                                class="terminal">b</span><br>
+                            <span class="nonterminal">C</span> → <span class="nonterminal">B</span><span
+                                class="terminal">b</span><br>
+                            <span class="nonterminal">B</span> → <span class="nonterminal">B</span><span
+                                class="terminal">a</span> | <span class="terminal">b</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUMMARY TABLE -->
+                <div class="subsection">
+                    <div class="subsection-title">1.6.5 Summary Table — Chomsky Hierarchy</div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Grammar Name</th>
+                                    <th>Language</th>
+                                    <th>Automaton</th>
+                                    <th>Production Form</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><span class="badge badge-red">Type 0</span></td>
+                                    <td>Unrestricted</td>
+                                    <td>Recursively Enumerable</td>
+                                    <td>Turing Machine (TM)</td>
+                                    <td><code>α → β (α ≠ ε)</code></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-orange">Type 1</span></td>
+                                    <td>Context Sensitive</td>
+                                    <td>Context Sensitive</td>
+                                    <td>Linear Bounded Automaton (LBA)</td>
+                                    <td><code>α₁Aα₂ → α₁βα₂ (β ≠ ε)</code></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-green">Type 2</span></td>
+                                    <td>Context Free</td>
+                                    <td>Context Free (CFL)</td>
+                                    <td>Pushdown Automaton (PDA)</td>
+                                    <td><code>A → α</code></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-blue">Type 3</span></td>
+                                    <td>Regular</td>
+                                    <td>Regular Language</td>
+                                    <td>Finite Automaton (DFA/NFA)</td>
+                                    <td><code>A → aB | a</code> (Right) or <code>A → Ba | a</code> (Left)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="def-box" style="margin-top:16px;">
+                        <div class="def-label">Hierarchy (Subset Relationship)</div>
+                        <div class="relation-chain">
+                            <span class="rc-item"
+                                style="background:rgba(88,166,255,0.15);color:var(--accent);">Regular</span>
+                            <span class="rc-arrow">⊂</span>
+                            <span class="rc-item" style="background:rgba(63,185,80,0.12);color:var(--accent2);">Context
+                                Free</span>
+                            <span class="rc-arrow">⊂</span>
+                            <span class="rc-item" style="background:rgba(255,166,87,0.12);color:var(--accent4);">Context
+                                Sensitive</span>
+                            <span class="rc-arrow">⊂</span>
+                            <span class="rc-item" style="background:rgba(248,81,73,0.12);color:var(--red);">Recursively
+                                Enumerable</span>
+                        </div>
+                        <p style="margin-top:8px; font-size:13px;">Every Regular Language is a CFL. Every CFL is a CSL.
+                            Every CSL is Recursively Enumerable.</p>
+                    </div>
+
+                    <!-- Hierarchy SVG Diagram -->
+                    <div
+                        style="margin:20px 0; background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:20px; text-align:center;">
+                        <svg width="100%" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg"
+                            style="max-width:560px;">
+                            <!-- Type 0 outermost -->
+                            <ellipse cx="300" cy="140" rx="280" ry="125" fill="rgba(248,81,73,0.08)" stroke="#f85149"
+                                stroke-width="1.5" stroke-dasharray="6,3" />
+                            <text x="300" y="24" text-anchor="middle" font-size="12" fill="#f85149" font-family="Arial"
+                                font-weight="700">Type 0 — Recursively Enumerable (Turing Machine)</text>
+                            <!-- Type 1 -->
+                            <ellipse cx="300" cy="148" rx="220" ry="96" fill="rgba(255,166,87,0.08)" stroke="#ffa657"
+                                stroke-width="1.5" stroke-dasharray="6,3" />
+                            <text x="300" y="64" text-anchor="middle" font-size="11" fill="#ffa657" font-family="Arial"
+                                font-weight="700">Type 1 — Context Sensitive (LBA)</text>
+                            <!-- Type 2 -->
+                            <ellipse cx="300" cy="155" rx="155" ry="68" fill="rgba(63,185,80,0.08)" stroke="#3fb950"
+                                stroke-width="1.5" stroke-dasharray="6,3" />
+                            <text x="300" y="100" text-anchor="middle" font-size="11" fill="#3fb950" font-family="Arial"
+                                font-weight="700">Type 2 — Context Free (PDA)</text>
+                            <!-- Type 3 innermost -->
+                            <ellipse cx="300" cy="162" rx="88" ry="42" fill="rgba(88,166,255,0.15)" stroke="#58a6ff"
+                                stroke-width="2" />
+                            <text x="300" y="157" text-anchor="middle" font-size="11" fill="#58a6ff" font-family="Arial"
+                                font-weight="700">Type 3</text>
+                            <text x="300" y="172" text-anchor="middle" font-size="10" fill="#58a6ff"
+                                font-family="Arial">Regular (DFA/NFA)</text>
+                        </svg>
+                        <div style="font-size:11px; color:var(--text2); margin-top:8px;">Figure: Chomsky Hierarchy —
+                            each type is a proper subset of the outer one</div>
+                    </div>
+                </div>
+
+                <!-- Other Grammar Classifications -->
+                <div class="subsection">
+                    <div class="subsection-title">1.6.6 Other Grammar Classifications</div>
+                    <div class="grid2">
+                        <div class="summary-card">
+                            <div class="sc-title">By Derivation Trees</div>
+                            <ul>
+                                <li><strong>Ambiguous Grammar:</strong> At least one string has 2 or more different
+                                    derivation (parse) trees.</li>
+                                <li><strong>Unambiguous Grammar:</strong> Every string has exactly ONE parse tree.</li>
+                            </ul>
+                        </div>
+                        <div class="summary-card">
+                            <div class="sc-title">By Language Size</div>
+                            <ul>
+                                <li><strong>Finite Language:</strong> The language has a finite number of strings.</li>
+                                <li><strong>Infinite Language:</strong> The language has infinitely many strings (most
+                                    languages in TCS).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.7 — DERIVATION TREE
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s7">
+                <div class="section-title">
+                    <span class="num">1.7</span> Derivation Tree (Parse Tree)
+                </div>
+
+                <div class="def-box">
+                    <div class="def-label">Definition</div>
+                    <p>A <strong>derivation tree</strong> (parse tree) is a graphical representation of how a string is
+                        derived from the start symbol S using the production rules of a grammar. It shows the
+                        hierarchical structure of a derivation.</p>
+                </div>
+
+                <div class="key-box">
+                    <div class="key-label">Properties of a Derivation Tree</div>
+                    <ul>
+                        <li>The <strong>root</strong> is always the Start Symbol (S).</li>
+                        <li><strong>Leaf nodes</strong> are terminals or ε.</li>
+                        <li><strong>Internal nodes</strong> are non-terminals.</li>
+                        <li>If an internal node is labeled A and its children (left to right) are X₁, X₂, ..., Xₙ, then
+                            <code>A → X₁X₂...Xₙ</code> must be a production in G.</li>
+                        <li>Reading leaf nodes from left to right gives the <strong>derived string (yield)</strong>.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Example 1 — Deriving "aab" from S → aS | bS | a | b</div>
+                    <div class="tree-box">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ &nbsp;&nbsp; \<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a &nbsp;&nbsp;&nbsp; S<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ &nbsp;&nbsp; \<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a &nbsp;&nbsp;&nbsp; S<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b
+                    </div>
+                    <p>Derivation: S → aS → aaS → aab</p>
+                    <p>Yield (read leaves left to right): <code>a a b</code> ✓</p>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Example 2 — Deriving "abba" from S → aSa | bSb | a | b | ε (Palindromes)</div>
+                    <div class="tree-box">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; \<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a &nbsp;&nbsp;&nbsp;S &nbsp;&nbsp;&nbsp; a<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ &nbsp;|&nbsp; \<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b &nbsp;S &nbsp; b<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ε
+                    </div>
+                    <p>Derivation: S → aSa → abSba → ab(ε)ba → abba</p>
+                </div>
+
+                <div class="note-box">
+                    <div class="note-label">Ambiguity via Derivation Trees</div>
+                    <p>If a string can be derived using <strong>two or more different derivation trees</strong>, the
+                        grammar is <strong>ambiguous</strong>. Ambiguity is a property of the grammar, not the language.
+                    </p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.8 — TCS IN COMPILERS
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s8">
+                <div class="section-title">
+                    <span class="num">1.8</span> Application of TCS in Compiler Construction
+                </div>
+
+                <p>Every phase of a compiler uses a concept from TCS. This is one of the primary motivations for
+                    studying Automata Theory.</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Compiler Phase</th>
+                                <th>TCS Concept Used</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody class="td-normal">
+                            <tr>
+                                <td><strong>Lexical Analysis</strong></td>
+                                <td>Regular Expressions, DFA/NFA</td>
+                                <td>Token recognition — identifies keywords, identifiers, operators, literals</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Syntax Analysis (Parsing)</strong></td>
+                                <td>CFG, PDA</td>
+                                <td>Checks if the token sequence follows the grammar rules of the language</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Semantic Analysis</strong></td>
+                                <td>Attribute Grammars, Type Systems</td>
+                                <td>Type checking, scope analysis, semantic correctness</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Code Generation & Optimization</strong></td>
+                                <td>Turing Machines, Computability</td>
+                                <td>Understanding computational limits; what can and cannot be optimized</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Lexical Analysis — How FA is Used</div>
+                    <p>Consider the source code: <code>int x = 5 + 3;</code></p>
+                    <p>The lexer uses a DFA to scan and recognize tokens:</p>
+                    <div class="grammar-rule" style="font-size:13px;">
+                        <span class="terminal">int</span> → keyword token<br>
+                        <span class="terminal">x</span> → identifier token<br>
+                        <span class="terminal">=</span> → assignment operator token<br>
+                        <span class="terminal">5</span> → integer literal token<br>
+                        <span class="terminal">+</span> → plus operator token<br>
+                        <span class="terminal">3</span> → integer literal token<br>
+                        <span class="terminal">;</span> → semicolon token
+                    </div>
+                    <p>Each token type is described by a Regular Expression, which is converted to a DFA for efficient
+                        scanning.</p>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Syntax Analysis — How CFG/PDA is Used</div>
+                    <p>A simplified CFG for assignment statement:</p>
+                    <div class="grammar-rule">
+                        <span class="nonterminal">stmt</span> → <span class="nonterminal">id</span> <span
+                            class="terminal">=</span> <span class="nonterminal">expr</span> <span
+                            class="terminal">;</span><br>
+                        <span class="nonterminal">expr</span> → <span class="nonterminal">expr</span> <span
+                            class="terminal">+</span> <span class="nonterminal">term</span> | <span
+                            class="nonterminal">term</span><br>
+                        <span class="nonterminal">term</span> → <span class="nonterminal">id</span> | <span
+                            class="nonterminal">num</span>
+                    </div>
+                    <p>The parser (LL/LR) uses this CFG to build a parse tree and verify syntactic correctness.</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.9 — LANGUAGE-GRAMMAR-AUTOMATA
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s9">
+                <div class="section-title">
+                    <span class="num">1.9</span> Language — Grammar — Automata Connection
+                </div>
+
+                <p>This is the <strong>heart of TCS</strong>. Each language class has a corresponding grammar
+                    (generator) and an automaton (recognizer) that are all equivalent in power.</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Language Class</th>
+                                <th>Described By</th>
+                                <th>Accepted By (Recognizer)</th>
+                                <th>Generated By</th>
+                            </tr>
+                        </thead>
+                        <tbody class="td-normal">
+                            <tr>
+                                <td><strong>Regular Language</strong></td>
+                                <td>Regular Expression (RE)</td>
+                                <td>DFA, NFA, ε-NFA, Mealy, Moore</td>
+                                <td>Regular Grammar (Type 3)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Context Free Language</strong></td>
+                                <td>CFG (Type 2)</td>
+                                <td>Pushdown Automaton (PDA)</td>
+                                <td>Context Free Grammar</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Context Sensitive Language</strong></td>
+                                <td>CSG (Type 1)</td>
+                                <td>Linear Bounded Automaton (LBA)</td>
+                                <td>Context Sensitive Grammar</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recursively Enumerable</strong></td>
+                                <td>Unrestricted Grammar (Type 0)</td>
+                                <td>Turing Machine (TM)</td>
+                                <td>Unrestricted Grammar</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="key-box" style="margin-top:20px;">
+                    <div class="key-label">Key Equivalences (Must Know for Exams)</div>
+                    <ul>
+                        <li><strong>RE = DFA = NFA = ε-NFA = Regular Grammar</strong> — all describe Regular Languages.
+                        </li>
+                        <li><strong>CFG = PDA</strong> — CFGs and PDAs are equivalent in power.</li>
+                        <li>Every DFA is an NFA. Every NFA can be converted to a DFA (subset construction).</li>
+                        <li>Not every CFL is regular. E.g., {0ⁿ1ⁿ | n ≥ 0} is CFL but NOT regular.</li>
+                        <li>Not every CSL is context free. E.g., {aⁿbⁿcⁿ | n ≥ 1} is CSL but NOT CFL.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.10 — PRACTICE QUESTIONS
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s10">
+                <div class="section-title">
+                    <span class="num">1.10</span> Practice Questions
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">Short Answer / Definition Questions</div>
+
+                    <div class="q-item">
+                        <div class="q-num">1</div>
+                        <div>
+                            <p>Define: Symbol, Alphabet, String, Language. Give one example of each.</p>
+                            <div class="q-ans"><strong>Answer:</strong> Symbol = smallest atomic unit (e.g. 'a').
+                                Alphabet = finite set of symbols (e.g. Σ={a,b}). String = finite sequence of symbols
+                                from Σ (e.g. "aab"). Language = any subset of Σ* (e.g. L = all strings over {a,b} of
+                                even length).</div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">2</div>
+                        <div>
+                            <p>For Σ = {0, 1}, list all strings in Σ² and Σ³.</p>
+                            <div class="q-ans"><strong>Answer:</strong> Σ² = {00, 01, 10, 11} (4 strings). Σ³ = {000,
+                                001, 010, 011, 100, 101, 110, 111} (8 strings). |Σᵏ| = 2ᵏ.</div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">3</div>
+                        <div>
+                            <p>What is the difference between Σ* and Σ⁺? What if Σ = ∅?</p>
+                            <div class="q-ans"><strong>Answer:</strong> Σ* includes ε (empty string), Σ⁺ does not. Σ⁺ =
+                                Σ* − {ε}. If Σ = ∅: Σ* = {ε}, Σ⁺ = ∅.</div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">4</div>
+                        <div>
+                            <p>What is a grammar? Define the 4-tuple and explain each component.</p>
+                            <div class="q-ans"><strong>Answer:</strong> Grammar G = (V, T, P, S). V =
+                                Variables/Non-terminals (symbols that can be replaced). T = Terminals (actual language
+                                symbols, V ∩ T = ∅). P = Productions (rules α → β). S = Start symbol (S ∈ V). L(G) = all
+                                terminal strings derivable from S.</div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">5</div>
+                        <div>
+                            <p>State the Chomsky Hierarchy. Name each type, the language it generates, and the automaton
+                                that accepts it.</p>
+                            <div class="q-ans"><strong>Answer:</strong> Type 0 → Unrestricted Grammar → Recursively
+                                Enumerable Language → Turing Machine. Type 1 → CSG → Context Sensitive Language → LBA.
+                                Type 2 → CFG → Context Free Language → PDA. Type 3 → Regular Grammar → Regular Language
+                                → DFA/NFA.</div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">6</div>
+                        <div>
+                            <p>What is the difference between Right Linear and Left Linear grammar? Give an example of
+                                each.</p>
+                            <div class="q-ans"><strong>Answer:</strong> Right Linear: A → aB or A → a (non-terminal on
+                                RIGHT end). Left Linear: A → Ba or A → a (non-terminal on LEFT end). Right Linear
+                                example: S → aS | b. Left Linear example: S → Sa | b.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">Application / Derivation Questions</div>
+
+                    <div class="q-item">
+                        <div class="q-num">7</div>
+                        <div>
+                            <p>For w = "aababc", find: |w|, |w|_a, |w|_b, |w|_c. Also list all prefixes and suffixes.
+                            </p>
+                            <div class="q-ans">
+                                <strong>|w| = 7, |w|_a = 3, |w|_b = 3, |w|_c = 1</strong> (Check: 3+3+1 = 7 ✓)<br>
+                                <strong>Prefixes:</strong> ε, a, aa, aab, aaba, aabab, aababc (7+1 = 8 prefixes for
+                                length 7... wait, w="aababc" length=7 → 8 prefixes)<br>
+                                <strong>Suffixes:</strong> ε, c, bc, abc, babc, ababc, aababc, aababc — reverse removal
+                                from left.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">8</div>
+                        <div>
+                            <p>Derive the string "abb" from grammar: S → Aabb, A → aA | bA | ε. Show full derivation.
+                            </p>
+                            <div class="q-ans">
+                                <strong>S → Aabb → εabb → abb</strong> (using A → ε)<br>
+                                Or: S → Aabb → aAabb → aεabb → aabb (for "aabb")
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">9</div>
+                        <div>
+                            <p>Identify the type of the following grammars (Type 0, 1, 2, or 3):</p>
+                            <p>a) S → aS | b &nbsp;&nbsp; b) S → aSb | ε &nbsp;&nbsp; c) AB → BA &nbsp;&nbsp; d) S → ε
+                                (and S doesn't appear in any RHS)</p>
+                            <div class="q-ans">
+                                <strong>a) S → aS | b</strong> → Type 3 (Right Linear Regular Grammar)<br>
+                                <strong>b) S → aSb | ε</strong> → Type 2 (CFG — single non-terminal on LHS, generates
+                                {aⁿbⁿ})<br>
+                                <strong>c) AB → BA</strong> → Type 1 (CSG — |RHS| = |LHS| = 2, non-contracting)<br>
+                                <strong>d) S → ε</strong> → Type 1 exception allowed (S not in any RHS)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">10</div>
+                        <div>
+                            <p>Draw the derivation tree for "abba" using grammar S → aSa | bSb | ε.</p>
+                            <div class="q-ans">
+                                <strong>Derivation:</strong> S → aSa → abSba → ab(ε)ba → abba<br>
+                                Tree: Root=S, children=[a, S, a]. Inner S children=[b, S, b]. Inner S = ε.<br>
+                                Yield = a + b + ε + b + a = "abba" ✓
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">11</div>
+                        <div>
+                            <p>For set A = {p, q, r}, find |P(A)| and list all subsets.</p>
+                            <div class="q-ans">
+                                <strong>|P(A)| = 2³ = 8</strong><br>
+                                P(A) = {∅, {p}, {q}, {r}, {p,q}, {p,r}, {q,r}, {p,q,r}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">12</div>
+                        <div>
+                            <p>Write a Right Linear Grammar for: L = {strings over {a,b} starting with 'a'}</p>
+                            <div class="q-ans">
+                                <strong>Grammar G:</strong><br>
+                                S → aA &nbsp;&nbsp; (must start with 'a')<br>
+                                A → aA | bA | ε &nbsp;&nbsp; (any combination follows)<br>
+                                <strong>Generates:</strong> a, aa, ab, aaa, aab, aba, abb, ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">Long Answer / Conceptual Questions (Exam-Style)</div>
+
+                    <div class="q-item">
+                        <div class="q-num">13</div>
+                        <div>
+                            <p>Explain the Chomsky Hierarchy in detail. Draw the subset diagram showing the relationship
+                                between all four language classes.</p>
+                            <div class="q-ans">
+                                <strong>Answer:</strong> Chomsky (1957) classified grammars into 4 types. Type 3 ⊂ Type
+                                2 ⊂ Type 1 ⊂ Type 0. Each outer type strictly includes all inner types plus additional
+                                languages. Regular ⊂ CFL ⊂ CSL ⊂ RE. The innermost (Regular) is most restricted;
+                                outermost (Recursively Enumerable) is least restricted. [Draw concentric ellipses as
+                                shown in the diagram above.]
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">14</div>
+                        <div>
+                            <p>What is a Derivation Tree? State its properties and construct one for the string "aab"
+                                from S → aS | bS | a | b.</p>
+                            <div class="q-ans">
+                                <strong>Properties:</strong> Root = S, leaves = terminals, internal nodes =
+                                non-terminals, production must exist for each parent-children set.
+                                <strong>Derivation:</strong> S → aS → aaS → aab. Tree has root S with children [a, S];
+                                inner S with children [a, S]; innermost S with child [b].
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">15</div>
+                        <div>
+                            <p>How is Theory of Computation applied in compiler design? Explain with reference to each
+                                compiler phase.</p>
+                            <div class="q-ans">
+                                <strong>Answer:</strong> Lexical Analysis uses RE + DFA/NFA for token recognition.
+                                Syntax Analysis uses CFG + PDA for parsing. Semantic Analysis uses Attribute Grammars
+                                for type checking. Code Generation uses Turing Machine theory to understand
+                                computability limits. [Expand with the table from Section 1.8 for full marks.]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════════════
+         SECTION 1.11 — QUICK REVISION
+    ══════════════════════════════════════════ -->
+            <div class="section" id="s11">
+                <div class="section-title">
+                    <span class="num">1.11</span> Quick Revision — Key Definitions
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Term</th>
+                                <th>Definition</th>
+                            </tr>
+                        </thead>
+                        <tbody class="td-normal">
+                            <tr>
+                                <td><strong>Symbol</strong></td>
+                                <td>Smallest atomic building block (individual character)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Alphabet (Σ)</strong></td>
+                                <td>Finite, non-empty set of symbols</td>
+                            </tr>
+                            <tr>
+                                <td><strong>String (w)</strong></td>
+                                <td>Finite sequence of symbols from Σ</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Empty String (ε)</strong></td>
+                                <td>String with zero symbols; |ε| = 0; identity for concatenation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>|w|</strong></td>
+                                <td>Length of string w (count of symbols)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Prefix</strong></td>
+                                <td>String from beginning of w (remove trailing symbols)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Suffix</strong></td>
+                                <td>String from end of w (remove leading symbols)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Substring</strong></td>
+                                <td>Contiguous portion of w (remove a prefix and a suffix)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Σᵏ</strong></td>
+                                <td>Set of all strings of exactly length k over Σ; |Σᵏ| = |Σ|ᵏ</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Σ* (Kleene)</strong></td>
+                                <td>Set of ALL strings over Σ including ε; Σ* = Σ⁰ ∪ Σ¹ ∪ Σ² ∪ ...</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Σ⁺ (Positive)</strong></td>
+                                <td>Set of all NON-EMPTY strings over Σ; Σ⁺ = Σ* − {ε}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Language (L)</strong></td>
+                                <td>Any subset of Σ* — a set of strings with specific rules</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Grammar G = (V,T,P,S)</strong></td>
+                                <td>V=Non-terminals, T=Terminals, P=Productions, S=Start symbol</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Automaton</strong></td>
+                                <td>Abstract mathematical model of a computing machine</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Chomsky Hierarchy</strong></td>
+                                <td>Classification: Type 0 (TM), Type 1 (LBA), Type 2 (PDA), Type 3 (FA)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Derivation Tree</strong></td>
+                                <td>Graphical representation of string derivation from S using productions</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ambiguous Grammar</strong></td>
+                                <td>CFG where at least one string has 2+ different parse trees</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sentential Form</strong></td>
+                                <td>Any string of terminals and non-terminals derived from S during derivation</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="key-box" style="margin-top:24px;">
+                    <div class="key-label">🎯 Exam Must-Remember Points</div>
+                    <ul>
+                        <li>V ∩ T = ∅ — Variables and Terminals are always disjoint sets.</li>
+                        <li>Σ* always includes ε; Σ⁺ never includes ε.</li>
+                        <li>{ε} ≠ ∅ — language with empty string ≠ empty language.</li>
+                        <li>Type 3 ⊂ Type 2 ⊂ Type 1 ⊂ Type 0 (proper subset at each level).</li>
+                        <li>Regular Grammar = Right Linear OR Left Linear (not both mixed).</li>
+                        <li>All DFAs are NFAs. Every NFA can be converted to an equivalent DFA.</li>
+                        <li>RE = DFA = NFA = ε-NFA (all equivalent for regular languages).</li>
+                        <li>CFG generates exactly Context Free Languages; accepted by PDA.</li>
+                        <li>Language of a grammar L(G) = all terminal strings derivable from S.</li>
+                        <li>Derivation tree root = S; leaves = terminals; internal = non-terminals.</li>
+                    </ul>
+                </div>
+
+                <div
+                    style="margin-top:30px; padding:20px 24px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; text-align:center;">
+                    <div style="font-size:13px; color:var(--text2); margin-bottom:6px;">END OF CHAPTER 1</div>
+                    <div style="font-size:15px; font-weight:700; color:var(--accent);">Theory of Computation — NMIMS
+                        MPSTME · B.Tech CSE</div>
+                    <div style="font-size:12px; color:var(--text2); margin-top:6px;">Next: Chapter 2 — Finite State
+                        Machines & Regular Sets (DFA, NFA, ε-NFA, RE, Pumping Lemma)</div>
+                </div>
+            </div>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+
+    <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // Active nav highlight on scroll
+        const sections = document.querySelectorAll('[id^="s"]');
+        const navItems = document.querySelectorAll('.nav-item');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => {
+                if (window.scrollY >= s.offsetTop - 120) current = s.id;
+            });
+            navItems.forEach(n => {
+                n.classList.remove('active');
+                if (n.getAttribute('href') === '#' + current) n.classList.add('active');
+            });
+        });
+    </script>
+
+  <footer style="text-align:center;padding:28px 40px;border-top:1px solid #30363d;font-size:13px;color:#8b949e;background:#0d1117;margin-top:40px;">
+    <p>TCS Notes &middot; <span style="color:#58a6ff;font-weight:600;">NMIMS MPSTME</span> &middot; B.Tech CSE Sem 5 &middot; Theory of Computation</p>
+    <p style="margin-top:6px;">Made by <span style="color:#58a6ff;font-weight:600;">Jay Naik</span></p>
+  </footer>
+</body>
+
+</html>

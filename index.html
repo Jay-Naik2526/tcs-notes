@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCS Notes — Theory of Computation | NMIMS MPSTME</title>
+  <meta name="description" content="Complete Theory of Computation notes for NMIMS MPSTME B.Tech CSE Sem 5. Covers Automata, DFA, NFA, CFG, PDA, Turing Machines and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #0d1117;
+      --bg2:     #161b22;
+      --bg3:     #1c2128;
+      --bg4:     #21262d;
+      --border:  #30363d;
+      --accent:  #58a6ff;
+      --green:   #3fb950;
+      --red:     #f85149;
+      --orange:  #ffa657;
+      --purple:  #d2a8ff;
+      --teal:    #39d353;
+      --text:    #e6edf3;
+      --text2:   #8b949e;
+      --text3:   #c9d1d9;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATED BG GRID ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(88,166,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(88,166,255,.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 60px;
+      background: rgba(13,17,23,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-logo {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 15px; color: #0d1117;
+    }
+    .nav-title { font-weight: 800; font-size: 15px; color: var(--text); }
+    .nav-sub   { font-size: 11px; color: var(--text2); margin-top: 1px; }
+    .nav-badge {
+      padding: 4px 12px;
+      background: rgba(88,166,255,.12);
+      border: 1px solid rgba(88,166,255,.25);
+      border-radius: 20px;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 100px 60px 80px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(88,166,255,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute;
+      bottom: -80px; left: 20%;
+      width: 300px; height: 300px;
+      background: radial-gradient(ellipse, rgba(210,168,255,.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(88,166,255,.1);
+      border: 1px solid rgba(88,166,255,.25);
+      border-radius: 30px;
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: .5px;
+      margin-bottom: 32px;
+    }
+    .hero-tag .dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(1.4); }
+    }
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 64px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 50%, var(--orange) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 17px;
+      color: var(--text2);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .hero-stats {
+      display: inline-flex;
+      gap: 0;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 60px;
+    }
+    .stat {
+      padding: 16px 28px;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 11px;
+      color: var(--text2);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    /* ── CHAPTERS SECTION ── */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 0 60px 100px;
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .section-head h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .section-head .line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-head .count {
+      font-size: 12px;
+      color: var(--text2);
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── CHAPTER GRID ── */
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .ch-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: all .25s cubic-bezier(.4,0,.2,1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .ch-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .25s;
+      border-radius: 16px;
+    }
+    .ch-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(88,166,255,.4);
+      box-shadow: 0 16px 48px rgba(88,166,255,.12);
+    }
+    .ch-card:hover::before { opacity: 1; }
+
+    /* Color accents per chapter */
+    .ch-card.c1 { --cc: #58a6ff; }
+    .ch-card.c2 { --cc: #3fb950; }
+    .ch-card.c3 { --cc: #ffa657; }
+    .ch-card.c4 { --cc: #d2a8ff; }
+    .ch-card.c5 { --cc: #f85149; }
+    .ch-card.c6 { --cc: #39d353; }
+
+    .ch-card:hover { border-color: rgba(var(--cc-raw, 88,166,255),.4); }
+
+    .ch-card.c1:hover { border-color: rgba(88,166,255,.4);  box-shadow: 0 16px 48px rgba(88,166,255,.12); }
+    .ch-card.c2:hover { border-color: rgba(63,185,80,.4);   box-shadow: 0 16px 48px rgba(63,185,80,.1); }
+    .ch-card.c3:hover { border-color: rgba(255,166,87,.4);  box-shadow: 0 16px 48px rgba(255,166,87,.1); }
+    .ch-card.c4:hover { border-color: rgba(210,168,255,.4); box-shadow: 0 16px 48px rgba(210,168,255,.1); }
+    .ch-card.c5:hover { border-color: rgba(248,81,73,.4);   box-shadow: 0 16px 48px rgba(248,81,73,.1); }
+    .ch-card.c6:hover { border-color: rgba(57,211,83,.4);   box-shadow: 0 16px 48px rgba(57,211,83,.1); }
+
+    .ch-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--cc);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ch-number .ch-status {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .status-ready {
+      background: rgba(63,185,80,.15);
+      color: var(--green);
+      border: 1px solid rgba(63,185,80,.25);
+    }
+    .status-soon {
+      background: rgba(139,148,158,.1);
+      color: var(--text2);
+      border: 1px solid var(--border);
+    }
+
+    .ch-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .ch-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .ch-desc {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .ch-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 22px;
+    }
+    .topic-tag {
+      padding: 3px 10px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11px;
+      color: var(--text2);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .ch-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .ch-meta-txt {
+      font-size: 12px;
+      color: var(--text2);
+    }
+    .ch-arrow {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: rgba(88,166,255,.1);
+      border: 1px solid rgba(88,166,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      font-size: 14px;
+      transition: all .2s;
+    }
+    .ch-card.c2 .ch-arrow { background: rgba(63,185,80,.1); border-color: rgba(63,185,80,.2); color: var(--green); }
+    .ch-card.c3 .ch-arrow { background: rgba(255,166,87,.1); border-color: rgba(255,166,87,.2); color: var(--orange); }
+    .ch-card.c4 .ch-arrow { background: rgba(210,168,255,.1); border-color: rgba(210,168,255,.2); color: var(--purple); }
+    .ch-card.c5 .ch-arrow { background: rgba(248,81,73,.1); border-color: rgba(248,81,73,.2); color: var(--red); }
+    .ch-card.c6 .ch-arrow { background: rgba(57,211,83,.1); border-color: rgba(57,211,83,.2); color: var(--teal); }
+
+    .ch-card:hover .ch-arrow { transform: translateX(3px); }
+    .ch-card.locked .ch-arrow { pointer-events: none; }
+
+    /* locked card style */
+    .ch-card.locked {
+      opacity: .55;
+      cursor: default;
+    }
+    .ch-card.locked:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ── QUICK INFO STRIP ── */
+    .info-strip {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 16px;
+      padding: 0 60px 80px;
+    }
+    .info-card {
+      flex: 1;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .info-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .info-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .info-card p {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 32px 60px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text2);
+    }
+    footer span { color: var(--accent); font-weight: 600; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .chapters-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      nav { padding: 12px 20px; }
+      .hero { padding: 60px 20px 50px; }
+      .section { padding: 0 20px 60px; }
+      .info-strip { flex-direction: column; padding: 0 20px 60px; }
+      .chapters-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">
+      <div class="nav-logo">TCS</div>
+      <div>
+        <div class="nav-title">Theory of Computation</div>
+        <div class="nav-sub">NMIMS MPSTME · B.Tech CSE · Sem 5</div>
+      </div>
+    </div>
+    <div class="nav-badge">6 Chapters</div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+
+    <div class="hero-tag">
+      <span class="dot"></span>
+      Study Notes — Theory of Computation &amp; Formal Languages
+    </div>
+
+    <h1>
+      Master <span class="grad">Automata &amp; TCS</span><br>one chapter at a time
+    </h1>
+
+    <p>
+      Comprehensive, exam-ready notes covering Automata Theory, Finite Machines,
+      Pushdown Automata, Context-Free Grammars, and Turing Machines.
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-val">6</div>
+        <div class="stat-lbl">Chapters</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">3</div>
+        <div class="stat-lbl">Available Now</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">Sem 5</div>
+        <div class="stat-lbl">B.Tech CSE</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">Dark</div>
+        <div class="stat-lbl">Mode</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTERS -->
+  <section class="section">
+    <div class="section-head">
+      <h2>📚 Chapters</h2>
+      <div class="line"></div>
+      <div class="count">6 units</div>
+    </div>
+
+    <div class="chapters-grid">
+
+      <!-- CH 1 — AVAILABLE -->
+      <a class="ch-card c1" href="ch1.html" id="ch1-link">
+        <div class="ch-number">
+          Chapter 01
+          <span class="ch-status status-ready">✓ Ready</span>
+        </div>
+        <span class="ch-icon">🔤</span>
+        <div class="ch-title">Introduction to Automata Theory</div>
+        <div class="ch-desc">
+          Basic concepts of Strings, Formal Languages, Chomsky Hierarchy,
+          Grammar Types 0–3, Derivation Trees, and compiler applications.
+        </div>
+        <div class="ch-topics">
+          <span class="topic-tag">Strings</span>
+          <span class="topic-tag">Chomsky</span>
+          <span class="topic-tag">Grammar Types</span>
+          <span class="topic-tag">Derivation Tree</span>
+        </div>
+        <div class="ch-footer">
+          <span class="ch-meta-txt">Unit 1 · 3 hrs</span>
+          <span class="ch-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- CH 2 — AVAILABLE -->
+      <a class="ch-card c2" href="ch2.html" id="ch2-link">
+        <div class="ch-number">
+          Chapter 02
+          <span class="ch-status status-ready">✓ Ready</span>
+        </div>
+        <span class="ch-icon">🤖</span>
+        <div class="ch-title">Finite State Machine &amp; Regular Set</div>
+        <div class="ch-desc">
+          DFA, NFA, ε-NFA, NFA to Minimized DFA conversion, Regular Expressions,
+          DFA to RE, Closure Properties &amp; Pumping Lemma.
+        </div>
+        <div class="ch-topics">
+          <span class="topic-tag">DFA</span>
+          <span class="topic-tag">NFA</span>
+          <span class="topic-tag">ε-NFA</span>
+          <span class="topic-tag">Min DFA</span>
+          <span class="topic-tag">Pumping Lemma</span>
+        </div>
+        <div class="ch-footer">
+          <span class="ch-meta-txt">Unit 2 · 8 hrs</span>
+          <span class="ch-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- CH 3 — AVAILABLE -->
+      <a class="ch-card c3" href="ch3.html" id="ch3-link">
+        <div class="ch-number">
+          Chapter 03
+          <span class="ch-status status-ready">✓ Ready</span>
+        </div>
+        <span class="ch-icon">🔁</span>
+        <div class="ch-title">Moore and Mealy Machine</div>
+        <div class="ch-desc">
+          Designing Mealy and Moore machines, conversion from
+          Mealy to Moore and Moore to Mealy with examples.
+        </div>
+        <div class="ch-topics">
+          <span class="topic-tag">Moore</span>
+          <span class="topic-tag">Mealy</span>
+          <span class="topic-tag">Conversion</span>
+          <span class="topic-tag">Output FSM</span>
+        </div>
+        <div class="ch-footer">
+          <span class="ch-meta-txt">Unit 3 · 3 hrs</span>
+          <span class="ch-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- CH 4 — COMING SOON -->
+      <div class="ch-card c4 locked" id="ch4-link">
+        <div class="ch-number">
+          Chapter 04
+          <span class="ch-status status-soon">Coming Soon</span>
+        </div>
+        <span class="ch-icon">📐</span>
+        <div class="ch-title">Context Free Grammar</div>
+        <div class="ch-desc">
+          Basic concept of CFG and Language, Ambiguous CFG, Simplification
+          of CFG, Chomsky's Normal Form, Griebach Normal Form.
+        </div>
+        <div class="ch-topics">
+          <span class="topic-tag">CFG</span>
+          <span class="topic-tag">Ambiguity</span>
+          <span class="topic-tag">CNF</span>
+          <span class="topic-tag">GNF</span>
+        </div>
+        <div class="ch-footer">
+          <span class="ch-meta-txt">Unit 4 · 5 hrs</span>
+          <span class="ch-arrow">🔒</span>
+        </div>
+      </div>
+
+      <!-- CH 5 — COMING SOON -->
+      <div class="ch-card c5 locked" id="ch5-link">
+        <div class="ch-number">
+          Chapter 05
+          <span class="ch-status status-soon">Coming Soon</span>
+        </div>
+        <span class="ch-icon">📦</span>
+        <div class="ch-title">Push Down Automata</div>
+        <div class="ch-desc">
+          Tuples and elements in PDA, Design of PDA for CFL,
+          Power of PDA over FSM, Closure Properties of CFL.
+        </div>
+        <div class="ch-topics">
+          <span class="topic-tag">PDA</span>
+          <span class="topic-tag">CFL Design</span>
+          <span class="topic-tag">PDA vs FSM</span>
+          <span class="topic-tag">CFL Closure</span>
+        </div>
+        <div class="ch-footer">
+          <span class="ch-meta-txt">Unit 5 · 5 hrs</span>
+          <span class="ch-arrow">🔒</span>
+        </div>
+      </div>
+
+      <!-- CH 6 — COMING SOON -->
+      <div class="ch-card c6 locked" id="ch6-link">
+        <div class="ch-number">
+          Chapter 06
+          <span class="ch-status status-soon">Coming Soon</span>
+        </div>
+        <span class="ch-icon">⚙️</span>
+        <div class="ch-title">Turing Machine</div>
+        <div class="ch-desc">
+          TM Definition, TM designing examples, Recursive &amp; RE languages,
+          Universal TM, Church-Turing Hypothesis, Halting Problem, TM vs PDA.
+        </div>
+        <div class="ch-topics">
+          <span class="topic-tag">TM</span>
+          <span class="topic-tag">Universal TM</span>
+          <span class="topic-tag">Halting</span>
+          <span class="topic-tag">Church-Turing</span>
+        </div>
+        <div class="ch-footer">
+          <span class="ch-meta-txt">Unit 6 · 6 hrs</span>
+          <span class="ch-arrow">🔒</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INFO STRIP -->
+  <div class="info-strip">
+    <div class="info-card">
+      <div class="info-icon">🎯</div>
+      <div>
+        <h3>Exam-Focused</h3>
+        <p>Every chapter covers key definitions, formulae, solved examples, and practice questions modelled on university patterns.</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">🌙</div>
+      <div>
+        <h3>Dark Mode by Default</h3>
+        <p>Easy on the eyes during late-night study sessions. Consistent GitHub-inspired dark theme across all chapters.</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">⚡</div>
+      <div>
+        <h3>Fast &amp; Offline Ready</h3>
+        <p>Pure HTML — no frameworks, no internet needed. Open in any browser and study anywhere, even without Wi-Fi.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>TCS Notes · <span>NMIMS MPSTME</span> · B.Tech CSE Sem 5 · Theory of Computation &amp; Formal Languages</p>
+    <p style="margin-top:8px;">Made by <span>Jay Naik</span></p>
+  </footer>
+
+</body>
+</html>

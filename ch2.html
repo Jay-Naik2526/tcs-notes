@@ -1,0 +1,2767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCS Notes — Chapter 2: Finite State Machines & Regular Sets</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg2: #161b22;
+            --bg3: #1c2128;
+            --bg4: #21262d;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent2: #3fb950;
+            --accent3: #ff7b72;
+            --accent4: #ffa657;
+            --accent5: #d2a8ff;
+            --text: #e6edf3;
+            --text2: #8b949e;
+            --text3: #c9d1d9;
+            --red: #f85149;
+            --yellow: #e3b341;
+            --green: #3fb950;
+            --purple: #d2a8ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            z-index: 100;
+            padding: 0 0 40px;
+        }
+
+        .sidebar-brand {
+            padding: 18px 18px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-brand .course {
+            font-size: 10px;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 3px;
+        }
+
+        .sidebar-brand .title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.3;
+        }
+
+        .sidebar-brand .ch {
+            font-size: 11px;
+            color: var(--accent4);
+            margin-top: 3px;
+        }
+
+        .nav-section {
+            padding: 12px 10px 4px 18px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 6px 18px 6px 22px;
+            font-size: 12px;
+            color: var(--text3);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all .15s;
+        }
+
+        .nav-item:hover {
+            color: var(--accent);
+            background: rgba(88, 166, 255, .06);
+            border-left-color: var(--accent);
+        }
+
+        .nav-item.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+            background: rgba(88, 166, 255, .1);
+        }
+
+        .nav-sub {
+            padding-left: 34px;
+            font-size: 11.5px;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        /* CHAPTER HEADER */
+        .chapter-header {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f29 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 55px 60px 45px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(63, 185, 80, .07) 0%, transparent 70%);
+        }
+
+        .ch-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(63, 185, 80, .12);
+            border: 1px solid rgba(63, 185, 80, .3);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--accent2);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .chapter-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .chapter-header h1 span {
+            color: var(--accent2);
+        }
+
+        .chapter-header p {
+            font-size: 14px;
+            color: var(--text2);
+            max-width: 640px;
+            position: relative;
+        }
+
+        .ch-meta {
+            display: flex;
+            gap: 14px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .ch-meta-item {
+            padding: 9px 16px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .ch-meta-item .label {
+            color: var(--text2);
+            margin-bottom: 2px;
+        }
+
+        .ch-meta-item .value {
+            color: var(--accent4);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 45px 60px;
+            max-width: 980px;
+        }
+
+        .section {
+            margin-bottom: 56px;
+        }
+
+        .section-title {
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .num {
+            background: var(--accent2);
+            color: #0d1117;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .subsection {
+            margin: 26px 0;
+        }
+
+        .subsection-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent4);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 15px;
+            background: var(--accent4);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: var(--text3);
+        }
+
+        /* BOXES */
+        .def-box {
+            background: rgba(88, 166, 255, .06);
+            border: 1px solid rgba(88, 166, 255, .25);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 14px 0;
+        }
+
+        .def-box .def-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .def-box p {
+            color: var(--text3);
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .formula {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 13.5px;
+            color: var(--accent5);
+            margin: 12px 0;
+            letter-spacing: .3px;
+            line-height: 1.8;
+        }
+
+        .key-box {
+            background: rgba(255, 166, 87, .07);
+            border: 1px solid rgba(255, 166, 87, .25);
+            border-left: 3px solid var(--accent4);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .key-box .key-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent4);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .key-box ul {
+            padding-left: 17px;
+        }
+
+        .key-box li {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin-bottom: 5px;
+        }
+
+        .example-box {
+            background: rgba(63, 185, 80, .05);
+            border: 1px solid rgba(63, 185, 80, .2);
+            border-left: 3px solid var(--accent2);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .example-box .ex-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent2);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .example-box p {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin-bottom: 5px;
+        }
+
+        .example-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .note-box {
+            background: rgba(248, 81, 73, .06);
+            border: 1px solid rgba(248, 81, 73, .2);
+            border-left: 3px solid var(--red);
+            border-radius: 8px;
+            padding: 13px 17px;
+            margin: 14px 0;
+        }
+
+        .note-box .note-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--red);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .note-box p {
+            color: var(--text3);
+            font-size: 13.5px;
+            margin: 0;
+        }
+
+        /* TABLE */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead tr {
+            background: var(--bg3);
+        }
+
+        thead th {
+            padding: 11px 14px;
+            text-align: left;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background .1s;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(88, 166, 255, .04);
+        }
+
+        tbody td {
+            padding: 10px 14px;
+            color: var(--text3);
+            vertical-align: top;
+        }
+
+        tbody td:first-child {
+            color: var(--accent5);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .td-normal td:first-child {
+            color: var(--text3);
+            font-family: inherit;
+            font-weight: 400;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 12.5px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--accent5);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        /* DIVIDER */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 38px 0;
+        }
+
+        /* BADGE */
+        .badge {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: 10.5px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .badge-blue {
+            background: rgba(88, 166, 255, .2);
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, .3);
+        }
+
+        .badge-green {
+            background: rgba(63, 185, 80, .15);
+            color: var(--accent2);
+            border: 1px solid rgba(63, 185, 80, .3);
+        }
+
+        .badge-red {
+            background: rgba(248, 81, 73, .15);
+            color: var(--red);
+            border: 1px solid rgba(248, 81, 73, .3);
+        }
+
+        .badge-orange {
+            background: rgba(255, 166, 87, .15);
+            color: var(--accent4);
+            border: 1px solid rgba(255, 166, 87, .3);
+        }
+
+        .badge-purple {
+            background: rgba(210, 168, 255, .15);
+            color: var(--purple);
+            border: 1px solid rgba(210, 168, 255, .3);
+        }
+
+        /* MACHINE DIAGRAM */
+        .machine-box {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 16px 14px;
+            margin: 18px 0;
+            text-align: center;
+        }
+
+        .machine-caption {
+            font-size: 11px;
+            color: var(--text2);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        svg text {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        }
+
+        /* RE PROBLEM CARD */
+        .re-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+
+        .re-card {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 15px 17px;
+        }
+
+        .re-card .re-q {
+            font-size: 12px;
+            color: var(--text2);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .re-card .re-ans {
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            color: var(--accent5);
+            font-weight: 700;
+            background: var(--bg4);
+            padding: 7px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            margin-bottom: 6px;
+        }
+
+        .re-card .re-note {
+            font-size: 11.5px;
+            color: var(--text2);
+        }
+
+        /* PRACTICE */
+        .practice-section {
+            background: rgba(210, 168, 255, .05);
+            border: 1px solid rgba(210, 168, 255, .2);
+            border-radius: 10px;
+            padding: 22px 26px;
+            margin: 28px 0;
+        }
+
+        .practice-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .practice-title::before {
+            content: '✦';
+            font-size: 12px;
+        }
+
+        .q-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(210, 168, 255, .1);
+            font-size: 13.5px;
+            color: var(--text3);
+        }
+
+        .q-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .q-num {
+            min-width: 26px;
+            height: 26px;
+            background: rgba(210, 168, 255, .15);
+            border: 1px solid rgba(210, 168, 255, .25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--purple);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .q-ans {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 9px 13px;
+            margin-top: 7px;
+            font-size: 13px;
+            color: var(--text2);
+        }
+
+        .q-ans strong {
+            color: var(--accent2);
+        }
+
+        /* GRID */
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 14px 0;
+        }
+
+        .summary-card {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 13px 15px;
+        }
+
+        .summary-card .sc-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent4);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+
+        .summary-card p,
+        .summary-card li {
+            font-size: 12.5px;
+            color: var(--text2);
+        }
+
+        .summary-card ul {
+            padding-left: 15px;
+        }
+
+        .summary-card li {
+            margin-bottom: 3px;
+        }
+
+        /* IDENTITY TABLE */
+        .id-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 14px 0;
+        }
+
+        .id-table th {
+            background: var(--bg3);
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent5);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .id-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .id-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .id-table td:nth-child(1) {
+            font-size: 11px;
+            color: var(--text2);
+            min-width: 36px;
+        }
+
+        .id-table td:nth-child(2) {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--accent5);
+            min-width: 200px;
+        }
+
+        .id-table td:nth-child(3) {
+            font-size: 12.5px;
+            color: var(--text3);
+        }
+
+        .id-table tr:nth-child(even) {
+            background: rgba(88, 166, 255, .03);
+        }
+
+        /* CLOSURE TABLE */
+        .cl-yes {
+            color: var(--accent2);
+            font-weight: 700;
+        }
+
+        .cl-no {
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        /* SCROLL TOP */
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            background: var(--accent2);
+            color: #0d1117;
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 17px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(63, 185, 80, .3);
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 28px 22px;
+            }
+
+            .chapter-header {
+                padding: 36px 22px;
+            }
+
+            .re-grid,
+            .grid2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <div class="course">NMIMS MPSTME · B.Tech CSE · Sem 5</div>
+            <div class="title">Theory of Computation</div>
+            <div class="ch">Chapter 2 — FSM & Regular Sets</div>
+        </div>
+        <div class="nav-section">Contents</div>
+        <a class="nav-item active" href="#s1">2.1 Regular Expressions</a>
+        <a class="nav-item nav-sub" href="#s1a">→ Formal Definition</a>
+        <a class="nav-item nav-sub" href="#s1b">→ RE Identities</a>
+        <a class="nav-item" href="#s2">2.2 RE Solved Problems</a>
+        <a class="nav-item nav-sub" href="#s2a">→ Length-based REs</a>
+        <a class="nav-item nav-sub" href="#s2b">→ Pattern-based REs</a>
+        <a class="nav-item nav-sub" href="#s2c">→ English Description</a>
+        <a class="nav-item" href="#s3">2.3 DFA (Deterministic FA)</a>
+        <a class="nav-item nav-sub" href="#s3a">→ DFA Diagrams</a>
+        <a class="nav-item nav-sub" href="#s3b">→ DFA Examples</a>
+        <a class="nav-item" href="#s4">2.4 NFA & ε-NFA</a>
+        <a class="nav-item nav-sub" href="#s4a">→ NFA Diagrams</a>
+        <a class="nav-item nav-sub" href="#s4b">→ Thomson's Rules</a>
+        <a class="nav-item" href="#s5">2.5 NFA → DFA Conversion</a>
+        <a class="nav-item" href="#s6">2.6 DFA → RE (Arden's Theorem)</a>
+        <a class="nav-item" href="#s7">2.7 Closure Properties</a>
+        <a class="nav-item" href="#s8">2.8 Pumping Lemma</a>
+        <a class="nav-item" href="#s9">2.9 Moore & Mealy Machines</a>
+        <a class="nav-item nav-sub" href="#s9a">→ Moore Machine</a>
+        <a class="nav-item nav-sub" href="#s9b">→ Mealy Machine</a>
+        <a class="nav-item nav-sub" href="#s9c">→ Conversion</a>
+        <a class="nav-item" href="#s10">2.10 Practice Questions</a>
+        <a class="nav-item" href="#s11">2.11 Quick Revision</a>
+    </nav>
+
+    <!-- MAIN -->
+    <div class="main">
+        <div class="chapter-header">
+            <div class="ch-badge">Unit 2 · 8 Lectures</div>
+            <h1>Finite State Machines &amp; <span>Regular Sets</span></h1>
+            <p>DFA, NFA, ε-NFA, Converting NFA to Minimized DFA, Regular Expressions, DFA to RE Conversion, Regular
+                Language, Closure Properties &amp; Pumping Lemma for Regular Sets.</p>
+            <div class="ch-meta">
+                <div class="ch-meta-item">
+                    <div class="label">Duration</div>
+                    <div class="value">08 Lectures</div>
+                </div>
+                <div class="ch-meta-item">
+                    <div class="label">Textbook</div>
+                    <div class="value">Linz Ch. 2–4 · Kulkarni Ch. 2</div>
+                </div>
+                <div class="ch-meta-item">
+                    <div class="label">Previous</div>
+                    <div class="value">Chapter 1 — Automata Intro</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- ══════════════════════════════════
+     2.1 REGULAR EXPRESSIONS
+══════════════════════════════════ -->
+            <div class="section" id="s1">
+                <div class="section-title"><span class="num">2.1</span> Regular Expressions (RE)</div>
+
+                <div class="def-box">
+                    <div class="def-label">Definition</div>
+                    <p>A <strong>Regular Expression</strong> is a formal notation for describing a Regular Language. The
+                        language accepted by a Finite Automaton can always be described by a Regular Expression, and
+                        vice versa — they are <strong>equivalent in power</strong>.</p>
+                </div>
+
+                <div class="subsection" id="s1a">
+                    <div class="subsection-title">2.1.1 Formal Definition (Recursive)</div>
+                    <p>Let Σ be an alphabet. The set of Regular Expressions over Σ is defined as:</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Basis/Rule</th>
+                                    <th>RE</th>
+                                    <th>Denotes</th>
+                                    <th>Regular Set</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>Basis 1</strong></td>
+                                    <td><code>φ</code></td>
+                                    <td>Empty set</td>
+                                    <td>{ } — empty language</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Basis 2</strong></td>
+                                    <td><code>ε</code></td>
+                                    <td>Null/empty string</td>
+                                    <td>{ε}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Basis 3</strong></td>
+                                    <td><code>a</code> where a∈Σ</td>
+                                    <td>Single symbol</td>
+                                    <td>{a}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Inductive 1</strong></td>
+                                    <td><code>R₁ + R₂</code></td>
+                                    <td>Union (OR)</td>
+                                    <td>L(R₁) ∪ L(R₂)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Inductive 2</strong></td>
+                                    <td><code>R₁ · R₂</code></td>
+                                    <td>Concatenation</td>
+                                    <td>L(R₁) · L(R₂)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Inductive 3</strong></td>
+                                    <td><code>R*</code></td>
+                                    <td>Kleene closure</td>
+                                    <td>Zero or more of R</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Inductive 4</strong></td>
+                                    <td><code>R⁺</code></td>
+                                    <td>Positive closure</td>
+                                    <td>One or more of R</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="key-box">
+                        <div class="key-label">Operator Precedence (High to Low)</div>
+                        <ul>
+                            <li><strong>1st (highest):</strong> Kleene star <code>*</code> and positive closure
+                                <code>⁺</code></li>
+                            <li><strong>2nd:</strong> Concatenation (implicit dot <code>·</code>)</li>
+                            <li><strong>3rd (lowest):</strong> Union <code>+</code></li>
+                            <li>Parentheses <code>()</code> override all precedence rules</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="ex-label">Basic RE Examples — L(r)</div>
+                        <p><code>r = a + b</code> → L(r) = {a, b}</p>
+                        <p><code>r = a.b</code> → L(r) = {ab}</p>
+                        <p><code>r = a*</code> → L(r) = {ε, a, aa, aaa, aaaa, ...}</p>
+                        <p><code>r = a⁺</code> → L(r) = {a, aa, aaa, aaaa, ...} (no ε)</p>
+                        <p><code>r = (a+b)*</code> → L(r) = all strings over {a,b} including ε</p>
+                    </div>
+                </div>
+
+                <!-- RE IDENTITIES -->
+                <div class="subsection" id="s1b">
+                    <div class="subsection-title">2.1.2 Regular Expression Identities (Laws)</div>
+                    <p>Used to simplify and manipulate Regular Expressions:</p>
+                    <table class="id-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Identity</th>
+                                <th>Explanation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>φ + R = R</td>
+                                <td>Union with empty set changes nothing</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>φR = Rφ = φ</td>
+                                <td>Concatenation with empty set = empty set</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>εR = Rε = R</td>
+                                <td>ε is the identity for concatenation</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>ε* = ε &nbsp; and &nbsp; φ* = ε</td>
+                                <td>Kleene star of ε or φ gives {ε}</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>R + R = R</td>
+                                <td>Idempotent law — union with itself</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>R*R* = R*</td>
+                                <td>Multiple stars collapse into one</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>RR* = R*R = R⁺</td>
+                                <td>Both mean "one or more R"</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>(R*)* = R*</td>
+                                <td>Star is idempotent</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>ε + RR* = R* = ε + R*R</td>
+                                <td>Adding ε to R⁺ gives R*</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>(PQ)*P = P(QP)*</td>
+                                <td>Shifting property</td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>(P+Q)* = (P*Q*)* = (P*+Q*)*</td>
+                                <td>Union and closure equivalences</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>(P+Q)R = PR + QR</td>
+                                <td>Left distributive law</td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>R(P+Q) = RP + RQ</td>
+                                <td>Right distributive law</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.2 RE SOLVED PROBLEMS
+══════════════════════════════════ -->
+            <div class="section" id="s2">
+                <div class="section-title"><span class="num">2.2</span> Regular Expression — Solved Problems</div>
+
+                <div class="subsection" id="s2a">
+                    <div class="subsection-title">2.2.1 Length-Based Regular Expressions (Σ = {a, b})</div>
+                    <div class="re-grid">
+                        <div class="re-card">
+                            <div class="re-q">All strings of any length (including ε)</div>
+                            <div class="re-ans">(a + b)*</div>
+                            <div class="re-note">Matches: ε, a, b, aa, ab, ba, bb, ...</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings EXCEPT empty string</div>
+                            <div class="re-ans">(a + b)⁺</div>
+                            <div class="re-note">= (a+b)* − {ε}. Matches: a, b, aa, ab, ...</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings of length EXACTLY 2</div>
+                            <div class="re-ans">(a + b)(a + b)</div>
+                            <div class="re-note">Matches: aa, ab, ba, bb (exactly 4 strings)</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings of length EXACTLY 3</div>
+                            <div class="re-ans">(a + b)(a + b)(a + b)</div>
+                            <div class="re-note">Matches 8 strings: aaa, aab, aba, abb, ...</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings of length AT LEAST 2</div>
+                            <div class="re-ans">(a + b)(a + b)(a + b)*</div>
+                            <div class="re-note">2 fixed positions + 0 or more after</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings of length AT MOST 2</div>
+                            <div class="re-ans">(ε + a + b)(ε + a + b)</div>
+                            <div class="re-note">Matches: ε, a, b, aa, ab, ba, bb</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings of EVEN length</div>
+                            <div class="re-ans">((a + b)(a + b))*</div>
+                            <div class="re-note">Matches: ε, aa, ab, ba, bb, aaaa, ...</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings of ODD length</div>
+                            <div class="re-ans">((a+b)(a+b))*(a+b)</div>
+                            <div class="re-note">Even-length prefix + 1 extra symbol</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings of length divisible by 3</div>
+                            <div class="re-ans">((a+b)(a+b)(a+b))*</div>
+                            <div class="re-note">Matches: ε, aaa, aab, aba, abb, ..., aaaaaa, ...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s2b">
+                    <div class="subsection-title">2.2.2 Pattern-Based Regular Expressions</div>
+                    <div class="re-grid">
+                        <div class="re-card">
+                            <div class="re-q">All strings ENDING with 'aa'</div>
+                            <div class="re-ans">(a + b)*aa</div>
+                            <div class="re-note">Any string (incl. ε) then mandatory 'aa'</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings STARTING with 'a'</div>
+                            <div class="re-ans">a(a + b)*</div>
+                            <div class="re-note">Mandatory 'a' first, then anything</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings CONTAINING 'a' (at least one 'a')</div>
+                            <div class="re-ans">(a + b)*a(a + b)*</div>
+                            <div class="re-note">Anything, then 'a', then anything</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">Starting with 'a' AND ending with 'a'</div>
+                            <div class="re-ans">a(a + b)*a + a</div>
+                            <div class="re-note">+a handles single 'a' (starts and ends with a)</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">Start and end with DIFFERENT symbols</div>
+                            <div class="re-ans">a(a+b)*b + b(a+b)*a</div>
+                            <div class="re-note">Case 1: a...b, Case 2: b...a</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">Start and end with SAME symbol</div>
+                            <div class="re-ans">a(a+b)*a + b(a+b)*b + a + b</div>
+                            <div class="re-note">+a +b for single-char strings</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">'a' appears EXACTLY twice</div>
+                            <div class="re-ans">b*ab*ab*</div>
+                            <div class="re-note">Only two 'a's, any b's around them</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">'a' appears AT LEAST twice</div>
+                            <div class="re-ans">b*ab*a(a + b)*</div>
+                            <div class="re-note">Two forced 'a's, then anything</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">All strings ending with 'abb'</div>
+                            <div class="re-ans">(a + b)*abb</div>
+                            <div class="re-note">Anything then mandatory 'abb' suffix</div>
+                        </div>
+                        <div class="re-card">
+                            <div class="re-q">Even number of 'a's (count of a is even)</div>
+                            <div class="re-ans">(b*ab*ab*)*b*</div>
+                            <div class="re-note">Groups of exactly 2 a's, b's anywhere</div>
+                        </div>
+                    </div>
+
+                    <div class="key-box" style="margin-top:18px;">
+                        <div class="key-label">Grammar from RE — Standard Template</div>
+                        <ul>
+                            <li>RE = <code>(a+b)*abb</code> → Grammar: <code>S → Aabb, A → aA | bA | ε</code></li>
+                            <li>RE = <code>abb(a+b)*</code> → Grammar: <code>S → abbA, A → aA | bA | ε</code></li>
+                            <li>Pattern: The fixed part becomes part of S; the variable part becomes a non-terminal with
+                                self-loops.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s2c">
+                    <div class="subsection-title">2.2.3 Interpreting RE in English</div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Regular Expression</th>
+                                    <th>English Description</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><code>a*b*</code></td>
+                                    <td>Any number of a's followed by any number of b's. The string "ba" can NEVER
+                                        appear in these strings — all a's come before all b's.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>b*ab*</code></td>
+                                    <td>All strings containing EXACTLY one 'a'. Any b's before and after the single 'a'.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><code>(11+0)*(00+1)*</code></td>
+                                    <td>Strings formed by concatenating repetitions of "11" or "0", followed by
+                                        repetitions of "00" or "1".</td>
+                                </tr>
+                                <tr>
+                                    <td><code>(1+01+001)*(ε+0+00)</code></td>
+                                    <td>Strings from {1,01,001} repeated, then optionally followed by at most two 0s.
+                                        These strings never have more than two consecutive 0's.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>[00+11+(01+10)(00+11)*(01+10)]*</code></td>
+                                    <td>All binary strings containing an EVEN number of 0's AND an EVEN number of 1's.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.3 DFA
+══════════════════════════════════ -->
+            <div class="section" id="s3">
+                <div class="section-title"><span class="num">2.3</span> DFA — Deterministic Finite Automaton</div>
+
+                <div class="def-box">
+                    <div class="def-label">Definition</div>
+                    <p>A <strong>DFA</strong> is a 5-tuple <code>M = (Q, Σ, δ, q₀, F)</code> where for every state and
+                        every input symbol, there is <strong>exactly ONE</strong> transition to a next state. No
+                        ambiguity, no ε-transitions.</p>
+                </div>
+
+                <div class="grid2">
+                    <div class="summary-card">
+                        <div class="sc-title">5-Tuple Components</div>
+                        <ul>
+                            <li><strong>Q</strong> — Finite set of states</li>
+                            <li><strong>Σ</strong> — Input alphabet</li>
+                            <li><strong>δ: Q×Σ→Q</strong> — Transition function</li>
+                            <li><strong>q₀ ∈ Q</strong> — Start state</li>
+                            <li><strong>F ⊆ Q</strong> — Accept states</li>
+                        </ul>
+                    </div>
+                    <div class="summary-card">
+                        <div class="sc-title">DFA Diagram Conventions</div>
+                        <ul>
+                            <li>States = <strong>circles</strong></li>
+                            <li>Start state = <strong>arrow pointing to it</strong></li>
+                            <li>Accept state = <strong>double circle</strong></li>
+                            <li>Transitions = <strong>labeled arrows</strong></li>
+                            <li>Dead/trap state = non-accepting sink state</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s3a">
+                    <div class="subsection-title">2.3.1 DFA Diagram Examples</div>
+
+                    <!-- DFA 1: strings ending in 'ab' -->
+                    <div class="machine-box">
+                        <svg width="100%" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+                                    orient="auto">
+                                    <path d="M1 2L8 5L1 8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </marker>
+                                <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+                                    orient="auto">
+                                    <path d="M1 2L8 5L1 8" fill="none" stroke="#58a6ff" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </marker>
+                                <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+                                    orient="auto">
+                                    <path d="M1 2L8 5L1 8" fill="none" stroke="#3fb950" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </marker>
+                            </defs>
+                            <!-- start arrow -->
+                            <line x1="28" y1="100" x2="76" y2="100" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="50" y="90" text-anchor="middle" font-size="10" fill="#8b949e">start</text>
+                            <!-- q0 -->
+                            <circle cx="112" cy="100" r="33" fill="rgba(88,166,255,0.1)" stroke="#58a6ff"
+                                stroke-width="2" />
+                            <text x="112" y="105" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#58a6ff">q0</text>
+                            <!-- q1 -->
+                            <circle cx="310" cy="100" r="33" fill="rgba(255,166,87,0.1)" stroke="#ffa657"
+                                stroke-width="2" />
+                            <text x="310" y="105" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#ffa657">q1</text>
+                            <!-- q2 accept -->
+                            <circle cx="508" cy="100" r="33" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                stroke-width="2" />
+                            <circle cx="508" cy="100" r="25" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="508" y="105" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#3fb950">q2</text>
+                            <!-- q0 self-loop b -->
+                            <path d="M92 68 Q112 12 132 68" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="112" y="8" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">b</text>
+                            <!-- q0→q1 on a -->
+                            <line x1="146" y1="100" x2="275" y2="100" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="210" y="90" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">a</text>
+                            <!-- q1 self-loop a -->
+                            <path d="M290 68 Q310 12 330 68" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="310" y="8" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">a</text>
+                            <!-- q1→q2 on b -->
+                            <line x1="344" y1="100" x2="473" y2="100" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="408" y="90" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">b</text>
+                            <!-- q2→q1 on a (curve above) -->
+                            <path d="M492 68 Q410 28 326 68" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="410" y="38" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">a</text>
+                            <!-- q2→q0 on b (curve below) -->
+                            <path d="M485 130 Q310 185 135 130" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="310" y="190" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">b</text>
+                            <!-- accept label -->
+                            <text x="508" y="150" text-anchor="middle" font-size="10" fill="#3fb950">accept</text>
+                        </svg>
+                        <div class="machine-caption">Figure 2.1 — DFA for L = {w ∈ {a,b}* | w ends with 'ab'}
+                            &nbsp;|&nbsp; RE: (a+b)*ab</div>
+                    </div>
+
+                    <div class="subsection" id="s3b">
+                        <div class="subsection-title">2.3.2 DFA for Even Number of 0s over {0,1}</div>
+                        <div class="machine-box">
+                            <svg width="100%" viewBox="0 0 500 195" xmlns="http://www.w3.org/2000/svg">
+                                <!-- start -->
+                                <line x1="28" y1="97" x2="76" y2="97" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="50" y="87" text-anchor="middle" font-size="10" fill="#8b949e">start</text>
+                                <!-- q0 accept (even 0s) -->
+                                <circle cx="112" cy="97" r="33" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                    stroke-width="2" />
+                                <circle cx="112" cy="97" r="25" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                                <text x="112" y="93" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#3fb950">q0</text>
+                                <text x="112" y="107" text-anchor="middle" font-size="9" fill="#3fb950">even</text>
+                                <!-- q1 (odd 0s) -->
+                                <circle cx="370" cy="97" r="33" fill="rgba(248,81,73,0.08)" stroke="#f85149"
+                                    stroke-width="2" />
+                                <text x="370" y="93" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#f85149">q1</text>
+                                <text x="370" y="107" text-anchor="middle" font-size="9" fill="#f85149">odd</text>
+                                <!-- q0 self-loop on 1 -->
+                                <path d="M92 65 Q112 8 132 65" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="112" y="4" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">1</text>
+                                <!-- q1 self-loop on 1 -->
+                                <path d="M350 65 Q370 8 390 65" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="370" y="4" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">1</text>
+                                <!-- q0→q1 on 0 (top) -->
+                                <path d="M144 82 Q241 36 338 82" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="241" y="44" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">0</text>
+                                <!-- q1→q0 on 0 (bottom) -->
+                                <path d="M338 112 Q241 158 144 112" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="241" y="170" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">0</text>
+                            </svg>
+                            <div class="machine-caption">Figure 2.2 — DFA for L = {w ∈ {0,1}* | number of 0s in w is
+                                even} &nbsp;|&nbsp; RE: (1*01*01*)*1*</div>
+                        </div>
+                    </div>
+
+                    <!-- DFA for strings NOT containing 'aa' -->
+                    <div class="subsection">
+                        <div class="subsection-title">2.3.3 DFA for Strings NOT containing 'aa' over {a,b}</div>
+                        <div class="machine-box">
+                            <svg width="100%" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg">
+                                <!-- start -->
+                                <line x1="22" y1="100" x2="68" y2="100" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="43" y="90" text-anchor="middle" font-size="10" fill="#8b949e">start</text>
+                                <!-- q0 accept: no 'a' seen recently -->
+                                <circle cx="104" cy="100" r="33" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                    stroke-width="2" />
+                                <circle cx="104" cy="100" r="25" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                                <text x="104" y="96" text-anchor="middle" font-size="12" font-weight="700"
+                                    fill="#3fb950">q0</text>
+                                <text x="104" y="110" text-anchor="middle" font-size="9" fill="#3fb950">no 'a'</text>
+                                <!-- q1 accept: one 'a' seen -->
+                                <circle cx="300" cy="100" r="33" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                    stroke-width="2" />
+                                <circle cx="300" cy="100" r="25" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                                <text x="300" y="96" text-anchor="middle" font-size="12" font-weight="700"
+                                    fill="#3fb950">q1</text>
+                                <text x="300" y="110" text-anchor="middle" font-size="9" fill="#3fb950">one 'a'</text>
+                                <!-- q2 dead: two 'a' seen (reject) -->
+                                <circle cx="490" cy="100" r="33" fill="rgba(248,81,73,0.08)" stroke="#f85149"
+                                    stroke-width="2" />
+                                <text x="490" y="96" text-anchor="middle" font-size="12" font-weight="700"
+                                    fill="#f85149">q2</text>
+                                <text x="490" y="110" text-anchor="middle" font-size="9" fill="#f85149">dead</text>
+                                <!-- q0 self-loop b -->
+                                <path d="M84 68 Q104 12 124 68" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="104" y="8" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">b</text>
+                                <!-- q0→q1 on a -->
+                                <line x1="138" y1="100" x2="265" y2="100" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="200" y="90" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">a</text>
+                                <!-- q1→q0 on b -->
+                                <path d="M282 132 Q200 168 122 132" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="200" y="174" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">b</text>
+                                <!-- q1→q2 on a -->
+                                <line x1="334" y1="100" x2="455" y2="100" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="394" y="90" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">a</text>
+                                <!-- q2 self-loop a,b -->
+                                <path d="M470 68 Q490 12 510 68" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="490" y="8" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">a,b</text>
+                            </svg>
+                            <div class="machine-caption">Figure 2.3 — DFA for strings NOT containing 'aa' over {a,b}.
+                                q0,q1 are accept; q2 is dead/trap state.</div>
+                        </div>
+
+                        <!-- Transition table for this DFA -->
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>State</th>
+                                        <th>Input: a</th>
+                                        <th>Input: b</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>→ q0</td>
+                                        <td>q1</td>
+                                        <td>q0</td>
+                                        <td><span class="badge badge-green">Start, Accept</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>q1</td>
+                                        <td>q2</td>
+                                        <td>q0</td>
+                                        <td><span class="badge badge-green">Accept</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>q2</td>
+                                        <td>q2</td>
+                                        <td>q2</td>
+                                        <td><span class="badge badge-red">Dead/Trap</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- DFA binary div by 3 -->
+                    <div class="subsection">
+                        <div class="subsection-title">2.3.4 DFA for Binary Strings Divisible by 3</div>
+                        <div class="machine-box">
+                            <svg width="100%" viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg">
+                                <!-- start -->
+                                <line x1="20" y1="120" x2="66" y2="120" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="42" y="110" text-anchor="middle" font-size="10" fill="#8b949e">start</text>
+                                <!-- q0 accept rem=0 -->
+                                <circle cx="102" cy="120" r="33" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                    stroke-width="2" />
+                                <circle cx="102" cy="120" r="25" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                                <text x="102" y="116" text-anchor="middle" font-size="12" font-weight="700"
+                                    fill="#3fb950">q0</text>
+                                <text x="102" y="130" text-anchor="middle" font-size="9" fill="#3fb950">rem=0</text>
+                                <!-- q1 rem=1 -->
+                                <circle cx="300" cy="46" r="33" fill="rgba(255,166,87,0.1)" stroke="#ffa657"
+                                    stroke-width="2" />
+                                <text x="300" y="42" text-anchor="middle" font-size="12" font-weight="700"
+                                    fill="#ffa657">q1</text>
+                                <text x="300" y="56" text-anchor="middle" font-size="9" fill="#ffa657">rem=1</text>
+                                <!-- q2 rem=2 -->
+                                <circle cx="300" cy="194" r="33" fill="rgba(248,81,73,0.08)" stroke="#f85149"
+                                    stroke-width="2" />
+                                <text x="300" y="190" text-anchor="middle" font-size="12" font-weight="700"
+                                    fill="#f85149">q2</text>
+                                <text x="300" y="204" text-anchor="middle" font-size="9" fill="#f85149">rem=2</text>
+                                <!-- q0 self-loop 0 -->
+                                <path d="M82 88 Q102 32 122 88" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="102" y="26" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">0</text>
+                                <!-- q0→q1 on 1 -->
+                                <path d="M130 104 Q200 56 266 56" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="192" y="62" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">1</text>
+                                <!-- q1→q2 on 0 -->
+                                <line x1="300" y1="80" x2="300" y2="159" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="313" y="122" font-size="13" font-weight="700" fill="#ffa657">0</text>
+                                <!-- q1→q0 on 1 -->
+                                <path d="M266 56 Q182 92 132 112" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="194" y="106" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">1</text>
+                                <!-- q2→q1 on 1 -->
+                                <path d="M330 177 Q430 120 332 68" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="428" y="124" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">1</text>
+                                <!-- q2→q0 on 0 -->
+                                <path d="M270 176 Q160 190 120 148" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                    marker-end="url(#arr)" />
+                                <text x="176" y="202" text-anchor="middle" font-size="13" font-weight="700"
+                                    fill="#ffa657">0</text>
+                            </svg>
+                            <div class="machine-caption">Figure 2.4 — DFA for L = {w ∈ {0,1}* | integer value of w is
+                                divisible by 3} &nbsp;|&nbsp; Key: new_rem = (2×old_rem + bit) mod 3</div>
+                        </div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>State</th>
+                                        <th>Input: 0</th>
+                                        <th>Input: 1</th>
+                                        <th>Remainder</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>→* q0</td>
+                                        <td>q0</td>
+                                        <td>q1</td>
+                                        <td>0 mod 3 = 0 <span class="badge badge-green">Accept</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>q1</td>
+                                        <td>q2</td>
+                                        <td>q0</td>
+                                        <td>1 mod 3 = 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>q2</td>
+                                        <td>q1</td>
+                                        <td>q0</td>
+                                        <td>2 mod 3 = 2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.4 NFA & ε-NFA
+══════════════════════════════════ -->
+            <div class="section" id="s4">
+                <div class="section-title"><span class="num">2.4</span> NFA &amp; ε-NFA</div>
+
+                <div class="def-box">
+                    <div class="def-label">NFA Definition</div>
+                    <p>A <strong>Non-deterministic Finite Automaton (NFA)</strong> is a 5-tuple
+                        <code>(Q, Σ, δ, q₀, F)</code> where the transition function is <strong>δ: Q × Σ → P(Q)</strong>
+                        (maps to a SUBSET of states — zero, one, or more). An NFA accepts a string if ANY computation
+                        path leads to an accept state.</p>
+                </div>
+
+                <div class="grid2">
+                    <div class="summary-card">
+                        <div class="sc-title">DFA vs NFA — Key Differences</div>
+                        <ul>
+                            <li><strong>DFA:</strong> δ: Q×Σ → Q (one next state)</li>
+                            <li><strong>NFA:</strong> δ: Q×Σ → P(Q) (set of states)</li>
+                            <li>NFA allows 0, 1, or more transitions per symbol</li>
+                            <li>NFA allows ε-transitions (ε-NFA)</li>
+                            <li>Both accept exactly Regular Languages</li>
+                            <li>Every DFA is a special case of NFA</li>
+                        </ul>
+                    </div>
+                    <div class="summary-card">
+                        <div class="sc-title">NFA Acceptance Rule</div>
+                        <ul>
+                            <li>NFA accepts w if <strong>at least one</strong> computation path ends in an accept state
+                            </li>
+                            <li>NFA rejects w if <strong>ALL</strong> paths reject or get stuck</li>
+                            <li>Think of NFA as trying all paths simultaneously</li>
+                            <li>NFA is easier to design; DFA is easier to implement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s4a">
+                    <div class="subsection-title">2.4.1 NFA Diagram — Strings ending in 'ab'</div>
+                    <div class="machine-box">
+                        <svg width="100%" viewBox="0 0 560 190" xmlns="http://www.w3.org/2000/svg">
+                            <!-- start -->
+                            <line x1="22" y1="95" x2="68" y2="95" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="43" y="84" text-anchor="middle" font-size="10" fill="#8b949e">start</text>
+                            <!-- q0 -->
+                            <circle cx="104" cy="95" r="33" fill="rgba(88,166,255,0.1)" stroke="#58a6ff"
+                                stroke-width="2" />
+                            <text x="104" y="100" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#58a6ff">q0</text>
+                            <!-- q1 -->
+                            <circle cx="300" cy="95" r="33" fill="rgba(255,166,87,0.1)" stroke="#ffa657"
+                                stroke-width="2" />
+                            <text x="300" y="100" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#ffa657">q1</text>
+                            <!-- q2 accept -->
+                            <circle cx="490" cy="95" r="33" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                stroke-width="2" />
+                            <circle cx="490" cy="95" r="25" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="490" y="100" text-anchor="middle" font-size="14" font-weight="700"
+                                fill="#3fb950">q2</text>
+                            <!-- q0 self-loop a,b -->
+                            <path d="M84 63 Q104 8 124 63" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="104" y="4" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">a,b</text>
+                            <!-- q0→q1 on a (NFA non-det) -->
+                            <line x1="138" y1="95" x2="265" y2="95" stroke="#58a6ff" stroke-width="1.5"
+                                marker-end="url(#arrb)" />
+                            <text x="200" y="84" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">a</text>
+                            <!-- q1→q2 on b -->
+                            <line x1="334" y1="95" x2="455" y2="95" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="394" y="84" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">b</text>
+                            <!-- NFA label -->
+                            <text x="300" y="175" text-anchor="middle" font-size="11" fill="#58a6ff">NFA: q0 guesses
+                                when 'a' is the start of final 'ab'</text>
+                        </svg>
+                        <div class="machine-caption">Figure 2.5 — NFA for L = {w ends with 'ab'} — simpler than
+                            equivalent DFA (only 3 states, q0 self-loops on a,b)</div>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="ex-label">NFA Trace — Input "bab"</div>
+                        <p>Path 1: q0 →b q0 →a q0 →b q0 → <strong>REJECT</strong> (q0 not accept)</p>
+                        <p>Path 2: q0 →b q0 →a q1 →b q2 → <strong>ACCEPT ✓</strong> (q2 is accept)</p>
+                        <p>Since at least ONE path accepts → NFA accepts "bab".</p>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s4b">
+                    <div class="subsection-title">2.4.2 Thomson's Construction Rules (RE → ε-NFA)</div>
+                    <p>Thomson's rules build an ε-NFA inductively from the structure of a Regular Expression:</p>
+
+                    <div class="machine-box">
+                        <svg width="100%" viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                                    orient="auto">
+                                    <path d="M1 2L8 5L1 8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </marker>
+                            </defs>
+
+                            <!-- TITLE -->
+                            <text x="340" y="18" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#58a6ff">Thomson's Construction Rules</text>
+
+                            <!-- RULE 1: Single symbol 'a' -->
+                            <text x="20" y="46" font-size="11" fill="#ffa657" font-weight="700">Rule 1: Single symbol
+                                'a'</text>
+                            <circle cx="80" cy="75" r="18" fill="rgba(88,166,255,0.1)" stroke="#58a6ff"
+                                stroke-width="1.5" />
+                            <text x="80" y="80" text-anchor="middle" font-size="11" fill="#58a6ff">→</text>
+                            <line x1="50" y1="75" x2="60" y2="75" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <line x1="99" y1="75" x2="145" y2="75" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="122" y="68" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#3fb950">a</text>
+                            <circle cx="163" cy="75" r="18" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                stroke-width="1.5" />
+                            <circle cx="163" cy="75" r="12" fill="none" stroke="#3fb950" stroke-width="1" />
+                            <text x="163" y="80" text-anchor="middle" font-size="11" fill="#3fb950">F</text>
+
+                            <!-- RULE 2: Union a|b -->
+                            <text x="20" y="118" font-size="11" fill="#ffa657" font-weight="700">Rule 2: Union (a +
+                                b)</text>
+                            <!-- new start -->
+                            <circle cx="80" cy="165" r="18" fill="rgba(88,166,255,0.1)" stroke="#58a6ff"
+                                stroke-width="1.5" />
+                            <text x="80" y="170" text-anchor="middle" font-size="10" fill="#58a6ff">S</text>
+                            <line x1="50" y1="165" x2="60" y2="165" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <!-- ε to a-start -->
+                            <line x1="98" y1="155" x2="148" y2="140" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="116" y="140" text-anchor="middle" font-size="10" fill="#d2a8ff">ε</text>
+                            <!-- a path -->
+                            <circle cx="166" cy="133" r="15" fill="rgba(88,166,255,0.08)" stroke="#58a6ff"
+                                stroke-width="1.2" />
+                            <text x="166" y="138" text-anchor="middle" font-size="10" fill="#58a6ff">a</text>
+                            <line x1="182" y1="133" x2="220" y2="140" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="202" y="130" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#3fb950">a</text>
+                            <circle cx="237" cy="145" r="15" fill="rgba(63,185,80,0.08)" stroke="#3fb950"
+                                stroke-width="1.2" />
+                            <!-- ε from a-final to new final -->
+                            <line x1="252" y1="145" x2="290" y2="158" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="273" y="146" text-anchor="middle" font-size="10" fill="#d2a8ff">ε</text>
+                            <!-- ε to b-start -->
+                            <line x1="98" y1="175" x2="148" y2="190" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="116" y="194" text-anchor="middle" font-size="10" fill="#d2a8ff">ε</text>
+                            <!-- b path -->
+                            <circle cx="166" cy="197" r="15" fill="rgba(255,166,87,0.08)" stroke="#ffa657"
+                                stroke-width="1.2" />
+                            <text x="166" y="202" text-anchor="middle" font-size="10" fill="#ffa657">b</text>
+                            <line x1="182" y1="197" x2="220" y2="190" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="202" y="202" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#3fb950">b</text>
+                            <circle cx="237" cy="185" r="15" fill="rgba(63,185,80,0.08)" stroke="#3fb950"
+                                stroke-width="1.2" />
+                            <!-- ε from b-final to new final -->
+                            <line x1="252" y1="185" x2="290" y2="172" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="272" y="174" text-anchor="middle" font-size="10" fill="#d2a8ff">ε</text>
+                            <!-- new final -->
+                            <circle cx="308" cy="165" r="18" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                stroke-width="1.5" />
+                            <circle cx="308" cy="165" r="12" fill="none" stroke="#3fb950" stroke-width="1" />
+                            <text x="308" y="170" text-anchor="middle" font-size="10" fill="#3fb950">F</text>
+
+                            <!-- RULE 3: Kleene Star a* -->
+                            <text x="20" y="246" font-size="11" fill="#ffa657" font-weight="700">Rule 3: Kleene Star
+                                (a*)</text>
+                            <!-- new start -->
+                            <circle cx="76" cy="295" r="18" fill="rgba(88,166,255,0.1)" stroke="#58a6ff"
+                                stroke-width="1.5" />
+                            <text x="76" y="300" text-anchor="middle" font-size="10" fill="#58a6ff">S</text>
+                            <line x1="46" y1="295" x2="56" y2="295" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <!-- ε to inner start -->
+                            <line x1="94" y1="295" x2="136" y2="295" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="115" y="285" text-anchor="middle" font-size="10" fill="#d2a8ff">ε</text>
+                            <!-- inner NFA for 'a' -->
+                            <circle cx="154" cy="295" r="15" fill="rgba(88,166,255,0.08)" stroke="#58a6ff"
+                                stroke-width="1.2" />
+                            <line x1="170" y1="295" x2="210" y2="295" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="190" y="285" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#3fb950">a</text>
+                            <circle cx="228" cy="295" r="15" fill="rgba(63,185,80,0.08)" stroke="#3fb950"
+                                stroke-width="1.2" />
+                            <!-- ε to new final -->
+                            <line x1="244" y1="295" x2="286" y2="295" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr2)" />
+                            <text x="265" y="285" text-anchor="middle" font-size="10" fill="#d2a8ff">ε</text>
+                            <!-- new final -->
+                            <circle cx="304" cy="295" r="18" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                stroke-width="1.5" />
+                            <circle cx="304" cy="295" r="12" fill="none" stroke="#3fb950" stroke-width="1" />
+                            <text x="304" y="300" text-anchor="middle" font-size="10" fill="#3fb950">F</text>
+                            <!-- back-loop ε from inner final to inner start -->
+                            <path d="M228 279 Q190 250 154 279" fill="none" stroke="#d2a8ff" stroke-width="1.2"
+                                marker-end="url(#arr2)" stroke-dasharray="4,2" />
+                            <text x="191" y="250" text-anchor="middle" font-size="10" fill="#d2a8ff">ε (repeat)</text>
+                            <!-- ε skip from new start to new final -->
+                            <path d="M76 312 Q190 336 304 312" fill="none" stroke="#d2a8ff" stroke-width="1.2"
+                                marker-end="url(#arr2)" stroke-dasharray="4,2" />
+                            <text x="190" y="336" text-anchor="middle" font-size="10" fill="#d2a8ff">ε (zero
+                                occurrences)</text>
+                        </svg>
+                        <div class="machine-caption">Figure 2.6 — Thomson's Construction: Rules for building ε-NFA from
+                            RE primitives</div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.5 NFA → DFA CONVERSION
+══════════════════════════════════ -->
+            <div class="section" id="s5">
+                <div class="section-title"><span class="num">2.5</span> NFA → DFA Conversion (Subset Construction)</div>
+
+                <div class="def-box">
+                    <div class="def-label">Algorithm — Subset Construction</div>
+                    <p>Each state in the resulting DFA corresponds to a <strong>subset of NFA states</strong>. The DFA
+                        state is a final state if any NFA state in the subset is a final state.</p>
+                </div>
+
+                <div class="key-box">
+                    <div class="key-label">Step-by-Step Algorithm</div>
+                    <ul>
+                        <li><strong>Step 1:</strong> Compute ε-closure of NFA start state → this is the DFA start state.
+                        </li>
+                        <li><strong>Step 2:</strong> For each DFA state (subset) S and each input symbol a, compute:
+                            <code>ε-closure(δ(S, a))</code> = set of all states reachable from any state in S on input
+                            a, then following ε-moves.</li>
+                        <li><strong>Step 3:</strong> If a new subset is generated, add it as a new DFA state.</li>
+                        <li><strong>Step 4:</strong> Mark any DFA state containing an NFA final state as a DFA final
+                            state.</li>
+                        <li><strong>Step 5:</strong> Repeat until no new states appear. Worst case: 2ⁿ states for
+                            n-state NFA.</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Solved Example — NFA to DFA Conversion</div>
+                    <p><strong>NFA:</strong> Q = {q0, q1, q2}, Σ = {a, b}, start = q0, final = {q2}</p>
+                    <p>Transitions: δ(q0,a) = {q0,q1}, δ(q0,b) = {q0}, δ(q1,b) = {q2}, δ(q2,a) = {q2}, δ(q2,b) = {q2}
+                    </p>
+                </div>
+
+                <div class="table-wrap" style="margin-top:8px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DFA State (Subset)</th>
+                                <th>Input: a</th>
+                                <th>Input: b</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>→ {q0}</td>
+                                <td>{q0,q1}</td>
+                                <td>{q0}</td>
+                                <td><span class="badge badge-blue">Start</span></td>
+                            </tr>
+                            <tr>
+                                <td>{q0,q1}</td>
+                                <td>{q0,q1}</td>
+                                <td>{q0,q2}</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td>{q0,q2}</td>
+                                <td>{q0,q1,q2}</td>
+                                <td>{q0,q2}</td>
+                                <td><span class="badge badge-green">Accept</span></td>
+                            </tr>
+                            <tr>
+                                <td>{q0,q1,q2}</td>
+                                <td>{q0,q1,q2}</td>
+                                <td>{q0,q2}</td>
+                                <td><span class="badge badge-green">Accept</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size:12.5px;color:var(--text2);margin-top:6px;">This NFA accepts strings over {a,b}
+                    ending in 'ab'. The DFA has 4 states (NFA had 3). A DFA state is final if any NFA state in the
+                    subset is final (here q2 is the NFA final state).</p>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.6 DFA → RE (ARDEN'S THEOREM)
+══════════════════════════════════ -->
+            <div class="section" id="s6">
+                <div class="section-title"><span class="num">2.6</span> DFA → Regular Expression (Arden's Theorem)</div>
+
+                <div class="def-box">
+                    <div class="def-label">Arden's Theorem</div>
+                    <p>If P and Q are Regular Expressions and P does not contain ε, then the equation <strong>R = Q +
+                            RP</strong> has a unique solution: <strong>R = QP*</strong></p>
+                    <p style="margin-top:6px;font-size:13px;">Used to solve simultaneous equations for each DFA state to
+                        find the overall RE.</p>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Method — State Equations from DFA</div>
+                    <p><strong>For each state qᵢ, write an equation:</strong> qᵢ = (sum of: qⱼ·symbol for each
+                        transition from qⱼ to qᵢ)</p>
+                    <p>For start state q0, also add ε.</p>
+                    <p>Solve using Arden's theorem and substitution. Final answer = equation for start state (or union
+                        if multiple final states).</p>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label">Solved Example — DFA to RE for strings ending in 'ab'</div>
+                    <p>States: q0 (start), q1, q2 (accept). Transitions as in Fig 2.1.</p>
+                    <p><strong>State equations:</strong></p>
+                    <div class="formula">
+                        q0 = ε + q0·b + q2·b<br>
+                        q1 = q0·a + q1·a + q2·a<br>
+                        q2 = q1·b
+                    </div>
+                    <p><strong>Solve q1 using Arden's (q1 = q1·a is of form R = RP + Q):</strong></p>
+                    <div class="formula">q1 = (q0·a + q2·a)·a* = (q0 + q2)·a·a*</div>
+                    <p><strong>Substitute q2 = q1·b, then q1:</strong></p>
+                    <div class="formula">Final RE = (a+b)*ab</div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.7 CLOSURE PROPERTIES
+══════════════════════════════════ -->
+            <div class="section" id="s7">
+                <div class="section-title"><span class="num">2.7</span> Closure Properties of Regular Languages</div>
+
+                <div class="def-box">
+                    <div class="def-label">Definition</div>
+                    <p>Closure Properties tell us: if we perform a certain operation on Regular Languages, is the
+                        resulting language <strong>still Regular</strong>? The answer for Regular Languages is YES for
+                        all the operations listed below.</p>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operation</th>
+                                <th>Closed?</th>
+                                <th>Proof Method</th>
+                            </tr>
+                        </thead>
+                        <tbody class="td-normal">
+                            <tr>
+                                <td><strong>Union</strong> — L₁ ∪ L₂</td>
+                                <td><span class="cl-yes">✓ YES</span></td>
+                                <td>RE: R₁+R₂ is also a RE. DFA: Product construction (final = final in DFA₁ OR DFA₂)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Concatenation</strong> — L₁·L₂</td>
+                                <td><span class="cl-yes">✓ YES</span></td>
+                                <td>RE: R₁·R₂ is a RE. NFA: connect final states of NFA₁ to start of NFA₂ with
+                                    ε-transitions</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kleene Star</strong> — L*</td>
+                                <td><span class="cl-yes">✓ YES</span></td>
+                                <td>RE: R* is a RE. NFA: add ε back-loops and new start/final states</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Complement</strong> — L̄</td>
+                                <td><span class="cl-yes">✓ YES</span></td>
+                                <td>DFA: swap all final and non-final states. Requires COMPLETE DFA.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Intersection</strong> — L₁ ∩ L₂</td>
+                                <td><span class="cl-yes">✓ YES</span></td>
+                                <td>Product construction: final = final in DFA₁ AND DFA₂. Or: L₁∩L₂ = (L̄₁ ∪ L̄₂)̄</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Difference</strong> — L₁ − L₂</td>
+                                <td><span class="cl-yes">✓ YES</span></td>
+                                <td>L₁ − L₂ = L₁ ∩ L̄₂. Closed since closed under ∩ and complement.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reversal</strong> — Lᴿ</td>
+                                <td><span class="cl-yes">✓ YES</span></td>
+                                <td>Reverse all DFA arrows; swap start/final states → get NFA for Lᴿ.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Homomorphism</strong></td>
+                                <td><span class="cl-yes">✓ YES</span></td>
+                                <td>Apply homomorphism h to each RE symbol → still regular.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">2.7.1 Closure Under Complement — Proof in Detail</div>
+                    <div class="def-box">
+                        <div class="def-label">Theorem</div>
+                        <p>If L is a Regular Language over Σ, then L̄ = Σ* − L is also Regular.</p>
+                    </div>
+                    <div class="algo-steps">
+                        <div class="key-box">
+                            <div class="key-label">Proof (DFA Construction)</div>
+                            <ul>
+                                <li><strong>Step 1:</strong> Take the complete DFA M for L (every state must have
+                                    transitions on every symbol — add dead state if needed).</li>
+                                <li><strong>Step 2:</strong> Create new DFA M' with same states and transitions.</li>
+                                <li><strong>Step 3:</strong> Exchange final and non-final states: F' = Q − F.</li>
+                                <li><strong>Result:</strong> M' accepts exactly those strings that M rejects → L(M') =
+                                    L̄.</li>
+                                <li><strong>⚠ Critical:</strong> The DFA MUST be complete before swapping. Incomplete
+                                    DFA leads to wrong complement.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">2.7.2 Closure Under Intersection — Product Construction</div>
+                    <div class="example-box">
+                        <div class="ex-label">Product Construction for DFA₁ × DFA₂</div>
+                        <p><strong>DFA states:</strong> Q = Q₁ × Q₂ (all pairs)</p>
+                        <p><strong>Start state:</strong> (q₀₁, q₀₂)</p>
+                        <p><strong>Transitions:</strong> δ((p,q), a) = (δ₁(p,a), δ₂(q,a))</p>
+                        <p><strong>For Union (∪):</strong> Final states = {(p,q) | p ∈ F₁ OR q ∈ F₂}</p>
+                        <p><strong>For Intersection (∩):</strong> Final states = {(p,q) | p ∈ F₁ AND q ∈ F₂}</p>
+                    </div>
+                </div>
+
+                <div class="note-box">
+                    <div class="note-label">Important — NOT Closed Under</div>
+                    <p>Regular Languages are <strong>NOT closed</strong> under infinite union or infinite intersection.
+                        Only finite union and finite intersection are guaranteed to stay regular.</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.8 PUMPING LEMMA
+══════════════════════════════════ -->
+            <div class="section" id="s8">
+                <div class="section-title"><span class="num">2.8</span> Pumping Lemma for Regular Languages</div>
+
+                <div class="def-box">
+                    <div class="def-label">Purpose</div>
+                    <p>The Pumping Lemma is a <strong>necessary condition</strong> for Regular Languages. It is used to
+                        <strong>prove that a language is NOT Regular</strong> (via contradiction). It CANNOT be used to
+                        prove a language IS regular.</p>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">2.8.1 Statement of Pumping Lemma</div>
+                    <div class="key-box">
+                        <div class="key-label">Pumping Lemma — Formal Statement</div>
+                        <ul>
+                            <li>If L is a Regular Language, then there exists a constant <strong>n</strong> (pumping
+                                length) such that:</li>
+                            <li>For every string <code>w ∈ L</code> with <code>|w| ≥ n</code>, we can write
+                                <code>w = xyz</code> where:</li>
+                            <li><strong>Condition 1:</strong> <code>|y| &gt; 0</code> — y is non-empty (the "pump" part)
+                            </li>
+                            <li><strong>Condition 2:</strong> <code>|xy| ≤ n</code> — x and y together are at most
+                                length n</li>
+                            <li><strong>Condition 3:</strong> <code>∀ i ≥ 0: xyⁱz ∈ L</code> — pumping y any number of
+                                times stays in L</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula">w = xyz where |y| &gt; 0, |xy| ≤ n, ∀i≥0: xyⁱz ∈ L</div>
+
+                    <p style="font-size:13px;color:var(--text2);">Note: xy⁰z = xz, xy¹z = xyz = w, xy²z = xyyz, etc.</p>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">2.8.2 Proof Strategy (Contradiction)</div>
+                    <div class="key-box">
+                        <div class="key-label">Steps to Prove L is NOT Regular</div>
+                        <ul>
+                            <li><strong>Step 1:</strong> Assume L is Regular (for contradiction).</li>
+                            <li><strong>Step 2:</strong> Let n be the pumping length guaranteed by the Pumping Lemma.
+                            </li>
+                            <li><strong>Step 3:</strong> Choose a specific string w ∈ L with |w| ≥ n (choose wisely —
+                                usually the "hardest" case).</li>
+                            <li><strong>Step 4:</strong> Consider ALL possible ways to split w = xyz satisfying
+                                conditions 1 and 2.</li>
+                            <li><strong>Step 5:</strong> For each split, find some i ≥ 0 such that xyⁱz ∉ L (usually i=0
+                                or i=2 works).</li>
+                            <li><strong>Step 6:</strong> This contradicts condition 3 → L is NOT Regular. □</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">2.8.3 Classic Example 1 — L = {aⁿbⁿ | n ≥ 0}</div>
+                    <div class="example-box">
+                        <div class="ex-label">Prove: L = {aⁿbⁿ | n ≥ 0} is NOT Regular</div>
+                        <p><strong>Step 1:</strong> Assume L is Regular with pumping length n.</p>
+                        <p><strong>Step 2:</strong> Choose w = aⁿbⁿ ∈ L (|w| = 2n ≥ n ✓).</p>
+                        <p><strong>Step 3:</strong> By condition 2: |xy| ≤ n → xy consists entirely of a's → y = aᵏ (k
+                            &gt; 0).</p>
+                        <p><strong>Step 4:</strong> Pump with i = 0: xy⁰z = xz = aⁿ⁻ᵏbⁿ. Since k &gt; 0, number of a's
+                            &lt; number of b's.</p>
+                        <p><strong>Step 5:</strong> xz ∉ L → Contradiction. Therefore L is <strong>NOT Regular</strong>.
+                            □</p>
+                    </div>
+
+                    <div class="machine-box">
+                        <svg width="100%" viewBox="0 0 640 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- w = xyz visualization -->
+                            <text x="20" y="20" font-size="12" fill="#8b949e">w = a a a ... a a b b ... b b</text>
+                            <text x="20" y="38" font-size="10" fill="#8b949e"> ←—— n a's ——→ ←— n b's —→</text>
+                            <!-- x portion -->
+                            <rect x="20" y="50" width="100" height="28" rx="5" fill="rgba(88,166,255,0.1)"
+                                stroke="#58a6ff" stroke-width="1.2" />
+                            <text x="70" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#58a6ff">x =
+                                aˢ</text>
+                            <!-- y portion -->
+                            <rect x="122" y="50" width="100" height="28" rx="5" fill="rgba(255,166,87,0.15)"
+                                stroke="#ffa657" stroke-width="1.5" />
+                            <text x="172" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#ffa657">y
+                                = aᵏ (k&gt;0)</text>
+                            <!-- z portion -->
+                            <rect x="224" y="50" width="200" height="28" rx="5" fill="rgba(210,168,255,0.1)"
+                                stroke="#d2a8ff" stroke-width="1.2" />
+                            <text x="324" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#d2a8ff">z
+                                = aⁿ⁻ˢ⁻ᵏbⁿ</text>
+                            <!-- constraint -->
+                            <text x="20" y="98" font-size="10" fill="#8b949e">|xy| ≤ n → x and y are entirely within the
+                                'a' section (no b's)</text>
+                            <!-- brace for xy -->
+                            <line x1="20" y1="45" x2="221" y2="45" stroke="#ffa657" stroke-width="1"
+                                stroke-dasharray="3,2" />
+                            <text x="120" y="42" text-anchor="middle" font-size="9" fill="#ffa657">|xy| ≤ n</text>
+                        </svg>
+                        <div class="machine-caption">Pumping Lemma visualization for w = aⁿbⁿ — y is always in the 'a'
+                            section</div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">2.8.4 Classic Example 2 — L = {aᵖ | p is prime}</div>
+                    <div class="example-box">
+                        <div class="ex-label">Prove: L = {aᵖ | p is prime} is NOT Regular</div>
+                        <p><strong>Step 1:</strong> Assume L is Regular with pumping length n.</p>
+                        <p><strong>Step 2:</strong> Choose w = aᵖ where p ≥ n+2 is prime. So |w| = p ≥ n ✓.</p>
+                        <p><strong>Step 3:</strong> w = xyz, |y| = k &gt; 0, |x| = j. So w = aʲ·aᵏ·aᵖ⁻ʲ⁻ᵏ.</p>
+                        <p><strong>Step 4:</strong> Pump with i = p: xyᵖz has length j + pk + (p-j-k) = p + pk - k =
+                            p(1+k) - k.</p>
+                        <p><strong>Step 5:</strong> For xyᵖz ∈ L, |xyᵖz| = p + (p-1)k must be prime. But p + (p-1)k =
+                            p(1 + k) − k. When we choose i such that |xyⁱz| is composite → contradiction.</p>
+                        <p>Alternatively: pump i=0, |xz| = p-k. We need p-k to be prime, but for k dividing p-something,
+                            this fails for some choice. Therefore L is <strong>NOT Regular</strong>. □</p>
+                    </div>
+                </div>
+
+                <div class="note-box">
+                    <div class="note-label">Common Mistake</div>
+                    <p>The Pumping Lemma says: if L is regular THEN every long string can be pumped. The CONTRAPOSITIVE
+                        is: if some long string CANNOT be pumped, THEN L is not regular. You CANNOT use Pumping Lemma to
+                        prove a language IS regular.</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.9 MOORE & MEALY MACHINES
+══════════════════════════════════ -->
+            <div class="section" id="s9">
+                <div class="section-title"><span class="num">2.9</span> Moore &amp; Mealy Machines (FA with Output)
+                </div>
+
+                <div class="def-box">
+                    <div class="def-label">Overview</div>
+                    <p>Moore and Mealy machines are Finite State Machines <strong>with output</strong>. Unlike DFA/NFA
+                        (which only accept or reject), these machines <strong>produce an output string</strong> for
+                        every input string.</p>
+                </div>
+
+                <div class="subsection" id="s9a">
+                    <div class="subsection-title">2.9.1 Moore Machine</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>A <strong>Moore Machine</strong> is a 6-tuple <code>(Q, Σ, Δ, δ, λ, q₀)</code> where the
+                            <strong>output λ: Q → Δ depends only on the CURRENT STATE</strong>.</p>
+                    </div>
+
+                    <div class="grid2">
+                        <div class="summary-card">
+                            <div class="sc-title">Moore 6-Tuple</div>
+                            <ul>
+                                <li><strong>Q</strong> — Finite set of states</li>
+                                <li><strong>Σ</strong> — Input alphabet</li>
+                                <li><strong>Δ</strong> — Output alphabet</li>
+                                <li><strong>δ: Q×Σ → Q</strong> — Transition function</li>
+                                <li><strong>λ: Q → Δ</strong> — Output function (STATE only)</li>
+                                <li><strong>q₀</strong> — Initial state</li>
+                            </ul>
+                        </div>
+                        <div class="summary-card">
+                            <div class="sc-title">Moore Key Properties</div>
+                            <ul>
+                                <li>Output written inside the state circle</li>
+                                <li>For n input symbols → <strong>n+1 outputs</strong> (initial state produces first
+                                    output)</li>
+                                <li>Output is produced when <strong>entering</strong> a state</li>
+                                <li>Same state always gives same output regardless of input</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Moore Machine Diagram Example -->
+                    <div class="machine-box">
+                        <svg width="100%" viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
+                            <!-- title -->
+                            <text x="340" y="18" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#58a6ff">Moore Machine — Detect substring 'ab', output count</text>
+                            <!-- start arrow -->
+                            <line x1="22" y1="110" x2="70" y2="110" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="44" y="100" text-anchor="middle" font-size="10" fill="#8b949e">start</text>
+                            <!-- q0: output 0, no 'a' seen -->
+                            <circle cx="108" cy="110" r="36" fill="rgba(88,166,255,0.1)" stroke="#58a6ff"
+                                stroke-width="2" />
+                            <text x="108" y="106" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#58a6ff">q0</text>
+                            <text x="108" y="120" text-anchor="middle" font-size="11" fill="#ffa657">out: 0</text>
+                            <!-- q1: output 0, saw 'a' -->
+                            <circle cx="340" cy="110" r="36" fill="rgba(255,166,87,0.1)" stroke="#ffa657"
+                                stroke-width="2" />
+                            <text x="340" y="106" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">q1</text>
+                            <text x="340" y="120" text-anchor="middle" font-size="11" fill="#ffa657">out: 0</text>
+                            <!-- q2: output 1, saw 'ab' -->
+                            <circle cx="568" cy="110" r="36" fill="rgba(63,185,80,0.1)" stroke="#3fb950"
+                                stroke-width="2" />
+                            <text x="568" y="106" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#3fb950">q2</text>
+                            <text x="568" y="120" text-anchor="middle" font-size="11" fill="#3fb950">out: 1</text>
+                            <!-- q0 self-loop b -->
+                            <path d="M88 75 Q108 20 128 75" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="108" y="14" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">b</text>
+                            <!-- q0→q1 on a -->
+                            <line x1="145" y1="110" x2="302" y2="110" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="222" y="100" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">a</text>
+                            <!-- q1 self-loop a -->
+                            <path d="M320 75 Q340 20 360 75" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="340" y="14" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">a</text>
+                            <!-- q1→q2 on b -->
+                            <line x1="377" y1="110" x2="530" y2="110" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="452" y="100" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">b</text>
+                            <!-- q2→q1 on a -->
+                            <path d="M550 75 Q455 34 358 75" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="452" y="38" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">a</text>
+                            <!-- q2→q0 on b -->
+                            <path d="M540 140 Q340 196 136 140" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="340" y="202" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">b</text>
+                            <!-- output labels inside state boxes -->
+                            <text x="108" y="155" text-anchor="middle" font-size="9" fill="#58a6ff">no 'a' seen</text>
+                            <text x="340" y="155" text-anchor="middle" font-size="9" fill="#ffa657">saw 'a'</text>
+                            <text x="568" y="155" text-anchor="middle" font-size="9" fill="#3fb950">saw 'ab'!</text>
+                        </svg>
+                        <div class="machine-caption">Figure 2.7 — Moore Machine detecting substring 'ab'. Output = 1
+                            when 'ab' just completed, else 0. Note: output is written inside the circle (associated with
+                            state).</div>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s9b">
+                    <div class="subsection-title">2.9.2 Mealy Machine</div>
+                    <div class="def-box">
+                        <div class="def-label">Definition</div>
+                        <p>A <strong>Mealy Machine</strong> is a 6-tuple <code>(Q, Σ, Δ, δ, λ, q₀)</code> where the
+                            <strong>output λ: Q×Σ → Δ depends on BOTH the current state AND the current input
+                                symbol</strong>.</p>
+                    </div>
+
+                    <div class="grid2">
+                        <div class="summary-card">
+                            <div class="sc-title">Mealy 6-Tuple</div>
+                            <ul>
+                                <li><strong>Q</strong> — Finite set of states</li>
+                                <li><strong>Σ</strong> — Input alphabet</li>
+                                <li><strong>Δ</strong> — Output alphabet</li>
+                                <li><strong>δ: Q×Σ → Q</strong> — Transition function</li>
+                                <li><strong>λ: Q×Σ → Δ</strong> — Output function (STATE + INPUT)</li>
+                                <li><strong>q₀</strong> — Initial state</li>
+                            </ul>
+                        </div>
+                        <div class="summary-card">
+                            <div class="sc-title">Mealy Key Properties</div>
+                            <ul>
+                                <li>Output written on the <strong>transition arrow</strong> (input/output)</li>
+                                <li>For n input symbols → <strong>n outputs</strong> (no initial output)</li>
+                                <li>Output produced <strong>during transition</strong></li>
+                                <li>Two transitions from same state can give different outputs</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Mealy Machine Diagram -->
+                    <div class="machine-box">
+                        <svg width="100%" viewBox="0 0 580 200" xmlns="http://www.w3.org/2000/svg">
+                            <text x="290" y="18" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">Mealy Machine — 2's Complement of Binary Number</text>
+                            <!-- start arrow -->
+                            <line x1="22" y1="105" x2="66" y2="105" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="42" y="95" text-anchor="middle" font-size="10" fill="#8b949e">start</text>
+                            <!-- q0: no carry yet -->
+                            <circle cx="104" cy="105" r="34" fill="rgba(88,166,255,0.1)" stroke="#58a6ff"
+                                stroke-width="2" />
+                            <text x="104" y="101" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#58a6ff">q0</text>
+                            <text x="104" y="115" text-anchor="middle" font-size="9" fill="#58a6ff">no carry</text>
+                            <!-- q1: carry done -->
+                            <circle cx="400" cy="105" r="34" fill="rgba(255,166,87,0.1)" stroke="#ffa657"
+                                stroke-width="2" />
+                            <text x="400" y="101" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">q1</text>
+                            <text x="400" y="115" text-anchor="middle" font-size="9" fill="#ffa657">carry done</text>
+                            <!-- q0 self-loop on 0: output 0 -->
+                            <path d="M84 72 Q104 18 124 72" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="104" y="12" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#3fb950">0/0</text>
+                            <!-- q0→q1 on 1: output 1 -->
+                            <path d="M138 90 Q265 44 366 90" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="252" y="58" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#3fb950">1/1</text>
+                            <!-- q1 self-loop on 0: output 1 -->
+                            <path d="M380 72 Q400 18 420 72" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="400" y="12" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#3fb950">0/1</text>
+                            <!-- q1 self-loop on 1: output 0 -->
+                            <path d="M374 138 Q270 180 134 138" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#arr)" />
+                            <text x="252" y="178" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#3fb950">1/0</text>
+                            <!-- notation -->
+                            <text x="290" y="195" text-anchor="middle" font-size="10" fill="#8b949e">Arrow labels:
+                                input/output</text>
+                        </svg>
+                        <div class="machine-caption">Figure 2.8 — Mealy Machine for 2's complement of binary input (read
+                            LSB first). Scan right-to-left: copy 0s until first 1, copy 1, then flip all subsequent
+                            bits.</div>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="ex-label">Mealy Trace — 2's complement of "1010" (read LSB=rightmost first)</div>
+                        <p>Input: 0 → 1 → 0 → 1 (LSB to MSB: 0, 1, 0, 1)</p>
+                        <p>q0 on 0: stay q0, output <strong>0</strong></p>
+                        <p>q0 on 1: go q1, output <strong>1</strong></p>
+                        <p>q1 on 0: stay q1, output <strong>1</strong></p>
+                        <p>q1 on 1: stay q1, output <strong>0</strong></p>
+                        <p>Output: 0110 → 2's complement of 1010 (=10 decimal) is 0110 (=6... wait: 2's comp of -6 in
+                            4-bit is 1010, complement is 0110 ✓)</p>
+                    </div>
+                </div>
+
+                <div class="subsection" id="s9c">
+                    <div class="subsection-title">2.9.3 Moore vs Mealy — Comparison</div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Moore Machine</th>
+                                    <th>Mealy Machine</th>
+                                </tr>
+                            </thead>
+                            <tbody class="td-normal">
+                                <tr>
+                                    <td><strong>Output depends on</strong></td>
+                                    <td>State only</td>
+                                    <td>State AND Input</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Output location in diagram</strong></td>
+                                    <td>Inside the state circle</td>
+                                    <td>On the transition arrow (input/output)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Output function</strong></td>
+                                    <td>λ: Q → Δ</td>
+                                    <td>λ: Q × Σ → Δ</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Outputs for n inputs</strong></td>
+                                    <td>n + 1 outputs</td>
+                                    <td>n outputs</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Initial output</strong></td>
+                                    <td>Yes (from start state)</td>
+                                    <td>No initial output</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>State count</strong></td>
+                                    <td>Usually MORE states</td>
+                                    <td>Usually FEWER states</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Response time</strong></td>
+                                    <td>Output after state change (slower)</td>
+                                    <td>Output during transition (faster)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Equivalent?</strong></td>
+                                    <td colspan="2" style="text-align:center;font-weight:600;color:var(--accent2);">YES
+                                        — Every Moore machine has an equivalent Mealy machine and vice versa</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="subsection">
+                        <div class="subsection-title">2.9.4 Conversion — Mealy to Moore</div>
+                        <div class="key-box">
+                            <div class="key-label">Mealy → Moore Conversion Algorithm</div>
+                            <ul>
+                                <li><strong>Problem:</strong> In Mealy, a single state can have transitions with
+                                    DIFFERENT outputs. In Moore, each state has ONE fixed output.</li>
+                                <li><strong>Solution:</strong> Split states that have transitions with different outputs
+                                    into separate states, one per distinct output.</li>
+                                <li><strong>Step 1:</strong> For each state qᵢ in Mealy, check the output on all
+                                    incoming transitions.</li>
+                                <li><strong>Step 2:</strong> If all incoming transitions to qᵢ have the same output x →
+                                    assign output x to qᵢ.</li>
+                                <li><strong>Step 3:</strong> If qᵢ has incoming transitions with different outputs →
+                                    split qᵢ into qᵢ/x₁, qᵢ/x₂, ... one per distinct output.</li>
+                                <li><strong>Step 4:</strong> Redirect each incoming transition to the appropriate split
+                                    state.</li>
+                                <li><strong>Start state:</strong> Assign arbitrary output (or create a new start state
+                                    if needed).</li>
+                            </ul>
+                        </div>
+
+                        <div class="subsection">
+                            <div class="subsection-title">2.9.5 Conversion — Moore to Mealy</div>
+                            <div class="key-box">
+                                <div class="key-label">Moore → Mealy Conversion Algorithm</div>
+                                <ul>
+                                    <li>This is simpler — Moore to Mealy never increases states.</li>
+                                    <li><strong>Step 1:</strong> Copy all states and transitions from the Moore machine.
+                                    </li>
+                                    <li><strong>Step 2:</strong> For each transition δ(qᵢ, a) = qⱼ in Moore, the Mealy
+                                        output is <strong>λ_Mealy(qᵢ, a) = λ_Moore(qⱼ)</strong> (output of the TARGET
+                                        state in Moore).</li>
+                                    <li><strong>Step 3:</strong> The initial output of the Moore machine (output at q₀
+                                        before any input) is dropped in Mealy — this is the only difference.</li>
+                                    <li><strong>Result:</strong> Same number of states. Mealy and Moore machines are
+                                        equivalent in language power.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.10 PRACTICE QUESTIONS
+══════════════════════════════════ -->
+            <div class="section" id="s10">
+                <div class="section-title"><span class="num">2.10</span> Practice Questions</div>
+
+                <div class="practice-section">
+                    <div class="practice-title">Regular Expression Questions</div>
+
+                    <div class="q-item">
+                        <div class="q-num">1</div>
+                        <div>
+                            <p>Write RE for: all strings over {a,b} where number of a's is even AND number of b's is
+                                odd.</p>
+                            <div class="q-ans"><strong>Ans:</strong> (b*ab*ab*)* b(b*ab*ab*)* — groups of 2 a's with
+                                b's, then an odd number of b's overall. Simpler: (b*ab*a)*b(b*ab*a)* wraps even-a groups
+                                with a lone b somewhere.</div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">2</div>
+                        <div>
+                            <p>Give the RE for: all binary strings over {0,1} that do NOT contain '11' as a substring.
+                            </p>
+                            <div class="q-ans"><strong>Ans:</strong> (0 + 10)*(1 + ε) — strings built from "0" and "10"
+                                blocks ensure no two consecutive 1s, optionally ending in a single 1.</div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">3</div>
+                        <div>
+                            <p>Simplify using RE identities: (ε + a)(ε + a)* </p>
+                            <div class="q-ans"><strong>Ans:</strong> (ε + a)(ε + a)* = (ε + a)⁺ . Note: (ε + a) acts
+                                like a optional — this equals a*. So (ε+a)(ε+a)* = a·a* + ε·a* = a⁺ + a* = a*.</div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">4</div>
+                        <div>
+                            <p>Write RE for: all strings over {a,b,c} that start and end with the same symbol.</p>
+                            <div class="q-ans"><strong>Ans:</strong> a(a+b+c)*a + b(a+b+c)*b + c(a+b+c)*c + a + b + c
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">DFA / NFA Questions</div>
+
+                    <div class="q-item">
+                        <div class="q-num">5</div>
+                        <div>
+                            <p>Design a DFA over {0,1} that accepts strings where every '0' is immediately followed by
+                                '1' (i.e., '00' and standalone '0' at end are rejected).</p>
+                            <div class="q-ans">
+                                <strong>States:</strong> q0 (start, accept — normal), q1 (saw '0', waiting for '1'),
+                                q_dead (error).<br>
+                                <strong>Transitions:</strong> q0→0→q1, q0→1→q0, q1→1→q0, q1→0→q_dead,
+                                q_dead→0,1→q_dead.<br>
+                                <strong>Accept states:</strong> q0 only (q1 is reject because string ended after
+                                '0').<br>
+                                <strong>RE:</strong> (1 + 01)*
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">6</div>
+                        <div>
+                            <p>Convert the NFA: δ(q0,a) = {q0,q1}, δ(q0,b) = {q0}, δ(q1,b) = {q2} (final={q2}) to DFA.
+                            </p>
+                            <div class="q-ans">
+                                <strong>DFA subsets:</strong><br>
+                                {q0} on a → {q0,q1} | on b → {q0}<br>
+                                {q0,q1} on a → {q0,q1} | on b → {q0,q2} ← FINAL<br>
+                                {q0,q2} on a → {q0,q1} | on b → {q0} ← FINAL<br>
+                                <strong>RE for this language:</strong> (a+b)*ab
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">7</div>
+                        <div>
+                            <p>Design a DFA over {a,b} that accepts strings of length divisible by 4.</p>
+                            <div class="q-ans">
+                                <strong>States:</strong> q0 (accept), q1, q2, q3 — tracking length mod 4.<br>
+                                <strong>Transitions:</strong> qᵢ on a or b → q(i+1 mod 4).<br>
+                                <strong>Accept:</strong> q0 only.<br>
+                                <strong>RE:</strong> ((a+b)(a+b)(a+b)(a+b))*
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">Pumping Lemma Questions</div>
+
+                    <div class="q-item">
+                        <div class="q-num">8</div>
+                        <div>
+                            <p>Prove: L = {ww | w ∈ {a,b}*} is NOT Regular using Pumping Lemma.</p>
+                            <div class="q-ans">
+                                <strong>Assume</strong> L is regular with pumping length n.<br>
+                                <strong>Choose:</strong> w = aⁿbaⁿb ∈ L (this is ss where s = aⁿb).<br>
+                                <strong>|w| = 2n+2 ≥ n ✓.</strong><br>
+                                Since |xy| ≤ n → xy = aᵏ (some k ≤ n), so y = aʲ (j &gt; 0).<br>
+                                <strong>Pump i=2:</strong> xy²z = aⁿ⁺ʲbaⁿb. This is NOT of the form ss (the two halves
+                                have different lengths unless j=0, contradiction).<br>
+                                <strong>Therefore L is NOT Regular. □</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">9</div>
+                        <div>
+                            <p>Is L = {(ab)ⁿ | n ≥ 0} Regular? If yes, give the RE. If no, use Pumping Lemma.</p>
+                            <div class="q-ans">
+                                <strong>YES, L is Regular.</strong> RE = (ab)* <br>
+                                DFA: q0 (start, accept) →a→ q1 →b→ q0. Dead state for wrong transitions.<br>
+                                The Pumping Lemma CAN be satisfied: w = (ab)ⁿ, split x=ε, y=ab, z=(ab)ⁿ⁻¹. Pumping y
+                                gives (ab)ⁿ⁺ⁱ⁻¹ ∈ L ✓.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <div class="practice-title">Moore & Mealy Questions</div>
+
+                    <div class="q-item">
+                        <div class="q-num">10</div>
+                        <div>
+                            <p>Design a Mealy Machine over {0,1} that outputs 1 whenever the input is '1' and the
+                                previous input was also '1', else outputs 0.</p>
+                            <div class="q-ans">
+                                <strong>States:</strong> q0 (start, previous was not 1), q1 (previous input was 1).<br>
+                                q0 on 0 → q0/0 | on 1 → q1/0<br>
+                                q1 on 0 → q0/0 | on 1 → q1/<strong>1</strong><br>
+                                <strong>Meaning:</strong> Output 1 only on consecutive 1s. RE for strings triggering
+                                output 1: (0+10)*11(0+10)*
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">11</div>
+                        <div>
+                            <p>Convert the Moore Machine (q0:A, q1:B) with δ(q0,0)=q1, δ(q0,1)=q0, δ(q1,0)=q0,
+                                δ(q1,1)=q1 to Mealy Machine.</p>
+                            <div class="q-ans">
+                                <strong>Rule:</strong> Mealy output on transition = Moore output of TARGET state.<br>
+                                q0 on 0 → q1, output = <strong>B</strong><br>
+                                q0 on 1 → q0, output = <strong>A</strong><br>
+                                q1 on 0 → q0, output = <strong>A</strong><br>
+                                q1 on 1 → q1, output = <strong>B</strong><br>
+                                <strong>Note:</strong> Initial Moore output (A at q0 before any input) is lost in Mealy.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-num">12</div>
+                        <div>
+                            <p>Design a Moore Machine over {a,b} that outputs 1 if input ends with 'aba', else outputs
+                                0.</p>
+                            <div class="q-ans">
+                                <strong>States track the suffix seen so far:</strong><br>
+                                q0: output 0 (no match prefix)<br>
+                                q1: output 0 (saw 'a')<br>
+                                q2: output 0 (saw 'ab')<br>
+                                q3: output <strong>1</strong> (saw 'aba' ← accept!)<br>
+                                Transitions: q0→a→q1, q0→b→q0, q1→b→q2, q1→a→q1, q2→a→q3, q2→b→q0, q3→a→q1, q3→b→q2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ══════════════════════════════════
+     2.11 QUICK REVISION
+══════════════════════════════════ -->
+            <div class="section" id="s11">
+                <div class="section-title"><span class="num">2.11</span> Quick Revision — Chapter 2</div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concept</th>
+                                <th>Key Fact</th>
+                            </tr>
+                        </thead>
+                        <tbody class="td-normal">
+                            <tr>
+                                <td><strong>Regular Expression</strong></td>
+                                <td>Formal notation for Regular Languages. Basis: φ, ε, a. Operations: +, ·, *, ⁺.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RE Precedence</strong></td>
+                                <td>* and ⁺ &gt; concatenation &gt; union (+). Use () to override.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Even length RE</strong></td>
+                                <td>((a+b)(a+b))* — pair up symbols.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DFA</strong></td>
+                                <td>5-tuple (Q,Σ,δ,q₀,F). Exactly ONE transition per (state,symbol). δ:Q×Σ→Q.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NFA</strong></td>
+                                <td>5-tuple same, but δ:Q×Σ→P(Q). Zero or more transitions. Easier to design.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ε-NFA</strong></td>
+                                <td>NFA with ε-transitions. Same power as DFA and NFA.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DFA = NFA = ε-NFA = RE</strong></td>
+                                <td>All equivalent — all describe exactly Regular Languages.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Thomson's Construction</strong></td>
+                                <td>Converts RE → ε-NFA inductively (union, concatenation, star rules).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Subset Construction</strong></td>
+                                <td>Converts NFA → DFA. DFA states are subsets of NFA states. Worst case: 2ⁿ states.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Arden's Theorem</strong></td>
+                                <td>R = Q + RP → R = QP*. Used to convert DFA → RE.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Closure Properties</strong></td>
+                                <td>Regular Languages closed under: ∪, ·, *, complement, ∩, difference, reversal.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Complement DFA</strong></td>
+                                <td>Swap final and non-final states. Requires COMPLETE DFA first.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pumping Lemma</strong></td>
+                                <td>Tool to prove languages are NOT regular. w=xyz, |y|&gt;0, |xy|≤n, xyⁱz∈L for all
+                                    i≥0.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Moore Machine</strong></td>
+                                <td>Output associated with STATE. λ:Q→Δ. n inputs → n+1 outputs.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mealy Machine</strong></td>
+                                <td>Output associated with TRANSITION. λ:Q×Σ→Δ. n inputs → n outputs.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Moore→Mealy</strong></td>
+                                <td>Mealy output = Moore output of TARGET state. Lose initial output.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mealy→Moore</strong></td>
+                                <td>Split states with different incoming outputs. More states in Moore.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>{aⁿbⁿ}</strong></td>
+                                <td>NOT Regular (context free). Classic Pumping Lemma proof.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="key-box" style="margin-top:22px;">
+                    <div class="key-label">🎯 Exam Must-Remember</div>
+                    <ul>
+                        <li>RE for even length = <code>((a+b)(a+b))*</code>; odd length =
+                            <code>((a+b)(a+b))*(a+b)</code></li>
+                        <li>RE for "exactly twice 'a'" = <code>b*ab*ab*</code>; "at least twice" =
+                            <code>b*ab*a(a+b)*</code></li>
+                        <li>DFA complement: swap final ↔ non-final. Must have COMPLETE DFA first.</li>
+                        <li>NFA→DFA: each DFA state = SUBSET of NFA states. Final DFA state = subset containing NFA
+                            final state.</li>
+                        <li>Moore: output inside state. Mealy: output on transition (input/output label).</li>
+                        <li>Moore→Mealy: output of Mealy transition = output of Moore's TARGET state.</li>
+                        <li>Pumping Lemma proves NOT regular. Cannot prove IS regular.</li>
+                        <li>Arden's: R = Q + RP → R = QP* (P must not contain ε).</li>
+                        <li>Product construction: union = OR of finals; intersection = AND of finals.</li>
+                        <li>RE identity: ε + RR* = R* and (R*)* = R*</li>
+                    </ul>
+                </div>
+
+                <div
+                    style="margin-top:28px;padding:18px 22px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;text-align:center;">
+                    <div style="font-size:12px;color:var(--text2);margin-bottom:5px;">END OF CHAPTER 2</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--accent2);">Theory of Computation — NMIMS
+                        MPSTME · B.Tech CSE</div>
+                    <div style="font-size:12px;color:var(--text2);margin-top:5px;">Next: Chapter 3 — Moore &amp; Mealy
+                        in Detail | Chapter 4 — Context Free Grammar</div>
+                </div>
+            </div>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+
+    <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const sections = document.querySelectorAll('[id^="s"]');
+        const navItems = document.querySelectorAll('.nav-item');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+            navItems.forEach(n => { n.classList.remove('active'); if (n.getAttribute('href') === '#' + current) n.classList.add('active'); });
+        });
+    </script>
+
+  <footer style="text-align:center;padding:28px 40px;border-top:1px solid #30363d;font-size:13px;color:#8b949e;background:#0d1117;margin-top:40px;">
+    <p>TCS Notes &middot; <span style="color:#58a6ff;font-weight:600;">NMIMS MPSTME</span> &middot; B.Tech CSE Sem 5 &middot; Theory of Computation</p>
+    <p style="margin-top:6px;">Made by <span style="color:#58a6ff;font-weight:600;">Jay Naik</span></p>
+  </footer>
+</body>
+
+</html>

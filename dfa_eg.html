@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Arial, 'Segoe UI', sans-serif;
+    font-size: 12pt;
+    color: #1a1a2e;
+    background: #fff;
+    line-height: 1.6;
+  }
+
+  /* ── COVER PAGE ─────────────────────────────── */
+  .cover {
+    page-break-after: always;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 60%, #1a1a2e 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 40px;
+  }
+  .cover-badge {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 50px;
+    padding: 8px 24px;
+    font-size: 11pt;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    color: #a8d8ea;
+  }
+  .cover h1 {
+    font-size: 38pt;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+  }
+  .cover h1 span { color: #e94560; }
+  .cover-sub {
+    font-size: 16pt;
+    color: #a8d8ea;
+    margin-bottom: 50px;
+    font-weight: 400;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 3px;
+    background: #e94560;
+    border-radius: 2px;
+    margin: 0 auto 40px;
+  }
+  .cover-meta {
+    font-size: 11pt;
+    color: rgba(255,255,255,0.6);
+    line-height: 2;
+  }
+  .cover-meta strong { color: rgba(255,255,255,0.9); }
+
+  /* ── PAGE LAYOUT ────────────────────────────── */
+  .page {
+    padding: 50px 55px;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── PAGE HEADER ────────────────────────────── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #0f3460;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+  }
+  .page-header-title {
+    font-size: 10pt;
+    font-weight: 600;
+    color: #0f3460;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .page-header-num {
+    font-size: 10pt;
+    color: #888;
+  }
+
+  /* ── SECTION HEADINGS ───────────────────────── */
+  h2 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #0f3460;
+    margin-bottom: 6px;
+    margin-top: 28px;
+  }
+  h2:first-child { margin-top: 0; }
+  .h2-bar {
+    width: 44px;
+    height: 3px;
+    background: #e94560;
+    border-radius: 2px;
+    margin-bottom: 18px;
+  }
+  h3 {
+    font-size: 13pt;
+    font-weight: 600;
+    color: #0f3460;
+    margin: 20px 0 10px;
+    padding-left: 12px;
+    border-left: 3px solid #e94560;
+  }
+
+  /* ── DEFINITION BOX ─────────────────────────── */
+  .def-box {
+    background: #f0f4ff;
+    border: 1px solid #c5d3f0;
+    border-left: 4px solid #0f3460;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 14px 0;
+  }
+  .def-box .def-label {
+    font-size: 9pt;
+    font-weight: 700;
+    color: #0f3460;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .def-box p { font-size: 11.5pt; color: #1a1a2e; }
+  .def-box code {
+    font-family: 'Courier New', monospace;
+    font-size: 12pt;
+    font-weight: 700;
+    color: #0f3460;
+    background: rgba(15,52,96,0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* ── TUPLE TABLE ────────────────────────────── */
+  .tuple-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 11pt;
+  }
+  .tuple-table th {
+    background: #0f3460;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 10.5pt;
+  }
+  .tuple-table th:first-child { border-radius: 6px 0 0 0; }
+  .tuple-table th:last-child  { border-radius: 0 6px 0 0; }
+  .tuple-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e8edf5;
+    vertical-align: top;
+  }
+  .tuple-table tr:nth-child(even) td { background: #f7f9ff; }
+  .tuple-table td:first-child { font-weight: 600; color: #0f3460; font-family: 'Courier New', monospace; font-size: 12pt; }
+
+  /* ── DIAGRAM BOX ────────────────────────────── */
+  .diagram-box {
+    border: 1px solid #dde4f0;
+    border-radius: 8px;
+    background: #f9faff;
+    padding: 24px 16px 14px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .diagram-caption {
+    font-size: 10pt;
+    color: #666;
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* ── TRANSITION TABLE ───────────────────────── */
+  .trans-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 11pt;
+  }
+  .trans-table th {
+    background: #16213e;
+    color: white;
+    padding: 9px 14px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 10.5pt;
+  }
+  .trans-table th:first-child { border-radius: 6px 0 0 0; text-align: left; }
+  .trans-table th:last-child  { border-radius: 0 6px 0 0; }
+  .trans-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e8edf5;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 11pt;
+  }
+  .trans-table td:first-child { text-align: left; font-weight: 600; color: #0f3460; }
+  .trans-table tr:nth-child(even) td { background: #f7f9ff; }
+  .trans-table .accept-row td { background: #e8f5e9; }
+  .trans-table .accept-row td:first-child { color: #2e7d32; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 9pt;
+    font-weight: 600;
+    margin-left: 6px;
+    font-family: 'Inter', sans-serif;
+  }
+  .badge-start  { background: #e3f2fd; color: #1565c0; }
+  .badge-accept { background: #e8f5e9; color: #2e7d32; }
+
+  /* ── TRACE BLOCK ────────────────────────────── */
+  .trace-block {
+    margin: 12px 0;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 10.5pt;
+  }
+  .trace-block.accept { background: #e8f5e9; border-left: 3px solid #4caf50; }
+  .trace-block.reject { background: #fce4ec; border-left: 3px solid #e91e63; }
+  .trace-label {
+    font-weight: 700;
+    font-size: 11pt;
+    margin-bottom: 4px;
+  }
+  .trace-block.accept .trace-label { color: #2e7d32; }
+  .trace-block.reject .trace-label { color: #c62828; }
+  .trace-path {
+    font-family: 'Courier New', monospace;
+    font-size: 10.5pt;
+    color: #333;
+  }
+  .trace-verdict {
+    font-weight: 700;
+    margin-left: 8px;
+  }
+  .trace-block.accept .trace-verdict { color: #2e7d32; }
+  .trace-block.reject .trace-verdict { color: #c62828; }
+
+  /* ── KEY POINTS ─────────────────────────────── */
+  .key-points {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-left: 4px solid #f9a825;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 16px 0;
+  }
+  .key-points .kp-title {
+    font-weight: 700;
+    color: #e65100;
+    font-size: 10.5pt;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .key-points ul { padding-left: 18px; }
+  .key-points li { margin-bottom: 5px; font-size: 11pt; color: #37290e; }
+
+  /* ── FORMULA BOX ────────────────────────────── */
+  .formula {
+    background: #1a1a2e;
+    color: #e0e0ff;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 12pt;
+    margin: 14px 0;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── COMPARISON TABLE ───────────────────────── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11pt;
+    margin: 14px 0;
+  }
+  .cmp-table th {
+    padding: 9px 14px;
+    font-weight: 700;
+    font-size: 10.5pt;
+    text-align: center;
+  }
+  .cmp-table th:nth-child(1) { background: #f0f4ff; color: #0f3460; border-radius: 6px 0 0 0; text-align: left; }
+  .cmp-table th:nth-child(2) { background: #0f3460; color: white; }
+  .cmp-table th:nth-child(3) { background: #16213e; color: #a8d8ea; border-radius: 0 6px 0 0; }
+  .cmp-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e8edf5;
+    text-align: center;
+  }
+  .cmp-table td:first-child { text-align: left; font-weight: 500; color: #333; }
+  .cmp-table tr:nth-child(even) td { background: #f7f9ff; }
+  .tick { color: #4caf50; font-weight: 700; }
+  .cross { color: #e53935; font-weight: 700; }
+
+  /* ── ALGO BOX ───────────────────────────────── */
+  .algo-box {
+    background: #f0f4ff;
+    border: 1px solid #c5d3f0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-size: 11pt;
+  }
+  .algo-box ol { padding-left: 20px; }
+  .algo-box li { margin-bottom: 6px; color: #1a1a2e; }
+  .algo-box li strong { color: #0f3460; }
+
+  /* ── FOOTER ─────────────────────────────────── */
+  @page {
+    margin: 0;
+    size: A4;
+  }
+
+  /* SVG */
+  svg text { font-family: Arial, sans-serif; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     COVER
+══════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">B.Tech CSE &nbsp;·&nbsp; Semester 5</div>
+  <h1>Theory of<br><span>Computation</span></h1>
+  <div class="cover-sub">Deterministic Finite Automata (DFA)</div>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <strong>NMIMS MPSTME Shirpur</strong><br>
+    Subject: Theory of Computation (TCS)<br>
+    Academic Year 2025–26<br><br>
+    <strong>Topics Covered</strong><br>
+    Definition &nbsp;·&nbsp; 5-Tuple &nbsp;·&nbsp; Diagrams &nbsp;·&nbsp; Transition Tables<br>
+    String Tracing &nbsp;·&nbsp; DFA vs NFA &nbsp;·&nbsp; Construction Examples<br>
+    Minimisation &nbsp;·&nbsp; Regular Languages
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 1 — DEFINITION & 5-TUPLE
+══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-header-title">Theory of Computation — DFA Notes</span>
+    <span class="page-header-num">01</span>
+  </div>
+
+  <h2>1. What is a DFA?</h2>
+  <div class="h2-bar"></div>
+
+  <div class="def-box">
+    <div class="def-label">Definition</div>
+    <p>A <strong>Deterministic Finite Automaton (DFA)</strong> is a mathematical model for recognising patterns in strings. It processes an input string one symbol at a time and decides whether to <em>accept</em> or <em>reject</em> it.</p>
+  </div>
+
+  <p style="margin:12px 0 6px; font-size:11.5pt;">A DFA is formally defined as a <strong>5-tuple</strong>:</p>
+
+  <div class="formula">M = ( Q , &Sigma; , &delta; , q<sub>0</sub> , F )</div>
+
+  <table class="tuple-table">
+    <tr><th>Symbol</th><th>Name</th><th>Description</th></tr>
+    <tr><td>Q</td><td>Set of States</td><td>Finite, non-empty set of all states the machine can be in</td></tr>
+    <tr><td>&Sigma;</td><td>Input Alphabet</td><td>Finite set of valid input symbols (e.g. {a, b} or {0, 1})</td></tr>
+    <tr><td>&delta;</td><td>Transition Function</td><td><code>&delta; : Q &times; &Sigma; &rarr; Q</code> — given a state and symbol, returns exactly ONE next state</td></tr>
+    <tr><td>q<sub>0</sub></td><td>Start State</td><td>The state where processing begins; q<sub>0</sub> &isin; Q</td></tr>
+    <tr><td>F</td><td>Accept States</td><td>Set of states that indicate acceptance; F &sube; Q</td></tr>
+  </table>
+
+  <div class="key-points">
+    <div class="kp-title">&#9888; Key Property — Determinism</div>
+    <ul>
+      <li>For every (state, symbol) pair, there is <strong>exactly one</strong> transition — never zero, never two.</li>
+      <li>No ambiguity. The next state is always completely determined.</li>
+      <li>No &epsilon; (epsilon) moves — every step consumes one input symbol.</li>
+      <li>If a transition is unspecified, a hidden <strong>dead/trap state</strong> is assumed (all input leads to reject).</li>
+    </ul>
+  </div>
+
+  <h3>How it works — step by step</h3>
+  <div class="algo-box">
+    <ol>
+      <li><strong>Start</strong> in state q<sub>0</sub>.</li>
+      <li>Read the <strong>first symbol</strong> of the input string.</li>
+      <li>Use &delta;(current state, symbol) to move to the <strong>next state</strong>.</li>
+      <li>Repeat steps 2–3 for every remaining symbol.</li>
+      <li>After the last symbol — if the current state &isin; F → <strong>ACCEPT</strong>, else → <strong>REJECT</strong>.</li>
+    </ol>
+  </div>
+
+  <h3>Accepting a string</h3>
+  <p style="font-size:11.5pt; margin-bottom:10px;">A DFA M accepts string <em>w</em> if and only if &delta;*(q<sub>0</sub>, w) &isin; F, where &delta;* is the extended transition function defined as:</p>
+  <div class="formula">
+    &delta;*(q, &epsilon;) = q<br>
+    &delta;*(q, xa)  = &delta;(&delta;*(q, x), a)
+  </div>
+  <p style="font-size:10.5pt; color:#555; margin-top:8px;">The <em>language</em> of DFA M is L(M) = { w &isin; &Sigma;* | &delta;*(q<sub>0</sub>, w) &isin; F }</p>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 2 — EXAMPLE 1: strings ending in 'ab'
+══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-header-title">Theory of Computation — DFA Notes</span>
+    <span class="page-header-num">02</span>
+  </div>
+
+  <h2>2. Example 1 — Strings ending in 'ab'</h2>
+  <div class="h2-bar"></div>
+
+  <div class="def-box">
+    <div class="def-label">Language</div>
+    <p><code>L = { w &isin; {a,b}* | w ends with 'ab' }</code></p>
+    <p style="margin-top:6px;font-size:11pt;color:#555;">e.g. "ab", "aab", "bab", "aaab" &isin; L &nbsp;&nbsp; | &nbsp;&nbsp; "a", "ba", "bb", "abb" &notin; L</p>
+  </div>
+
+  <p style="margin:10px 0 4px; font-size:11pt;"><strong>5-Tuple:</strong> &nbsp; Q = {q0, q1, q2} &nbsp; &Sigma; = {a,b} &nbsp; q<sub>0</sub> = q0 &nbsp; F = {q2}</p>
+
+  <!-- DIAGRAM -->
+  <div class="diagram-box">
+    <svg width="100%" viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M1 1L9 5L1 9" fill="none" stroke="#444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <!-- start arrow -->
+      <line x1="30" y1="110" x2="82" y2="110" stroke="#444" stroke-width="1.5" marker-end="url(#arr1)"/>
+      <text x="54" y="100" text-anchor="middle" font-size="11" fill="#888">start</text>
+
+      <!-- q0 -->
+      <circle cx="118" cy="110" r="34" fill="#e8f0fe" stroke="#0f3460" stroke-width="2"/>
+      <text x="118" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#0f3460">q0</text>
+
+      <!-- q1 -->
+      <circle cx="310" cy="110" r="34" fill="#e8fef0" stroke="#0f3460" stroke-width="2"/>
+      <text x="310" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#0f3460">q1</text>
+
+      <!-- q2 accept (double circle) -->
+      <circle cx="500" cy="110" r="34" fill="#fff0f3" stroke="#0f3460" stroke-width="2"/>
+      <circle cx="500" cy="110" r="26" fill="none" stroke="#0f3460" stroke-width="1.5"/>
+      <text x="500" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#0f3460">q2</text>
+
+      <!-- q0 self-loop b (above) -->
+      <path d="M98 77 Q118 20 138 77" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr1)"/>
+      <text x="118" y="14" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">b</text>
+
+      <!-- q0 → q1 on a -->
+      <line x1="153" y1="110" x2="274" y2="110" stroke="#444" stroke-width="1.5" marker-end="url(#arr1)"/>
+      <text x="214" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">a</text>
+
+      <!-- q1 self-loop a (above) -->
+      <path d="M290 77 Q310 20 330 77" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr1)"/>
+      <text x="310" y="14" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">a</text>
+
+      <!-- q1 → q2 on b -->
+      <line x1="345" y1="110" x2="464" y2="110" stroke="#444" stroke-width="1.5" marker-end="url(#arr1)"/>
+      <text x="405" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">b</text>
+
+      <!-- q2 → q1 on a (curve above) -->
+      <path d="M484 77 Q400 32 326 77" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr1)"/>
+      <text x="406" y="43" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">a</text>
+
+      <!-- q2 → q0 on b (curve below) -->
+      <path d="M480 141 Q310 200 138 141" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr1)"/>
+      <text x="310" y="207" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">b</text>
+
+      <!-- accept star label -->
+      <text x="500" y="157" text-anchor="middle" font-size="10" fill="#c62828">accept</text>
+    </svg>
+    <div class="diagram-caption">Figure 1 — DFA for L = { w | w ends with 'ab' }</div>
+  </div>
+
+  <!-- Transition Table -->
+  <h3>Transition Table &nbsp; &delta;(state, symbol)</h3>
+  <table class="trans-table">
+    <tr><th>State</th><th>a</th><th>b</th><th>Type</th></tr>
+    <tr>
+      <td>q0 <span class="badge badge-start">start</span></td>
+      <td>q1</td><td>q0</td><td>—</td>
+    </tr>
+    <tr>
+      <td>q1</td>
+      <td>q1</td><td>q2</td><td>—</td>
+    </tr>
+    <tr class="accept-row">
+      <td>q2 <span class="badge badge-accept">accept</span></td>
+      <td>q1</td><td>q0</td><td>&#10003; Accept</td>
+    </tr>
+  </table>
+
+  <!-- Traces -->
+  <h3>String Traces</h3>
+
+  <div class="trace-block accept">
+    <div class="trace-label">✓ Input: "ab"</div>
+    <div class="trace-path">q0 —a→ q1 —b→ q2 <span class="trace-verdict">ACCEPT (q2 ∈ F)</span></div>
+  </div>
+  <div class="trace-block accept">
+    <div class="trace-label">✓ Input: "aab"</div>
+    <div class="trace-path">q0 —a→ q1 —a→ q1 —b→ q2 <span class="trace-verdict">ACCEPT</span></div>
+  </div>
+  <div class="trace-block accept">
+    <div class="trace-label">✓ Input: "bab"</div>
+    <div class="trace-path">q0 —b→ q0 —a→ q1 —b→ q2 <span class="trace-verdict">ACCEPT</span></div>
+  </div>
+  <div class="trace-block reject">
+    <div class="trace-label">✗ Input: "ba"</div>
+    <div class="trace-path">q0 —b→ q0 —a→ q1 <span class="trace-verdict">REJECT (q1 ∉ F)</span></div>
+  </div>
+  <div class="trace-block reject">
+    <div class="trace-label">✗ Input: "abb"</div>
+    <div class="trace-path">q0 —a→ q1 —b→ q2 —b→ q0 <span class="trace-verdict">REJECT (q0 ∉ F)</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 3 — EXAMPLE 2: strings with even 0s
+══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-header-title">Theory of Computation — DFA Notes</span>
+    <span class="page-header-num">03</span>
+  </div>
+
+  <h2>3. Example 2 — Even number of 0s</h2>
+  <div class="h2-bar"></div>
+
+  <div class="def-box">
+    <div class="def-label">Language</div>
+    <p><code>L = { w &isin; {0,1}* | w contains an even number of 0s }</code></p>
+    <p style="margin-top:6px;font-size:11pt;color:#555;">Note: 0 is even. So &epsilon; (empty string) is accepted.</p>
+  </div>
+
+  <p style="margin:10px 0 4px; font-size:11pt;"><strong>5-Tuple:</strong> &nbsp; Q = {q0, q1} &nbsp; &Sigma; = {0,1} &nbsp; q<sub>0</sub> = q0 &nbsp; F = {q0}</p>
+  <p style="font-size:11pt; color:#555; margin-bottom:10px;">Intuition: q0 = even count of 0s seen, q1 = odd count of 0s seen.</p>
+
+  <div class="diagram-box">
+    <svg width="100%" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M1 1L9 5L1 9" fill="none" stroke="#444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <!-- start arrow -->
+      <line x1="30" y1="100" x2="82" y2="100" stroke="#444" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="54" y="90" text-anchor="middle" font-size="11" fill="#888">start</text>
+
+      <!-- q0 accept (double circle) -->
+      <circle cx="118" cy="100" r="34" fill="#e8f0fe" stroke="#0f3460" stroke-width="2"/>
+      <circle cx="118" cy="100" r="26" fill="none" stroke="#0f3460" stroke-width="1.5"/>
+      <text x="118" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="#0f3460">q0</text>
+
+      <!-- q1 -->
+      <circle cx="380" cy="100" r="34" fill="#fce4ec" stroke="#0f3460" stroke-width="2"/>
+      <text x="380" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="#0f3460">q1</text>
+
+      <!-- q0 self-loop 1 (above) -->
+      <path d="M98 67 Q118 10 138 67" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="118" y="6" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">1</text>
+
+      <!-- q1 self-loop 1 (above) -->
+      <path d="M360 67 Q380 10 400 67" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="380" y="6" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">1</text>
+
+      <!-- q0 → q1 on 0 (top arc) -->
+      <path d="M152 85 Q249 36 346 85" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="249" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">0</text>
+
+      <!-- q1 → q0 on 0 (bottom arc) -->
+      <path d="M346 115 Q249 164 152 115" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="249" y="176" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">0</text>
+
+      <!-- labels -->
+      <text x="118" y="147" text-anchor="middle" font-size="10" fill="#1565c0">even 0s (accept)</text>
+      <text x="380" y="147" text-anchor="middle" font-size="10" fill="#c62828">odd 0s (reject)</text>
+    </svg>
+    <div class="diagram-caption">Figure 2 — DFA for even number of 0s over {0,1}</div>
+  </div>
+
+  <h3>Transition Table</h3>
+  <table class="trans-table">
+    <tr><th>State</th><th>0</th><th>1</th><th>Meaning</th></tr>
+    <tr class="accept-row">
+      <td>q0 <span class="badge badge-start">start</span> <span class="badge badge-accept">accept</span></td>
+      <td>q1</td><td>q0</td><td>Even 0s seen</td>
+    </tr>
+    <tr>
+      <td>q1</td>
+      <td>q0</td><td>q1</td><td>Odd 0s seen</td>
+    </tr>
+  </table>
+
+  <h3>String Traces</h3>
+  <div class="trace-block accept">
+    <div class="trace-label">✓ Input: "" (empty)</div>
+    <div class="trace-path">q0 &nbsp; <span class="trace-verdict">ACCEPT (0 zeros — even)</span></div>
+  </div>
+  <div class="trace-block accept">
+    <div class="trace-label">✓ Input: "00"</div>
+    <div class="trace-path">q0 —0→ q1 —0→ q0 <span class="trace-verdict">ACCEPT</span></div>
+  </div>
+  <div class="trace-block accept">
+    <div class="trace-label">✓ Input: "1001"</div>
+    <div class="trace-path">q0 —1→ q0 —0→ q1 —0→ q0 —1→ q0 <span class="trace-verdict">ACCEPT</span></div>
+  </div>
+  <div class="trace-block reject">
+    <div class="trace-label">✗ Input: "0"</div>
+    <div class="trace-path">q0 —0→ q1 <span class="trace-verdict">REJECT (odd count)</span></div>
+  </div>
+  <div class="trace-block reject">
+    <div class="trace-label">✗ Input: "001"</div>
+    <div class="trace-path">q0 —0→ q1 —0→ q0 —1→ q0 ... wait — q0 is accept ✓</div>
+  </div>
+
+  <div class="key-points" style="margin-top:16px;">
+    <div class="kp-title">&#128161; Design Pattern — Parity Tracking</div>
+    <ul>
+      <li>Use <strong>2 states</strong> to track even/odd of a single symbol.</li>
+      <li>q0 = even (start &amp; accept), q1 = odd.</li>
+      <li>Generalise: for counting mod k → need k states.</li>
+      <li>Other symbols that don't affect the count → self-loops in both states.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 4 — EXAMPLE 3: binary divisible by 3
+══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-header-title">Theory of Computation — DFA Notes</span>
+    <span class="page-header-num">04</span>
+  </div>
+
+  <h2>4. Example 3 — Binary strings divisible by 3</h2>
+  <div class="h2-bar"></div>
+
+  <div class="def-box">
+    <div class="def-label">Language</div>
+    <p><code>L = { w &isin; {0,1}* | integer value of w is divisible by 3 }</code></p>
+    <p style="margin-top:6px;font-size:11pt;color:#555;">e.g. "0" (0), "11" (3), "110" (6), "1001" (9) &isin; L</p>
+  </div>
+
+  <p style="font-size:11pt; margin:10px 0 4px;"><strong>Key Insight:</strong> Track the remainder when dividing by 3 (mod 3).</p>
+  <p style="font-size:11pt; margin-bottom:4px;">If current value = <em>n</em> and we read bit <em>b</em>:</p>
+  <div class="formula">new value = 2n + b &nbsp; → &nbsp; new remainder = (2 &times; old_remainder + b) mod 3</div>
+
+  <p style="font-size:11pt; margin:10px 0 4px;"><strong>5-Tuple:</strong> &nbsp; Q = {q0, q1, q2} &nbsp; &Sigma; = {0,1} &nbsp; q<sub>0</sub> = q0 &nbsp; F = {q0}</p>
+
+  <div class="diagram-box">
+    <svg width="100%" viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M1 1L9 5L1 9" fill="none" stroke="#444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <!-- start -->
+      <line x1="20" y1="120" x2="72" y2="120" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="44" y="110" text-anchor="middle" font-size="10" fill="#888">start</text>
+
+      <!-- q0 accept -->
+      <circle cx="108" cy="120" r="34" fill="#e8f0fe" stroke="#0f3460" stroke-width="2"/>
+      <circle cx="108" cy="120" r="26" fill="none" stroke="#0f3460" stroke-width="1.5"/>
+      <text x="108" y="116" text-anchor="middle" font-size="13" font-weight="700" fill="#0f3460">q0</text>
+      <text x="108" y="131" text-anchor="middle" font-size="9" fill="#1565c0">rem=0</text>
+
+      <!-- q1 -->
+      <circle cx="310" cy="50" r="34" fill="#fff8e1" stroke="#0f3460" stroke-width="2"/>
+      <text x="310" y="46" text-anchor="middle" font-size="13" font-weight="700" fill="#0f3460">q1</text>
+      <text x="310" y="61" text-anchor="middle" font-size="9" fill="#e65100">rem=1</text>
+
+      <!-- q2 -->
+      <circle cx="310" cy="190" r="34" fill="#fce4ec" stroke="#0f3460" stroke-width="2"/>
+      <text x="310" y="186" text-anchor="middle" font-size="13" font-weight="700" fill="#0f3460">q2</text>
+      <text x="310" y="201" text-anchor="middle" font-size="9" fill="#c62828">rem=2</text>
+
+      <!-- q0 self-loop 0 -->
+      <path d="M88 87 Q108 30 128 87" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="108" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">0</text>
+
+      <!-- q0 → q1 on 1 -->
+      <path d="M138 103 Q220 50 275 62" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="196" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">1</text>
+
+      <!-- q1 → q2 on 0 -->
+      <line x1="310" y1="84" x2="310" y2="154" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="323" y="122" font-size="13" font-weight="700" fill="#e94560">0</text>
+
+      <!-- q1 → q0 on 1 -->
+      <path d="M275 62 Q180 90 138 110" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="200" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">1</text>
+
+      <!-- q2 → q1 on 1 -->
+      <path d="M340 175 Q430 130 340 66" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="430" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">1</text>
+
+      <!-- q2 → q0 on 0 -->
+      <path d="M278 175 Q160 190 118 152" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="185" y="202" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">0</text>
+
+      <!-- q1 self-loop (no — covered above) -->
+    </svg>
+    <div class="diagram-caption">Figure 3 — DFA for binary strings whose value ≡ 0 (mod 3)</div>
+  </div>
+
+  <h3>Transition Table</h3>
+  <table class="trans-table">
+    <tr><th>State</th><th>0</th><th>1</th><th>Remainder</th></tr>
+    <tr class="accept-row">
+      <td>q0 <span class="badge badge-start">start</span> <span class="badge badge-accept">accept</span></td>
+      <td>q0</td><td>q1</td><td>0 mod 3 = 0</td>
+    </tr>
+    <tr>
+      <td>q1</td><td>q2</td><td>q0</td><td>1 mod 3 = 1</td>
+    </tr>
+    <tr>
+      <td>q2</td><td>q1</td><td>q0</td><td>2 mod 3 = 2</td>
+    </tr>
+  </table>
+
+  <h3>Traces</h3>
+  <div class="trace-block accept">
+    <div class="trace-label">✓ "11" = 3</div>
+    <div class="trace-path">q0 —1→ q1 —1→ q0 <span class="trace-verdict">ACCEPT</span></div>
+  </div>
+  <div class="trace-block accept">
+    <div class="trace-label">✓ "110" = 6</div>
+    <div class="trace-path">q0 —1→ q1 —1→ q0 —0→ q0 <span class="trace-verdict">ACCEPT</span></div>
+  </div>
+  <div class="trace-block reject">
+    <div class="trace-label">✗ "10" = 2</div>
+    <div class="trace-path">q0 —1→ q1 —0→ q2 <span class="trace-verdict">REJECT</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 5 — DFA vs NFA + Minimisation
+══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-header-title">Theory of Computation — DFA Notes</span>
+    <span class="page-header-num">05</span>
+  </div>
+
+  <h2>5. DFA vs NFA</h2>
+  <div class="h2-bar"></div>
+
+  <table class="cmp-table">
+    <tr><th>Property</th><th>DFA</th><th>NFA</th></tr>
+    <tr><td>Transitions per (state, symbol)</td><td>Exactly 1</td><td>0, 1, or more</td></tr>
+    <tr><td>&epsilon; (epsilon) transitions</td><td class="cross">✗ No</td><td class="tick">✓ Yes</td></tr>
+    <tr><td>Determinism</td><td class="tick">✓ Always deterministic</td><td class="cross">✗ Non-deterministic</td></tr>
+    <tr><td>Dead state needed?</td><td class="tick">✓ Explicit or implicit</td><td class="cross">✗ Not required</td></tr>
+    <tr><td>Simulation</td><td>Single current state</td><td>Set of possible states</td></tr>
+    <tr><td>Expressive power</td><td colspan="2" style="text-align:center; font-weight:600; color:#0f3460;">Equal — both recognise Regular Languages</td></tr>
+    <tr><td>Easier to design?</td><td class="cross">✗ Harder</td><td class="tick">✓ Easier</td></tr>
+    <tr><td>Easier to implement?</td><td class="tick">✓ Easier (direct simulation)</td><td class="cross">✗ Harder (subset tracking)</td></tr>
+    <tr><td>State count after conversion</td><td>Up to 2<sup>n</sup> states</td><td>n states</td></tr>
+  </table>
+
+  <div class="key-points">
+    <div class="kp-title">&#9888; Equivalence Theorem</div>
+    <ul>
+      <li>Every NFA can be converted to an equivalent DFA using the <strong>Subset Construction algorithm</strong>.</li>
+      <li>An NFA with n states may produce a DFA with up to <strong>2<sup>n</sup> states</strong> (worst case).</li>
+      <li>In practice, many states are unreachable — the actual DFA is often much smaller.</li>
+    </ul>
+  </div>
+
+  <h2 style="margin-top:24px;">6. DFA Minimisation</h2>
+  <div class="h2-bar"></div>
+
+  <p style="font-size:11.5pt; margin-bottom:12px;">Multiple DFAs can recognise the same language. The <strong>minimum DFA</strong> has the fewest possible states. We find it using the <strong>Table-Filling Algorithm (Myhill-Nerode)</strong>.</p>
+
+  <h3>Table-Filling Algorithm — Steps</h3>
+  <div class="algo-box">
+    <ol>
+      <li><strong>Mark</strong> all pairs (p, q) where one is an accept state and the other is not — these are distinguishable.</li>
+      <li><strong>Repeat</strong> until no new pairs are marked:<br>
+          &nbsp;&nbsp;For each unmarked pair (p, q) and each symbol a:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;If (&delta;(p,a), &delta;(q,a)) is already marked → mark (p, q).</li>
+      <li><strong>Merge</strong> all remaining unmarked pairs — they are equivalent (indistinguishable) states.</li>
+      <li>Build the <strong>new minimised DFA</strong> using the merged equivalence classes.</li>
+    </ol>
+  </div>
+
+  <h3>Properties of Minimum DFA</h3>
+  <table class="trans-table">
+    <tr><th style="text-align:left;">Property</th><th style="text-align:left;">Description</th></tr>
+    <tr><td>Unique</td><td style="text-align:left; font-family:inherit;">Up to isomorphism — only one minimum DFA exists for any regular language</td></tr>
+    <tr><td>No dead states</td><td style="text-align:left; font-family:inherit;">If all transitions are defined (complete DFA), one dead state may remain</td></tr>
+    <tr><td>No equivalent states</td><td style="text-align:left; font-family:inherit;">No two distinct states accept exactly the same set of future strings</td></tr>
+    <tr><td>No unreachable states</td><td style="text-align:left; font-family:inherit;">Remove any state unreachable from q<sub>0</sub> before minimising</td></tr>
+  </table>
+
+  <h2 style="margin-top:24px;">7. Regular Languages & Closure</h2>
+  <div class="h2-bar"></div>
+  <p style="font-size:11.5pt; margin-bottom:10px;">The set of languages recognised by DFAs = <strong>Regular Languages</strong>. They are closed under:</p>
+  <div style="display:flex; gap:14px; flex-wrap:wrap; margin:8px 0;">
+    <div style="flex:1; min-width:120px; background:#f0f4ff; border:1px solid #c5d3f0; border-radius:6px; padding:10px 14px; text-align:center; font-size:11pt; font-weight:600; color:#0f3460;">Union<br><span style="font-weight:400; font-size:10pt;">L₁ ∪ L₂</span></div>
+    <div style="flex:1; min-width:120px; background:#f0f4ff; border:1px solid #c5d3f0; border-radius:6px; padding:10px 14px; text-align:center; font-size:11pt; font-weight:600; color:#0f3460;">Intersection<br><span style="font-weight:400; font-size:10pt;">L₁ ∩ L₂</span></div>
+    <div style="flex:1; min-width:120px; background:#f0f4ff; border:1px solid #c5d3f0; border-radius:6px; padding:10px 14px; text-align:center; font-size:11pt; font-weight:600; color:#0f3460;">Complement<br><span style="font-weight:400; font-size:10pt;">L̄ = Σ* \ L</span></div>
+    <div style="flex:1; min-width:120px; background:#f0f4ff; border:1px solid #c5d3f0; border-radius:6px; padding:10px 14px; text-align:center; font-size:11pt; font-weight:600; color:#0f3460;">Concatenation<br><span style="font-weight:400; font-size:10pt;">L₁ · L₂</span></div>
+    <div style="flex:1; min-width:120px; background:#f0f4ff; border:1px solid #c5d3f0; border-radius:6px; padding:10px 14px; text-align:center; font-size:11pt; font-weight:600; color:#0f3460;">Kleene Star<br><span style="font-weight:400; font-size:10pt;">L*</span></div>
+  </div>
+
+  <div class="key-points" style="margin-top:18px;">
+    <div class="kp-title">&#128218; Quick Revision — Must Remember</div>
+    <ul>
+      <li>DFA = 5-tuple (Q, &Sigma;, &delta;, q<sub>0</sub>, F) — exactly one transition per (state, symbol) pair.</li>
+      <li>Accept if final state &isin; F after reading entire input. Reject otherwise.</li>
+      <li>Double circle in diagram = accept state. Arrow with "start" = start state.</li>
+      <li>DFA ≡ NFA in power. NFA → DFA via subset construction (2<sup>n</sup> worst case).</li>
+      <li>DFA recognises exactly the <strong>Regular Languages</strong>.</li>
+      <li>Minimise DFA using Table-Filling (Myhill-Nerode) algorithm.</li>
+      <li>Pumping Lemma proves a language is <strong>NOT</strong> regular.</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
