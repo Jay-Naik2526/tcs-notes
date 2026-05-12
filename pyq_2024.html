@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCS PYQ Solutions — NMIMS MPSTME</title>
+    <style>
+        :root { --bg: #0d1117; --bg2: #161b22; --bg3: #1c2128; --bg4: #21262d; --border: #30363d; --cyan: #79c0ff; --gold: #f0c040; --green: #3fb950; --orange: #ffa657; --purple: #d2a8ff; --red: #f85149; --pink: #f778ba; --blue: #58a6ff; --text: #e6edf3; --text2: #8b949e; --text3: #c9d1d9; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.7; padding-bottom:60px;}
+        .topnav { position: sticky; top: 0; z-index: 999; background: var(--bg2); border-bottom: 2px solid var(--border); padding: 12px 24px; display:flex; align-items:center; }
+        .brand { font-size: 14px; font-weight: 800; color: var(--gold); margin-right: 20px;}
+        .nav-links a { color: var(--text2); text-decoration: none; margin-right: 15px; font-size:13px; font-weight:600;}
+        .nav-links a:hover { color: var(--cyan); }
+        .main { max-width: 1020px; margin: 0 auto; padding: 32px 36px 80px; }
+        
+        .ph { background: var(--bg2); border: 1px solid var(--border); padding: 24px 30px; border-radius: 12px; margin-bottom: 30px; border-top: 4px solid var(--cyan); }
+        .ph h2 { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 12px; }
+        .ph-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--text2); font-family: monospace; }
+        .ph-meta span { background: var(--bg3); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
+        
+        .qb { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 24px; overflow: hidden; }
+        .qh { display: flex; align-items: stretch; background: var(--bg3); border-bottom: 1px solid var(--border); }
+        .qn { padding: 12px 18px; font-weight: 800; font-size: 14px; color: var(--bg); display: flex; align-items: center; justify-content: center; min-width: 60px; }
+        .c1 { background: var(--blue); } .c2 { background: var(--green); } .c3 { background: var(--orange); } .c4 { background: var(--purple); } .c5 { background: var(--red); } .c6 { background: var(--gold); }
+        .qt { padding: 12px 16px; font-weight: 600; color: var(--text); flex-grow: 1; align-self: center; }
+        .qm { padding: 12px 16px; font-weight: 700; color: var(--text2); font-family: monospace; align-self: center; border-left: 1px solid var(--border); }
+        
+        .qbody { padding: 24px 28px; }
+        .qstmt { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); line-height: 1.6; }
+        .alabel { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan); margin-bottom: 12px; display: inline-block; background: rgba(121,192,255,.1); padding: 4px 10px; border-radius: 4px; }
+        .a { margin-bottom: 16px; color: var(--text3); }
+        
+        .formula { background: var(--bg3); border: 1px solid var(--border); padding: 16px; border-radius: 6px; font-family: monospace; font-size: 13.5px; color: var(--cyan); margin: 16px 0; overflow-x: auto; white-space: pre-wrap; line-height: 1.5;}
+        
+        .dbox { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; overflow-x: auto; }
+        
+        .tw { margin: 20px 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
+        th { background: var(--bg3); color: var(--text); font-weight: 600; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text3); font-family: monospace; vertical-align: top;}
+        tr:last-child td { border-bottom: none; }
+        
+        ul.a-list { margin-left: 20px; margin-bottom: 16px; color: var(--text3); }
+        ul.a-list li { margin-bottom: 6px; }
+        
+        .tuple-list { margin-left: 20px; margin-bottom: 16px; color: var(--text3); }
+        .tuple-list li { margin-bottom: 8px; list-style-type: disc; }
+        .tuple-highlight { color: var(--orange); font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="topnav">
+        <div class="brand">TCS Notes &bull; PYQ</div>
+        <div class="nav-links">
+            <a href="index.html">← Back to Chapters</a>
+        </div>
+    </div>
+
+    <div class="main">
+<div class="ph">
+                <h2>Final/Re-Examination — Academic Year 2024-25</h2>
+                <div class="ph-meta"><span>Date: 10/05/2025</span><span>Marks: 100</span><span>Time: 3
+                        hrs</span><span>Batches: 2022-23 &amp; 2023-24</span></div>
+            </div>
+
+            <!-- Q1a -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c1">Q1a</div>
+                    <div class="qt">Key Applications of Theoretical Computer Science</div>
+                    <div class="qm">[5]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">What are the key applications of Theoretical Computer Science?</div>
+                    <div class="alabel">Answer</div>
+                    <ul class="al">
+                        <li><strong>Compiler Design:</strong> Lexical analysis uses DFA/NFA to tokenize source code via
+                            regular expressions. Syntax analysis (parsing) uses CFG and PDAs. Every compiler is built on
+                            TCS.</li>
+                        <li><strong>Text Search &amp; Pattern Matching:</strong> grep, regex engines, search engines —
+                            all based on finite automata and regular expressions.</li>
+                        <li><strong>Network Protocols:</strong> Protocol state machines modelled using FA (TCP
+                            handshake, HTTP states).</li>
+                        <li><strong>AI &amp; NLP:</strong> Formal grammars model language; parsers in NLP use CFL/PDA
+                            techniques.</li>
+                        <li><strong>Computability Limits:</strong> Halting Problem and undecidability show what
+                            computers fundamentally CANNOT do — critical for security analysis.</li>
+                        <li><strong>Cryptography:</strong> Complexity theory (P vs NP) is the mathematical foundation of
+                            modern cryptographic security.</li>
+                        <li><strong>Software Verification:</strong> Model checkers use automata to verify program
+                            correctness automatically.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Q1b: NFA→DFA -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c1">Q1b</div>
+                    <div class="qt">NFA to Equivalent DFA — Subset Construction</div>
+                    <div class="qm">[5]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">NFA: states {q0,q1,q2,q3}, start q0, final q3. δ: q0→0→{q0,q1}, q0→1→{q0},
+                        q1→0→{q2}, q1→1→{q1}, q2→0→{q3}, q2→1→{q3}, q3→0→φ, q3→1→{q2}. Convert to DFA.</div>
+                    <div class="alabel">Subset Construction</div>
+                    <p class="a">Each DFA state = a <strong>set of NFA states</strong>. A DFA state is accepting if it
+                        contains q3. Start = {q0}.</p>
+                    <div class="tw">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>DFA State (NFA subset)</th>
+                                    <th>On 0</th>
+                                    <th>On 1</th>
+                                    <th>Accept?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>→ A = {q0}</td>
+                                    <td>B={q0,q1}</td>
+                                    <td>A={q0}</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>B = {q0,q1}</td>
+                                    <td>C={q0,q1,q2}</td>
+                                    <td>B={q0,q1}</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>C = {q0,q1,q2}</td>
+                                    <td>D={q0,q1,q2,q3}★</td>
+                                    <td>E={q0,q1,q3}★</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>D = {q0,q1,q2,q3} ★</td>
+                                    <td>D★</td>
+                                    <td>E★</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>E = {q0,q1,q3} ★</td>
+                                    <td>C</td>
+                                    <td>B</td>
+                                    <td>Yes (has q3)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="alabel">DFA State Diagram</div>
+                    <div class="dbox"><svg width="100%" viewBox="0 0 680 190" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                                    orient="auto">
+                                    <path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </marker>
+                            </defs>
+                            <line x1="14" y1="95" x2="46" y2="95" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a1)" />
+                            <!-- A -->
+                            <circle cx="80" cy="95" r="28" fill="rgba(240,192,64,.1)" stroke="#f0c040"
+                                stroke-width="2" />
+                            <text x="80" y="91" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#f0c040">A</text>
+                            <text x="80" y="104" text-anchor="middle" font-size="8" fill="#f0c040">{q0}</text>
+                            <!-- B -->
+                            <circle cx="210" cy="95" r="28" fill="rgba(88,166,255,.08)" stroke="#58a6ff"
+                                stroke-width="1.5" />
+                            <text x="210" y="91" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#58a6ff">B</text>
+                            <text x="210" y="104" text-anchor="middle" font-size="8" fill="#58a6ff">{q0,q1}</text>
+                            <!-- C -->
+                            <circle cx="370" cy="95" r="28" fill="rgba(210,168,255,.08)" stroke="#d2a8ff"
+                                stroke-width="1.5" />
+                            <text x="370" y="91" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#d2a8ff">C</text>
+                            <text x="370" y="104" text-anchor="middle" font-size="8" fill="#d2a8ff">{q0,q1,q2}</text>
+                            <!-- D accept -->
+                            <circle cx="540" cy="55" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2.5" />
+                            <circle cx="540" cy="55" r="21" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="540" y="51" text-anchor="middle" font-size="10" font-weight="700"
+                                fill="#3fb950">D★</text>
+                            <text x="540" y="63" text-anchor="middle" font-size="7.5" fill="#3fb950">{q0..q3}</text>
+                            <!-- E accept -->
+                            <circle cx="540" cy="155" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2.5" />
+                            <circle cx="540" cy="155" r="21" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="540" y="151" text-anchor="middle" font-size="10" font-weight="700"
+                                fill="#3fb950">E★</text>
+                            <text x="540" y="163" text-anchor="middle" font-size="7.5" fill="#3fb950">{q0,q1,q3}</text>
+                            <!-- A self on 1 -->
+                            <path d="M60,68 Q80,20 100,68" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a1)" />
+                            <text x="80" y="16" text-anchor="middle" font-size="10" fill="#3fb950">1</text>
+                            <!-- A→B on 0 -->
+                            <line x1="109" y1="95" x2="180" y2="95" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a1)" />
+                            <text x="145" y="85" text-anchor="middle" font-size="10" fill="#3fb950">0</text>
+                            <!-- B self on 1 -->
+                            <path d="M190,68 Q210,25 230,68" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a1)" />
+                            <text x="210" y="21" text-anchor="middle" font-size="10" fill="#3fb950">1</text>
+                            <!-- B→C on 0 -->
+                            <line x1="239" y1="95" x2="340" y2="95" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a1)" />
+                            <text x="290" y="85" text-anchor="middle" font-size="10" fill="#3fb950">0</text>
+                            <!-- C→D on 0 -->
+                            <line x1="396" y1="82" x2="514" y2="64" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a1)" />
+                            <text x="445" y="64" text-anchor="middle" font-size="10" fill="#3fb950">0</text>
+                            <!-- C→E on 1 -->
+                            <line x1="396" y1="108" x2="514" y2="142" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a1)" />
+                            <text x="448" y="136" text-anchor="middle" font-size="10" fill="#3fb950">1</text>
+                            <!-- D self on 0,1 -->
+                            <path d="M520,28 Q540,0 560,28" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a1)" />
+                            <text x="540" y="-5" text-anchor="middle" font-size="10" fill="#3fb950">0,1→D,E</text>
+                            <!-- E→C on 0 -->
+                            <path d="M514,148 Q430,145 398,112" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a1)" />
+                            <text x="430" y="155" text-anchor="middle" font-size="9" fill="#3fb950">0→C</text>
+                            <!-- E→B on 1 -->
+                            <path d="M512,162 Q350,175 240,110" fill="none" stroke="#8b949e" stroke-width="1.3"
+                                stroke-dasharray="4,2" marker-end="url(#a1)" />
+                            <text x="350" y="182" text-anchor="middle" font-size="9" fill="#3fb950">1→B</text>
+                        </svg>
+                        <div class="dcap">DFA — 5 states {A,B,C,D★,E★}. D and E are accepting states (contain q3).
+                            Language: binary strings where some path through original NFA reaches q3.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q1c: CFG for (0+1)*00(0+1)*11 -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c1">Q1c</div>
+                    <div class="qt">CFG for RE = (0+1)*00(0+1)*11</div>
+                    <div class="qm">[5]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">Form a CFG generating the same language as RE = (0+1)*00(0+1)*11. Provide the
+                        tuples.</div>
+                    <div class="alabel">Answer</div>
+                    <p class="a"><strong>Language:</strong> All binary strings containing "00" followed (somewhere
+                        later) by "11". (0+1)* before "00", (0+1)* between, "11" at the end — so actually strings that
+                        have "00" as a substring and end with "11" after that.</p>
+                    <div class="grammar"><span class="nt">S</span> → <span class="nt">A</span> <span class="t">00</span>
+                        <span class="nt">A</span> <span class="t">11</span> <span class="nt">A</span>
+                        <span class="nt">A</span> → <span class="t">0</span><span class="nt">A</span> | <span
+                            class="t">1</span><span class="nt">A</span> | <span class="t">ε</span>
+                    </div>
+                    <div class="tbox">
+                        <div class="tl">4-Tuple G = (V, T, P, S)</div>
+                        <ul>
+                            <li><code>V = {S, A}</code> — Non-terminals</li>
+                            <li><code>T = {0, 1}</code> — Terminals</li>
+                            <li><code>P</code>: S→A00A11A, A→0A|1A|ε</li>
+                            <li><code>S</code> — Start symbol</li>
+                        </ul>
+                    </div>
+                    <p class="a">A generates (0+1)* (any binary string including ε). So S generates:
+                        (any)(00)(any)(11)(any) = exactly the language of (0+1)*00(0+1)*11(0+1)*. The final A can be ε
+                        giving the RE pattern exactly.</p>
+                </div>
+            </div>
+
+            <!-- Q1d: PDA for a^n b^n n≥0 -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c1">Q1d</div>
+                    <div class="qt">PDA for L = {aⁿbⁿ | n ≥ 0}</div>
+                    <div class="qm">[5]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">Design a state-transition PDA for L = {aⁿbⁿ | n ≥ 0}.</div>
+                    <div class="alabel">7-Tuple &amp; Transitions</div>
+                    <div class="tbox">
+                        <div class="tl">7-Tuple PDA: M = (Q, Σ, Γ, δ, q0, Z0, F)</div>
+                        <ul>
+                            <li><code>Q = {q0, q1, q2}</code></li>
+                            <li><code>Σ = {a, b}</code></li>
+                            <li><code>Γ = {A, Z0}</code> — A marks each 'a'; Z0 is bottom-of-stack marker</li>
+                            <li><code>q0</code> — Start state</li>
+                            <li><code>Z0</code> — Initial stack symbol</li>
+                            <li><code>F = {q2}</code> — Final (accept) state</li>
+                        </ul>
+                    </div>
+                    <div class="tw">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Input</th>
+                                    <th>Stack Top</th>
+                                    <th>Next</th>
+                                    <th>Stack Action</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>a</td>
+                                    <td>Z0</td>
+                                    <td>q0</td>
+                                    <td>AZ0 (push A)</td>
+                                    <td>Push A for 'a', first 'a'</td>
+                                </tr>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>a</td>
+                                    <td>A</td>
+                                    <td>q0</td>
+                                    <td>AA (push A)</td>
+                                    <td>Push A for each 'a'</td>
+                                </tr>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>b</td>
+                                    <td>A</td>
+                                    <td>q1</td>
+                                    <td>ε (pop A)</td>
+                                    <td>First 'b' — pop one A</td>
+                                </tr>
+                                <tr>
+                                    <td>q1</td>
+                                    <td>b</td>
+                                    <td>A</td>
+                                    <td>q1</td>
+                                    <td>ε (pop A)</td>
+                                    <td>Continue popping A for b's</td>
+                                </tr>
+                                <tr>
+                                    <td>q1</td>
+                                    <td>ε</td>
+                                    <td>Z0</td>
+                                    <td>q2</td>
+                                    <td>Z0</td>
+                                    <td>Stack empty → go to accept</td>
+                                </tr>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>ε</td>
+                                    <td>Z0</td>
+                                    <td>q2</td>
+                                    <td>Z0</td>
+                                    <td>n=0: empty input accepted (ε ∈ L)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dbox"><svg width="100%" viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                                    orient="auto">
+                                    <path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </marker>
+                            </defs>
+                            <line x1="12" y1="90" x2="46" y2="90" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a2)" />
+                            <circle cx="82" cy="90" r="32" fill="rgba(240,192,64,.1)" stroke="#f0c040"
+                                stroke-width="2.5" />
+                            <text x="82" y="86" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#f0c040">q0</text>
+                            <text x="82" y="100" text-anchor="middle" font-size="8.5" fill="#f0c040">push A's</text>
+                            <circle cx="280" cy="90" r="32" fill="rgba(255,166,87,.1)" stroke="#ffa657"
+                                stroke-width="2" />
+                            <text x="280" y="86" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">q1</text>
+                            <text x="280" y="100" text-anchor="middle" font-size="8.5" fill="#ffa657">pop A's</text>
+                            <circle cx="470" cy="90" r="32" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2.5" />
+                            <circle cx="470" cy="90" r="24" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="470" y="86" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#3fb950">q2</text>
+                            <text x="470" y="100" text-anchor="middle" font-size="8.5" fill="#3fb950">accept</text>
+                            <!-- q0 self loops -->
+                            <path d="M60,58 Q82,5 104,58" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a2)" />
+                            <text x="82" y="0" text-anchor="middle" font-size="10" fill="#3fb950">a,Z0/AZ0</text>
+                            <text x="82" y="14" text-anchor="middle" font-size="10" fill="#3fb950">a,A/AA</text>
+                            <!-- q0→q1 -->
+                            <line x1="115" y1="90" x2="246" y2="90" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a2)" />
+                            <text x="182" y="80" text-anchor="middle" font-size="10" fill="#3fb950">b,A/ε</text>
+                            <!-- q1 self -->
+                            <path d="M258,58 Q280,5 302,58" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a2)" />
+                            <text x="280" y="2" text-anchor="middle" font-size="10" fill="#3fb950">b,A/ε</text>
+                            <!-- q1→q2 -->
+                            <line x1="313" y1="90" x2="436" y2="90" stroke="#3fb950" stroke-width="2"
+                                marker-end="url(#a2)" />
+                            <text x="374" y="80" text-anchor="middle" font-size="10" fill="#3fb950">ε,Z0/Z0</text>
+                            <!-- q0→q2 n=0 -->
+                            <path d="M104,118 Q280,160 436,118" fill="none" stroke="#8b949e" stroke-width="1.3"
+                                stroke-dasharray="4,2" marker-end="url(#a2)" />
+                            <text x="280" y="170" text-anchor="middle" font-size="9" fill="#8b949e">ε,Z0/Z0 (n=0)</text>
+                        </svg>
+                        <div class="dcap">PDA for aⁿbⁿ (n≥0). Label format: input, stack-top / new-stack-top. Dashed
+                            line = n=0 shortcut (ε accepted directly).</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2a: DFA for w contains 'ab' or ends 'ba' -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c2">Q2a</div>
+                    <div class="qt">DFA for L = {w | w contains 'ab' OR ends with 'ba', w∈{a,b}*}</div>
+                    <div class="qm">[10]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">Model a DFA for L = {w | w contains 'ab' or ends with 'ba', w∈{a,b}*}. Describe
+                        states, transitions, accepting conditions.</div>
+                    <div class="alabel">State Design</div>
+                    <p class="a">We track two things simultaneously: (1) have we seen 'ab'? and (2) what is the recent
+                        suffix (for detecting 'ba' at end). Once 'ab' is found, we stay in a permanent accept zone.</p>
+                    <div class="tbox">
+                        <div class="tl">5-Tuple DFA: M = (Q, Σ, δ, q0, F)</div>
+                        <ul>
+                            <li><code>Q = {q0, q1, q2, q3, q4}</code></li>
+                            <li><code>Σ = {a, b}</code></li>
+                            <li><code>q0</code> — Start</li>
+                            <li><code>F = {q2, q4}</code> — Accept states</li>
+                        </ul>
+                    </div>
+                    <div class="tw">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Meaning</th>
+                                    <th>On 'a'</th>
+                                    <th>On 'b'</th>
+                                    <th>Accept?</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tdn">
+                                <tr>
+                                    <td>→ q0</td>
+                                    <td>Start — no relevant prefix</td>
+                                    <td>q1</td>
+                                    <td>q3</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>q1</td>
+                                    <td>Last char was 'a'</td>
+                                    <td>q1</td>
+                                    <td>q2</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>q2 ★</td>
+                                    <td>'ab' found — permanent accept</td>
+                                    <td>q2</td>
+                                    <td>q4</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>q3</td>
+                                    <td>Last char was 'b' (tracking for 'ba')</td>
+                                    <td>q4</td>
+                                    <td>q3</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>q4 ★</td>
+                                    <td>Ends with 'ba'</td>
+                                    <td>q1</td>
+                                    <td>q2</td>
+                                    <td>Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="alabel">Explanation of key transitions</div>
+                    <ul class="al">
+                        <li>q0→'a'→q1: first symbol 'a', could be start of 'ab'</li>
+                        <li>q1→'b'→q2: saw 'ab'! q2 is absorbing accept state</li>
+                        <li>q3→'a'→q4: saw 'ba' — ends with 'ba', accept (unless more input changes it)</li>
+                        <li>q4→'a'→q1: new 'a' after 'ba' — 'ba' suffix broken, track new 'a'</li>
+                        <li>q4→'b'→q2: 'ba' followed by 'b' → we had 'ab' at the 'ab' inside 'bab' → q2</li>
+                    </ul>
+                    <div class="dbox"><svg width="100%" viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                                    orient="auto">
+                                    <path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </marker>
+                            </defs>
+                            <line x1="12" y1="100" x2="48" y2="100" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a3)" />
+                            <circle cx="84" cy="100" r="30" fill="rgba(240,192,64,.08)" stroke="#f0c040"
+                                stroke-width="2" />
+                            <text x="84" y="105" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#f0c040">q0</text>
+                            <circle cx="240" cy="50" r="30" fill="rgba(88,166,255,.08)" stroke="#58a6ff"
+                                stroke-width="1.5" />
+                            <text x="240" y="55" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#58a6ff">q1</text>
+                            <circle cx="430" cy="50" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2.5" />
+                            <circle cx="430" cy="50" r="23" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="430" y="46" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#3fb950">q2★</text>
+                            <text x="430" y="62" text-anchor="middle" font-size="8" fill="#3fb950">ab found</text>
+                            <circle cx="240" cy="155" r="30" fill="rgba(210,168,255,.08)" stroke="#d2a8ff"
+                                stroke-width="1.5" />
+                            <text x="240" y="160" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#d2a8ff">q3</text>
+                            <circle cx="430" cy="155" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2.5" />
+                            <circle cx="430" cy="155" r="23" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="430" y="151" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#3fb950">q4★</text>
+                            <text x="430" y="167" text-anchor="middle" font-size="8" fill="#3fb950">ba suffix</text>
+                            <!-- transitions -->
+                            <line x1="111" y1="88" x2="213" y2="64" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="148" y="64" text-anchor="middle" font-size="10" fill="#3fb950">a</text>
+                            <line x1="111" y1="112" x2="213" y2="141" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="148" y="140" text-anchor="middle" font-size="10" fill="#3fb950">b</text>
+                            <!-- q1 self a -->
+                            <path d="M218,22 Q240,-8 262,22" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="240" y="-6" text-anchor="middle" font-size="10" fill="#3fb950">a</text>
+                            <!-- q1→q2 b -->
+                            <line x1="271" y1="50" x2="398" y2="50" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a3)" />
+                            <text x="335" y="40" text-anchor="middle" font-size="10" fill="#3fb950">b</text>
+                            <!-- q2 self a,b -->
+                            <path d="M408,22 Q430,-8 452,22" fill="none" stroke="#3fb950" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="430" y="-4" text-anchor="middle" font-size="10" fill="#3fb950">a,b</text>
+                            <!-- q3 self b -->
+                            <path d="M218,175 Q240,200 262,175" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="240" y="200" text-anchor="middle" font-size="10" fill="#3fb950">b</text>
+                            <!-- q3→q4 a -->
+                            <line x1="271" y1="155" x2="398" y2="155" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a3)" />
+                            <text x="335" y="145" text-anchor="middle" font-size="10" fill="#3fb950">a</text>
+                            <!-- q4→q1 a -->
+                            <path d="M412,128 Q320,96 268,68" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="330" y="90" text-anchor="middle" font-size="10" fill="#3fb950">a</text>
+                            <!-- q4→q2 b -->
+                            <path d="M430,125 Q430,90 430,82" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a3)" />
+                            <text x="445" y="105" font-size="10" fill="#3fb950">b</text>
+                        </svg>
+                        <div class="dcap">DFA for L = {w contains 'ab' OR ends with 'ba'}. q2 is absorbing accept (once
+                            'ab' found, always accept). q4 accepts if string currently ends with 'ba'.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2b: Language of S→aSa|bSb|ε and PDA -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c2">Q2b</div>
+                    <div class="qt">Language of S→aSa|bSb|ε &amp; PDA Design</div>
+                    <div class="qm">[10]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">Provide formal language description for S→aSa|bSb|ε. Design a PDA that recognizes
+                        it with formal tuple representation.</div>
+                    <div class="alabel">Language Description</div>
+                    <p class="a">S→aSa adds 'a' symmetrically on both sides. S→bSb adds 'b' symmetrically. S→ε is the
+                        base (empty centre). This generates <strong>even-length palindromes</strong> over {a,b}.</p>
+                    <p class="a"><strong>L = {wwᴿ | w ∈ {a,b}*}</strong> — all strings that are their own reverse and
+                        have even length. Examples: ε, aa, bb, abba, baab, aabbaa, abbaabba ...</p>
+                    <div class="alabel">PDA Design (NPDA — nondeterministic)</div>
+                    <div class="tbox">
+                        <div class="tl">7-Tuple PDA: M = (Q, Σ, Γ, δ, q0, Z0, F)</div>
+                        <ul>
+                            <li><code>Q = {q0, q1, q2}</code></li>
+                            <li><code>Σ = {a, b}</code></li>
+                            <li><code>Γ = {a, b, Z0}</code></li>
+                            <li><code>q0</code> — Start (push phase)</li>
+                            <li><code>Z0</code> — Bottom-of-stack marker</li>
+                            <li><code>F = {q2}</code></li>
+                        </ul>
+                    </div>
+                    <div class="tw">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Input</th>
+                                    <th>Stack Top</th>
+                                    <th>Next</th>
+                                    <th>Stack</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>a</td>
+                                    <td>Z0/a/b</td>
+                                    <td>q0</td>
+                                    <td>push a</td>
+                                    <td>PUSH: push each symbol</td>
+                                </tr>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>b</td>
+                                    <td>Z0/a/b</td>
+                                    <td>q0</td>
+                                    <td>push b</td>
+                                    <td>PUSH: push each symbol</td>
+                                </tr>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>ε</td>
+                                    <td>Z0/a/b</td>
+                                    <td>q1</td>
+                                    <td>unchanged</td>
+                                    <td>NONDETERMINISTIC GUESS of midpoint</td>
+                                </tr>
+                                <tr>
+                                    <td>q1</td>
+                                    <td>a</td>
+                                    <td>a</td>
+                                    <td>q1</td>
+                                    <td>ε (pop)</td>
+                                    <td>MATCH: pop matching 'a'</td>
+                                </tr>
+                                <tr>
+                                    <td>q1</td>
+                                    <td>b</td>
+                                    <td>b</td>
+                                    <td>q1</td>
+                                    <td>ε (pop)</td>
+                                    <td>MATCH: pop matching 'b'</td>
+                                </tr>
+                                <tr>
+                                    <td>q1</td>
+                                    <td>ε</td>
+                                    <td>Z0</td>
+                                    <td>q2</td>
+                                    <td>ε</td>
+                                    <td>Stack empty → ACCEPT</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="nbox">
+                        <div class="nl">Key Note — Why NPDA?</div>The ε-transition from q0→q1 is nondeterministic — the
+                        PDA "guesses" the exact midpoint. It tries all possible midpoints and accepts if any branch
+                        succeeds. A DPDA cannot recognize all palindromes (wwᴿ).
+                    </div>
+                    <div class="dbox"><svg width="100%" viewBox="0 0 580 185" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                                    orient="auto">
+                                    <path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </marker>
+                            </defs>
+                            <line x1="12" y1="92" x2="46" y2="92" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a4)" />
+                            <circle cx="100" cy="92" r="36" fill="rgba(88,166,255,.08)" stroke="#58a6ff"
+                                stroke-width="2.5" />
+                            <text x="100" y="88" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#58a6ff">q0</text>
+                            <text x="100" y="102" text-anchor="middle" font-size="8.5" fill="#58a6ff">PUSH phase</text>
+                            <circle cx="310" cy="92" r="36" fill="rgba(255,166,87,.1)" stroke="#ffa657"
+                                stroke-width="2" />
+                            <text x="310" y="88" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#ffa657">q1</text>
+                            <text x="310" y="102" text-anchor="middle" font-size="8.5" fill="#ffa657">MATCH phase</text>
+                            <circle cx="510" cy="92" r="36" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2.5" />
+                            <circle cx="510" cy="92" r="28" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="510" y="88" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#3fb950">q2</text>
+                            <text x="510" y="102" text-anchor="middle" font-size="8.5" fill="#3fb950">ACCEPT</text>
+                            <!-- q0 self: push all -->
+                            <path d="M72,55 Q100,5 128,55" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a4)" />
+                            <text x="100" y="-1" text-anchor="middle" font-size="9.5" fill="#3fb950">a,Z0/aZ0 a,a/aa
+                                a,b/ab</text>
+                            <text x="100" y="12" text-anchor="middle" font-size="9.5" fill="#3fb950">b,Z0/bZ0 b,a/ba
+                                b,b/bb</text>
+                            <!-- q0→q1: NDET ε guess -->
+                            <line x1="137" y1="92" x2="272" y2="92" stroke="#f778ba" stroke-width="2.5"
+                                marker-end="url(#a4)" />
+                            <text x="206" y="78" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#f778ba">ε,a/a ε,b/b ε,Z0/Z0</text>
+                            <text x="206" y="116" text-anchor="middle" font-size="9" fill="#f778ba">← NONDETERMINISTIC
+                                GUESS</text>
+                            <!-- q1 self: match -->
+                            <path d="M282,55 Q310,5 338,55" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a4)" />
+                            <text x="310" y="2" text-anchor="middle" font-size="9.5" fill="#3fb950">a,a/ε b,b/ε</text>
+                            <!-- q1→q2 -->
+                            <line x1="347" y1="92" x2="472" y2="92" stroke="#3fb950" stroke-width="2"
+                                marker-end="url(#a4)" />
+                            <text x="410" y="78" text-anchor="middle" font-size="10" fill="#3fb950">ε,Z0/ε</text>
+                        </svg>
+                        <div class="dcap">NPDA for even palindromes (wwᴿ). Pink arrows = nondeterministic ε-transitions
+                            that guess the midpoint. q0 pushes all symbols; q1 pops and matches.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3a: Mealy counting zeros -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c3">Q3a</div>
+                    <div class="qt">Mealy Machine — Count 0s: output A(odd), B(even≥2), C(for 1s)</div>
+                    <div class="qm">[10]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">Construct a Mealy machine over {0,1}. Output 'A' if number of 0s received is odd,
+                        'B' if even (≥2), 'C' otherwise (on reading 1s).</div>
+                    <div class="alabel">Answer</div>
+                    <p class="a">Track count of 0s modulo 2 using two states. On input '0': if in even-0s state → output
+                        A (just became odd), switch to odd state. If in odd-0s state → output B (back to even), switch
+                        to even state. On input '1': output C, stay in same state.</p>
+                    <div class="tbox">
+                        <div class="tl">6-Tuple Mealy: M = (Q, Σ, Δ, δ, λ, q0)</div>
+                        <ul>
+                            <li><code>Q = {q0, q1}</code> — q0: even count of 0s, q1: odd count of 0s</li>
+                            <li><code>Σ = {0, 1}</code></li>
+                            <li><code>Δ = {A, B, C}</code></li>
+                            <li><code>q0</code> — Start (0 zeros seen = even)</li>
+                            <li><code>λ: Q×Σ→Δ</code> — output on each transition</li>
+                        </ul>
+                    </div>
+                    <div class="tw">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Current State</th>
+                                    <th>Meaning</th>
+                                    <th>On 0 → (Next / Output)</th>
+                                    <th>On 1 → (Next / Output)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tdn">
+                                <tr>
+                                    <td>→ q0</td>
+                                    <td>Even count of 0s</td>
+                                    <td>q1 / A (count just became ODD)</td>
+                                    <td>q0 / C (1 doesn't affect count)</td>
+                                </tr>
+                                <tr>
+                                    <td>q1</td>
+                                    <td>Odd count of 0s</td>
+                                    <td>q0 / B (count just became EVEN again)</td>
+                                    <td>q1 / C (1 doesn't affect count)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dbox"><svg width="100%" viewBox="0 0 500 160" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                                    orient="auto">
+                                    <path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </marker>
+                            </defs>
+                            <line x1="14" y1="80" x2="50" y2="80" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a5)" />
+                            <circle cx="108" cy="80" r="42" fill="rgba(88,166,255,.1)" stroke="#58a6ff"
+                                stroke-width="2.5" />
+                            <text x="108" y="75" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#58a6ff">q0</text>
+                            <text x="108" y="92" text-anchor="middle" font-size="9" fill="#58a6ff">even 0s</text>
+                            <circle cx="360" cy="80" r="42" fill="rgba(255,166,87,.1)" stroke="#ffa657"
+                                stroke-width="2.5" />
+                            <text x="360" y="75" text-anchor="middle" font-size="13" font-weight="700"
+                                fill="#ffa657">q1</text>
+                            <text x="360" y="92" text-anchor="middle" font-size="9" fill="#ffa657">odd 0s</text>
+                            <!-- self loops -->
+                            <path d="M78,40 Q108,-5 138,40" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a5)" />
+                            <text x="108" y="-4" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#3fb950">1/C</text>
+                            <path d="M330,40 Q360,-5 390,40" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a5)" />
+                            <text x="360" y="-4" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#3fb950">1/C</text>
+                            <!-- q0→q1: 0/A -->
+                            <path d="M148,65 Q234,30 320,65" fill="none" stroke="#8b949e" stroke-width="2"
+                                marker-end="url(#a5)" />
+                            <text x="234" y="38" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#3fb950">0/A</text>
+                            <!-- q1→q0: 0/B -->
+                            <path d="M320,95 Q234,130 148,95" fill="none" stroke="#8b949e" stroke-width="2"
+                                marker-end="url(#a5)" />
+                            <text x="234" y="138" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#3fb950">0/B</text>
+                        </svg>
+                        <div class="dcap">Mealy Machine for counting 0s. Label: input/output. 0→A when odd count; 0→B
+                            when returning to even; 1→C always.</div>
+                    </div>
+                    <div class="alabel">Sample Trace — Input "0 1 0 0 1"</div>
+                    <div class="trace">q0 --0/A--> q1 --1/C--> q1 --0/B--> q0 --0/A--> q1 --1/C--> q1
+                        Output sequence: A C B A C</div>
+                </div>
+            </div>
+
+            <!-- Q3b: TM for w#w -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c3">Q3b</div>
+                    <div class="qt">TM for L = {w#w | w ∈ {0,1}*}</div>
+                    <div class="qm">[10]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">Draw TM state transition diagram for L = {w#w | w∈{0,1}*}. Input 1: 1010#1010 →
+                        Accepted. Input 2: 1010#0101 → Rejected.</div>
+                    <div class="alabel">7-Tuple &amp; Strategy</div>
+                    <div class="tbox">
+                        <div class="tl">7-Tuple TM: M = (Q, Σ, Γ, δ, q0, B, F)</div>
+                        <ul>
+                            <li><code>Q = {q0,q1,q2,q3,q4,q5,qacc,qrej}</code></li>
+                            <li><code>Σ = {0, 1, #}</code></li>
+                            <li><code>Γ = {0,1,#,X,Y,B}</code> — X marks matched 0, Y marks matched 1</li>
+                            <li><code>q0</code> — Start; <code>B</code> — Blank; <code>F = {qacc}</code></li>
+                        </ul>
+                    </div>
+                    <p class="a"><strong>Strategy:</strong> Pick leftmost unmarked symbol from first w. Cross it (→X or
+                        →Y to remember value). Scan right past #. Skip already-marked symbols in second w. Check that
+                        the corresponding position has the same value. Mark it. Scan back to start. Repeat until all of
+                        first w is done. Then verify second w is fully marked too.</p>
+                    <div class="tw">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Read</th>
+                                    <th>Write</th>
+                                    <th>Move</th>
+                                    <th>Next</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>0</td>
+                                    <td>X</td>
+                                    <td>R</td>
+                                    <td>q1</td>
+                                    <td>Mark '0' as X, remember value '0' (state q1=seeking 0)</td>
+                                </tr>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>1</td>
+                                    <td>Y</td>
+                                    <td>R</td>
+                                    <td>q2</td>
+                                    <td>Mark '1' as Y, remember value '1' (state q2=seeking 1)</td>
+                                </tr>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>X/Y</td>
+                                    <td>X/Y</td>
+                                    <td>R</td>
+                                    <td>q0</td>
+                                    <td>Skip already-marked symbols</td>
+                                </tr>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>#</td>
+                                    <td>#</td>
+                                    <td>R</td>
+                                    <td>q5</td>
+                                    <td>All of first w marked, go verify second w</td>
+                                </tr>
+                                <tr>
+                                    <td>q1</td>
+                                    <td>0/1/X/Y</td>
+                                    <td>same</td>
+                                    <td>R</td>
+                                    <td>q1</td>
+                                    <td>Scan right to # (seeking '0')</td>
+                                </tr>
+                                <tr>
+                                    <td>q1</td>
+                                    <td>#</td>
+                                    <td>#</td>
+                                    <td>R</td>
+                                    <td>q3</td>
+                                    <td>Found #, now look for '0' in second w</td>
+                                </tr>
+                                <tr>
+                                    <td>q2</td>
+                                    <td>0/1/X/Y/#</td>
+                                    <td>same</td>
+                                    <td>R</td>
+                                    <td>q2</td>
+                                    <td>Scan right to # (seeking '1')</td>
+                                </tr>
+                                <tr>
+                                    <td>q2</td>
+                                    <td>#</td>
+                                    <td>#</td>
+                                    <td>R</td>
+                                    <td>q4</td>
+                                    <td>Found #, now look for '1' in second w</td>
+                                </tr>
+                                <tr>
+                                    <td>q3</td>
+                                    <td>X/Y</td>
+                                    <td>X/Y</td>
+                                    <td>R</td>
+                                    <td>q3</td>
+                                    <td>Skip already-matched in second w</td>
+                                </tr>
+                                <tr>
+                                    <td>q3</td>
+                                    <td>0</td>
+                                    <td>X</td>
+                                    <td>L</td>
+                                    <td>q_back</td>
+                                    <td>Found matching '0' → mark, scan back to start</td>
+                                </tr>
+                                <tr>
+                                    <td>q3</td>
+                                    <td>1/B</td>
+                                    <td>same</td>
+                                    <td>N</td>
+                                    <td>qrej</td>
+                                    <td>Mismatch or ran out → REJECT</td>
+                                </tr>
+                                <tr>
+                                    <td>q4</td>
+                                    <td>X/Y</td>
+                                    <td>X/Y</td>
+                                    <td>R</td>
+                                    <td>q4</td>
+                                    <td>Skip already-matched in second w</td>
+                                </tr>
+                                <tr>
+                                    <td>q4</td>
+                                    <td>1</td>
+                                    <td>Y</td>
+                                    <td>L</td>
+                                    <td>q_back</td>
+                                    <td>Found matching '1' → mark, scan back</td>
+                                </tr>
+                                <tr>
+                                    <td>q4</td>
+                                    <td>0/B</td>
+                                    <td>same</td>
+                                    <td>N</td>
+                                    <td>qrej</td>
+                                    <td>Mismatch → REJECT</td>
+                                </tr>
+                                <tr>
+                                    <td>q_back</td>
+                                    <td>any non-B</td>
+                                    <td>same</td>
+                                    <td>L</td>
+                                    <td>q_back</td>
+                                    <td>Scan all the way left to blank</td>
+                                </tr>
+                                <tr>
+                                    <td>q_back</td>
+                                    <td>B</td>
+                                    <td>B</td>
+                                    <td>R</td>
+                                    <td>q0</td>
+                                    <td>Back at left edge → repeat from q0</td>
+                                </tr>
+                                <tr>
+                                    <td>q5</td>
+                                    <td>X/Y</td>
+                                    <td>X/Y</td>
+                                    <td>R</td>
+                                    <td>q5</td>
+                                    <td>Verify all of second w is marked</td>
+                                </tr>
+                                <tr>
+                                    <td>q5</td>
+                                    <td>B</td>
+                                    <td>B</td>
+                                    <td>N</td>
+                                    <td>qacc</td>
+                                    <td>All matched → ACCEPT</td>
+                                </tr>
+                                <tr>
+                                    <td>q5</td>
+                                    <td>0/1</td>
+                                    <td>same</td>
+                                    <td>N</td>
+                                    <td>qrej</td>
+                                    <td>Unmatch in second w → REJECT</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dbox"><svg width="100%" viewBox="0 0 720 195" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                                    orient="auto">
+                                    <path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </marker>
+                            </defs>
+                            <line x1="10" y1="100" x2="42" y2="100" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a6)" />
+                            <circle cx="76" cy="100" r="28" fill="rgba(240,192,64,.1)" stroke="#f0c040"
+                                stroke-width="2" />
+                            <text x="76" y="105" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#f0c040">q0</text>
+                            <circle cx="200" cy="55" r="26" fill="rgba(88,166,255,.08)" stroke="#58a6ff"
+                                stroke-width="1.5" />
+                            <text x="200" y="60" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#58a6ff">q1</text>
+                            <text x="200" y="74" text-anchor="middle" font-size="7.5" fill="#58a6ff">seek 0</text>
+                            <circle cx="200" cy="152" r="26" fill="rgba(210,168,255,.08)" stroke="#d2a8ff"
+                                stroke-width="1.5" />
+                            <text x="200" y="157" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#d2a8ff">q2</text>
+                            <text x="200" y="171" text-anchor="middle" font-size="7.5" fill="#d2a8ff">seek 1</text>
+                            <circle cx="360" cy="55" r="26" fill="rgba(255,166,87,.08)" stroke="#ffa657"
+                                stroke-width="1.5" />
+                            <text x="360" y="60" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#ffa657">q3</text>
+                            <text x="360" y="74" text-anchor="middle" font-size="7.5" fill="#ffa657">find 0</text>
+                            <circle cx="360" cy="152" r="26" fill="rgba(247,120,186,.08)" stroke="#f778ba"
+                                stroke-width="1.5" />
+                            <text x="360" y="157" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#f778ba">q4</text>
+                            <text x="360" y="171" text-anchor="middle" font-size="7.5" fill="#f778ba">find 1</text>
+                            <circle cx="490" cy="100" r="26" fill="rgba(121,192,255,.08)" stroke="#79c0ff"
+                                stroke-width="1.5" />
+                            <text x="490" y="100" text-anchor="middle" font-size="10" font-weight="700"
+                                fill="#79c0ff">qback</text>
+                            <text x="490" y="115" text-anchor="middle" font-size="7.5" fill="#79c0ff">scan ←</text>
+                            <circle cx="610" cy="55" r="26" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2" />
+                            <text x="610" y="60" text-anchor="middle" font-size="10" font-weight="700"
+                                fill="#3fb950">q5</text>
+                            <text x="610" y="73" text-anchor="middle" font-size="7.5" fill="#3fb950">verify</text>
+                            <circle cx="680" cy="55" r="24" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2.5" />
+                            <circle cx="680" cy="55" r="17" fill="none" stroke="#3fb950" stroke-width="1.5" />
+                            <text x="680" y="59" text-anchor="middle" font-size="9" font-weight="700"
+                                fill="#3fb950">qacc</text>
+                            <circle cx="680" cy="152" r="24" fill="rgba(248,81,73,.08)" stroke="#f85149"
+                                stroke-width="2" />
+                            <text x="680" y="156" text-anchor="middle" font-size="9" font-weight="700"
+                                fill="#f85149">qrej</text>
+                            <!-- transitions -->
+                            <line x1="101" y1="88" x2="176" y2="65" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a6)" />
+                            <text x="128" y="65" text-anchor="middle" font-size="9" fill="#3fb950">0/X,R</text>
+                            <line x1="101" y1="112" x2="176" y2="142" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a6)" />
+                            <text x="128" y="138" text-anchor="middle" font-size="9" fill="#3fb950">1/Y,R</text>
+                            <!-- q1→q3 on # -->
+                            <line x1="227" y1="55" x2="332" y2="55" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a6)" />
+                            <text x="280" y="45" text-anchor="middle" font-size="9" fill="#3fb950">#/#,R</text>
+                            <!-- q2→q4 on # -->
+                            <line x1="227" y1="152" x2="332" y2="152" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a6)" />
+                            <text x="280" y="142" text-anchor="middle" font-size="9" fill="#3fb950">#/#,R</text>
+                            <!-- q3→qback match 0 -->
+                            <line x1="386" y1="62" x2="464" y2="88" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a6)" />
+                            <text x="434" y="68" text-anchor="middle" font-size="9" fill="#3fb950">0/X,L</text>
+                            <!-- q4→qback match 1 -->
+                            <line x1="386" y1="144" x2="464" y2="112" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a6)" />
+                            <text x="434" y="135" text-anchor="middle" font-size="9" fill="#f778ba">1/Y,L</text>
+                            <!-- qback→q0 -->
+                            <path d="M464,120 Q380,165 104,120" fill="none" stroke="#8b949e" stroke-width="1.3"
+                                stroke-dasharray="4,2" marker-end="url(#a6)" />
+                            <text x="280" y="178" text-anchor="middle" font-size="9" fill="#8b949e">B/B,R → q0</text>
+                            <!-- q0→q5 on # -->
+                            <path d="M104,96 Q355,50 582,72" fill="none" stroke="#3fb950" stroke-width="1.4"
+                                stroke-dasharray="5,2" marker-end="url(#a6)" />
+                            <text x="340" y="60" text-anchor="middle" font-size="9" fill="#3fb950">#/#,R (all
+                                done)</text>
+                            <!-- q5→qacc -->
+                            <line x1="637" y1="55" x2="655" y2="55" stroke="#3fb950" stroke-width="1.8"
+                                marker-end="url(#a6)" />
+                            <text x="645" y="45" text-anchor="middle" font-size="9" fill="#3fb950">B→acc</text>
+                            <!-- reject arrows -->
+                            <line x1="386" y1="65" x2="656" y2="148" stroke="#f85149" stroke-width="1.3"
+                                stroke-dasharray="3,2" marker-end="url(#a6)" />
+                            <text x="555" y="118" text-anchor="middle" font-size="9" fill="#f85149">mismatch→rej</text>
+                        </svg>
+                        <div class="dcap">TM for w#w. q0 picks leftmost unmarked symbol; q1/q2 scan to #; q3/q4 find
+                            matching symbol in second half; qback scans back; q5 verifies second half fully marked.
+                        </div>
+                    </div>
+                    <div class="alabel">Traces</div>
+                    <div class="trace">Input "1010#1010":
+                        q0: 1→Y,R → q2 → scan right → # → q4 → skip X/Y → find 1→Y,L → qback → back to q0
+                        q0: X → skip → 0→X,R → q1 → scan → # → q3 → find 0→X,L → qback → q0 ...repeat...
+                        When q0 reads # → q5 → all X/Y in second half → B → qacc ACCEPTED ✓
+
+                        Input "1010#0101":
+                        q0: 1→Y,R → q2 → scan → # → q4 → find 0 (MISMATCH, expecting 1) → qrej REJECTED ✓</div>
+                </div>
+            </div>
+
+            <!-- Q4a: Ambiguity S→a|iCtS|iCtSeS -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c4">Q4a</div>
+                    <div class="qt">CFG Ambiguity — S→a|iCtS|iCtSeS, C→b (if-then-else)</div>
+                    <div class="qm">[10]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">CFG: S→a|iCtS|iCtSeS, C→b. Use "ibtibtaea" for LMD, RMD, derivation trees.
+                        Analyze ambiguity.</div>
+                    <div class="alabel">Answer</div>
+                    <p class="a">This models the <strong>if-then-else</strong> construct: i=if, t=then, e=else,
+                        C=condition(→b), a=statement. String "ibtibtaea" = if b then (if b then a) else a — the classic
+                        dangling-else problem.</p>
+                    <p class="a"><strong>Leftmost Derivation 1</strong> (else binds to INNER if — standard
+                        interpretation):</p>
+                    <div class="trace">S ⇒ iCtS (S→iCtS, outer if-then without else)
+                        ⇒ iCtiCtSeS (inner S→iCtSeS)
+                        ⇒ ibtiCtSeS (C→b)
+                        ⇒ ibtibtSeS (C→b)
+                        ⇒ ibtibta eS (S→a)
+                        ⇒ ibtibtaea (S→a) ← "if b then (if b then a else a)"</div>
+                    <p class="a"><strong>Leftmost Derivation 2</strong> (else binds to OUTER if):</p>
+                    <div class="trace">S ⇒ iCtSeS (S→iCtSeS, outer if-then-else)
+                        ⇒ iCtiCtSSeS ... (different parse tree structure)
+
+                        (Different binding gives different derivation trees → AMBIGUOUS)</div>
+                    <p class="a"><strong>Conclusion:</strong> Grammar is <strong>AMBIGUOUS</strong> — the string
+                        "ibtibtaea" has two distinct parse trees. The ambiguity arises from the <strong>dangling else
+                            problem</strong>: the grammar does not specify which 'if' the 'else' belongs to when there
+                        is a nested if-then without else.</p>
+                    <p class="a"><strong>Cause:</strong> The production S→iCtS (if-then without else) followed by
+                        S→iCtSeS (if-then-else) allows the same string to be parsed with the 'else' attached to either
+                        the outer or inner 'if'.</p>
+                    <p class="a"><strong>Remedy:</strong> Distinguish "matched" statements (with else) from "unmatched"
+                        (without). Rewrite grammar to force else to bind with nearest unmatched if.</p>
+                </div>
+            </div>
+
+            <!-- Q4b: RE and Recursive + Unary TM -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c4">Q4b</div>
+                    <div class="qt">Recursive &amp; RE Languages + TM for Unary Increment</div>
+                    <div class="qm">[10]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">Define and explain Recursive and RE languages with examples. Give TM for unary
+                        increment. Input: 00000 → Output: 000000.</div>
+                    <div class="alabel">Recursive Language (Decidable)</div>
+                    <p class="a">A language L is <strong>recursive</strong> if there exists a TM that <strong>halts on
+                            EVERY input</strong> and correctly accepts strings in L and rejects strings not in L. Always
+                        gives a YES or NO answer.</p>
+                    <ul class="al">
+                        <li>For w ∈ L: TM halts and ACCEPTS</li>
+                        <li>For w ∉ L: TM halts and REJECTS</li>
+                        <li>Examples: All regular languages, all CFLs, aⁿbⁿcⁿ (recognized by TM that always halts)</li>
+                    </ul>
+                    <div class="alabel">Recursively Enumerable (RE) Language</div>
+                    <p class="a">A language L is <strong>RE</strong> if there exists a TM that accepts every string in L
+                        but may loop forever on strings not in L.</p>
+                    <ul class="al">
+                        <li>For w ∈ L: TM halts and ACCEPTS</li>
+                        <li>For w ∉ L: TM may REJECT or LOOP FOREVER (no guarantee!)</li>
+                        <li>Example: The Halting Problem — can verify a TM halts on input (if it does), but cannot
+                            always detect non-halting</li>
+                        <li>Recursive ⊂ RE — every decidable language is RE but not vice versa</li>
+                    </ul>
+                    <div class="alabel">TM for Unary Increment (Input: 00000 → Output: 000000)</div>
+                    <p class="a">In unary, number n = n zeros. Incrementing n by 1 = appending one more zero.</p>
+                    <div class="tw">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Read</th>
+                                    <th>Write</th>
+                                    <th>Move</th>
+                                    <th>Next</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>R</td>
+                                    <td>q0</td>
+                                    <td>Scan right past all existing zeros</td>
+                                </tr>
+                                <tr>
+                                    <td>q0</td>
+                                    <td>B</td>
+                                    <td>0</td>
+                                    <td>N</td>
+                                    <td>qacc</td>
+                                    <td>Found end — write one extra zero → ACCEPT</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="trace">Trace "00000":
+                        q0: 0→0,R; 0→0,R; 0→0,R; 0→0,R; 0→0,R; B→write 0, HALT
+                        Output: 000000 (6 zeros = unary 6 = 5+1 = increment) ✓</div>
+                    <div class="tbox">
+                        <div class="tl">7-Tuple TM</div>
+                        <ul>
+                            <li><code>Q = {q0, qacc}</code></li>
+                            <li><code>Σ = {0}</code></li>
+                            <li><code>Γ = {0, B}</code></li>
+                            <li><code>B</code> — Blank</li>
+                            <li><code>F = {qacc}</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q5a: Arden's Theorem + RE for DFA -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c5">Q5a</div>
+                    <div class="qt">Arden's Theorem — Derive RE from DFA</div>
+                    <div class="qm">[10]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">State Arden's Theorem. Derive RE for DFA: q1→a→q2, q1→b→q3, q2→a→q3, q3→a→q3.
+                        Start: q1, Final: q3.</div>
+                    <div class="alabel">Arden's Theorem</div>
+                    <div class="pbox">
+                        <div class="pl">Theorem</div>If P and Q are regular expressions and ε ∉ P, then the equation R =
+                        Q + RP has a unique solution: <strong>R = QP*</strong>
+                    </div>
+                    <div class="alabel">Step 1 — Write State Equations</div>
+                    <p class="a">For each state qᵢ write: qᵢ = ε (if start) + Σ (qⱼ·symbol) for all transitions
+                        qⱼ→symbol→qᵢ</p>
+                    <div class="formula">q1 = ε (q1 is start state)
+                        q2 = q1·a (only q1→a→q2)
+                        q3 = q1·b + q2·a + q3·a (q1→b, q2→a, q3→a all go to q3)</div>
+                    <div class="alabel">Step 2 — Substitute q2 into q3</div>
+                    <div class="formula">q3 = q1·b + (q1·a)·a + q3·a
+                        = q1·(b + aa) + q3·a</div>
+                    <div class="alabel">Step 3 — Apply Arden's Theorem</div>
+                    <p class="a">This is R = Q + R·P form where R=q3, Q=q1·(b+aa), P=a. So:</p>
+                    <div class="formula">q3 = q1·(b+aa)·a*
+                        = ε·(b+aa)·a* (since q1 = ε)
+                        = (b+aa)a*</div>
+                    <div class="alabel">Result — RE for L(M)</div>
+                    <div class="formula">L = (b + aa)a* = ba* + aaa*</div>
+                    <p class="a">Language: strings that either start with 'b' followed by any a's, OR start with "aa"
+                        followed by any a's. In other words, strings of the form ba* or a²a* = aa⁺.</p>
+                </div>
+            </div>
+
+            <!-- Q5b: CNF for S→AACD -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c5">Q5b</div>
+                    <div class="qt">CNF Conversion — G: S→AACD, A→aAb|ε, C→aC|a, D→aDa|bDb|ε</div>
+                    <div class="qm">[10]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">CFG G: S→AACD, A→aAb|ε, C→aC|a, D→aDa|bDb|ε. Transform to CNF.</div>
+                    <div class="alabel">Step 1 — Find Nullable Symbols</div>
+                    <p class="a">Nullable: A (A→ε), D (D→ε). Check S: not directly nullable (AACD needs all ≥ 1 symbol
+                        from each unless A and D nullable).</p>
+                    <div class="alabel">Step 2 — Remove ε-Productions</div>
+                    <p class="a">For S→AACD, A appears at positions 1,2; D appears at position 4. Enumerate subsets of
+                        removing nullable symbols (A and D, but not both leaving nothing):</p>
+                    <div class="grammar"><span class="nt">S</span> → <span class="nt">AACD</span> | <span
+                            class="nt">ACD</span> | <span class="nt">AAC</span> | <span class="nt">CD</span> | <span
+                            class="nt">AC</span> | <span class="nt">C</span>
+                        <span class="nt">A</span> → <span class="t">a</span><span class="nt">A</span><span
+                            class="t">b</span> | <span class="t">ab</span> (from aAb removing A)
+                        <span class="nt">C</span> → <span class="t">a</span><span class="nt">C</span> | <span
+                            class="t">a</span>
+                        <span class="nt">D</span> → <span class="t">a</span><span class="nt">D</span><span
+                            class="t">a</span> | <span class="t">b</span><span class="nt">D</span><span
+                            class="t">b</span> | <span class="t">aa</span> | <span class="t">bb</span> (removing D from
+                        aDa, bDb)
+                    </div>
+                    <div class="alabel">Step 3 — Remove Unit Productions</div>
+                    <p class="a">S→C is unit. Replace with C's productions: add S→aC, S→a. Remove S→C.</p>
+                    <div class="alabel">Step 4 — Replace Terminals in Multi-Symbol RHS</div>
+                    <p class="a">Create: Xa→a, Xb→b for each terminal in mixed productions.</p>
+                    <div class="grammar"><span class="nt">A</span> → <span class="nt">Xa</span><span
+                            class="nt">E1</span> where <span class="nt">E1</span> → <span class="nt">A</span><span
+                            class="nt">Xb</span> (from aAb → Xa·A·Xb, break into Xa·E1, E1→A·Xb)
+                        <span class="nt">A</span> → <span class="nt">Xa</span><span class="nt">Xb</span> (from ab)
+                        <span class="nt">C</span> → <span class="nt">Xa</span><span class="nt">C</span> (from aC →
+                        already binary with new NT)
+                        <span class="nt">D</span> → <span class="nt">Xa</span><span class="nt">E2</span> where <span
+                            class="nt">E2</span> → <span class="nt">D</span><span class="nt">Xa</span> (from aDa)
+                        <span class="nt">D</span> → <span class="nt">Xb</span><span class="nt">E3</span> where <span
+                            class="nt">E3</span> → <span class="nt">D</span><span class="nt">Xb</span> (from bDb)
+                        <span class="nt">D</span> → <span class="nt">Xa</span><span class="nt">Xa</span> | <span
+                            class="nt">Xb</span><span class="nt">Xb</span> (from aa, bb)
+                        <span class="nt">Xa</span> → <span class="t">a</span> | <span class="nt">Xb</span> → <span
+                            class="t">b</span>
+                    </div>
+                    <div class="alabel">Step 5 — Break Long S Productions into Binary</div>
+                    <div class="grammar">S → <span class="nt">A</span><span class="nt">F1</span> where <span
+                            class="nt">F1</span> → <span class="nt">A</span><span class="nt">F2</span> where <span
+                            class="nt">F2</span> → <span class="nt">C</span><span class="nt">D</span> (from AACD)
+                        S → <span class="nt">A</span><span class="nt">F2</span> (from ACD)
+                        S → <span class="nt">A</span><span class="nt">F3</span> where <span class="nt">F3</span> → <span
+                            class="nt">A</span><span class="nt">C</span> (from AAC)
+                        S → <span class="nt">C</span><span class="nt">D</span> | <span class="nt">A</span><span
+                            class="nt">C</span> | <span class="t">a</span><span class="nt">C</span> | <span
+                            class="t">a</span></div>
+                    <div class="nbox">
+                        <div class="nl">Final CNF Summary</div>All productions are now A→BC or A→a form. Key new
+                        non-terminals: Xa, Xb, E1, E2, E3, F1, F2, F3. Every terminal in a multi-symbol RHS is replaced
+                        by its corresponding Xa/Xb non-terminal. All RHS with 3+ symbols are broken into binary using
+                        new intermediate non-terminals.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q6a: Pumping Lemma -->
+            <div class="qb">
+                <div class="qh">
+                    <div class="qn c6">Q6a</div>
+                    <div class="qt">Pumping Lemma — Prove aⁿbⁿ and aⁿbⁿcⁿ are NOT Regular</div>
+                    <div class="qm">[10]</div>
+                </div>
+                <div class="qbody">
+                    <div class="qstmt">Check regularity using Pumping Lemma: (i) L={aⁿbⁿ|n≥1}, (ii) L={aⁿbⁿcⁿ|n≥1}.
+                    </div>
+                    <div class="alabel">Pumping Lemma for Regular Languages</div>
+                    <div class="pbox">
+                        <div class="pl">Statement</div>If L is regular with pumping length n, then ∀w∈L with |w|≥n, ∃
+                        decomposition w=xyz such that: (1) |y|>0, (2) |xy|≤n, (3) ∀i≥0: xyⁱz ∈ L.
+                    </div>
+                    <div class="alabel">(i) L = {aⁿbⁿ | n≥1} — NOT Regular</div>
+                    <div class="pbox">
+                        <div class="pl">Proof by Contradiction</div>
+                        <div class="pstep">
+                            <div class="psn">1</div>Assume L is regular with pumping length p.
+                        </div>
+                        <div class="pstep">
+                            <div class="psn">2</div>Choose w = aᵖbᵖ ∈ L. |w| = 2p ≥ p ✓
+                        </div>
+                        <div class="pstep">
+                            <div class="psn">3</div>Since |xy| ≤ p, both x and y consist ONLY of a's. Let y = aᵏ (k >
+                            0).
+                        </div>
+                        <div class="pstep">
+                            <div class="psn">4</div>Pump down: i=0 → xy⁰z = xz = aᵖ⁻ᵏbᵖ. Since k>0, #a < #b → xz ∉
+                                L.</div>
+                                <div class="pstep">
+                                    <div class="psn">5</div>Contradiction! Assumption wrong. L = {aⁿbⁿ} is NOT regular.
+                                    □
+                                </div>
+                        </div>
+                        <div class="alabel">(ii) L = {aⁿbⁿcⁿ | n≥1} — NOT Regular</div>
+                        <div class="pbox">
+                            <div class="pl">Proof by Contradiction</div>
+                            <div class="pstep">
+                                <div class="psn">1</div>Assume L is regular with pumping length p.
+                            </div>
+                            <div class="pstep">
+                                <div class="psn">2</div>Choose w = aᵖbᵖcᵖ ∈ L. |w| = 3p ≥ p ✓
+                            </div>
+                            <div class="pstep">
+                                <div class="psn">3</div>Since |xy| ≤ p, the substring y lies entirely within the
+                                a-section. y = aᵏ, k > 0.
+                            </div>
+                            <div class="pstep">
+                                <div class="psn">4</div>Pump up: i=2 → xy²z = aᵖ⁺ᵏbᵖcᵖ. More a's than b's and c's → ∉ L.
+                            </div>
+                            <div class="pstep">
+                                <div class="psn">5</div>Contradiction! L = {aⁿbⁿcⁿ} is NOT regular. □
+                            </div>
+                        </div>
+                        <div class="nbox">
+                            <div class="nl">Additional Note</div>L={aⁿbⁿcⁿ} is also NOT context-free — proven by CFL
+                            Pumping Lemma. It is Context-Sensitive (Type 1), recognized only by Linear Bounded Automata
+                            (LBA). TM can recognize it using three-phase marking (mark a→X, b→Y, c→Z repeatedly).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q6b, Q6c -->
+                <div class="qb">
+                    <div class="qh">
+                        <div class="qn c6">Q6b &amp; Q6c</div>
+                        <div class="qt">Type-2 Grammar + PDA vs FA Power Comparison</div>
+                        <div class="qm">[5+5]</div>
+                    </div>
+                    <div class="qbody">
+                        <div class="qstmt">Q6b: Define Type-2 grammar, language, recognizer, example. Q6c: Compare
+                            computational power of PDA and FA.</div>
+                        <div class="alabel">Q6b — Type-2 (Context Free) Grammar</div>
+                        <div class="tw">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Attribute</th>
+                                        <th>Detail</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tdn">
+                                    <tr>
+                                        <td>Type</td>
+                                        <td>Type 2 — Context Free Grammar (CFG)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Production LHS</td>
+                                        <td>Single non-terminal only: A→α</td>
+                                    </tr>
+                                    <tr>
+                                        <td>RHS (α)</td>
+                                        <td>Any string of terminals and non-terminals (no restriction on right side)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Language Generated</td>
+                                        <td>Context Free Language (CFL)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Recognizer</td>
+                                        <td>Pushdown Automaton (PDA)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Example</td>
+                                        <td>S→aSb|ε generates {aⁿbⁿ|n≥0}; S→SS|(S)|ε generates balanced parentheses</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Applications</td>
+                                        <td>Syntax of programming languages (Java, C++, Python grammars are all CFGs)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alabel">Q6c — PDA vs FA Computational Power</div>
+                        <div class="tw">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>FA (DFA/NFA)</th>
+                                        <th>PDA</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tdn">
+                                    <tr>
+                                        <td>Memory</td>
+                                        <td>None beyond states</td>
+                                        <td>Infinite stack (LIFO access)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Languages</td>
+                                        <td>Regular (Type 3)</td>
+                                        <td>Context Free (Type 2)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tuple</td>
+                                        <td>5-tuple</td>
+                                        <td>7-tuple</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Counts aⁿbⁿ?</td>
+                                        <td>No — fixed states can't count arbitrarily</td>
+                                        <td>Yes — push a's, pop for b's</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Palindromes?</td>
+                                        <td>No</td>
+                                        <td>Yes (NPDA)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Regular languages?</td>
+                                        <td>Yes</td>
+                                        <td>Yes (PDA simulates FA by ignoring stack)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Simulates other?</td>
+                                        <td>Cannot simulate PDA</td>
+                                        <td>Can simulate FA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="a"><strong>Conclusion:</strong> PDA ⊃ FA in expressive power. Every language
+                            recognizable by FA is also recognizable by PDA. The converse is false — aⁿbⁿ is a CFL not
+                            recognizable by any FA.</p>
+                    </div>
+                </div>
+
+                <!-- Q7a, Q7b, Q7c, Q7d -->
+                <div class="qb">
+                    <div class="qh">
+                        <div class="qn c7">Q7a–Q7d</div>
+                        <div class="qt">RE for double letters | Moore→Mealy | UTM | Formal Language</div>
+                        <div class="qm">[5+5+5+5]</div>
+                    </div>
+                    <div class="qbody">
+                        <div class="alabel">Q7a — RE: strings with at least one double letter over {a,b,c}</div>
+                        <div class="formula">RE = (a+b+c)* (aa + bb + cc) (a+b+c)*</div>
+                        <p class="a">Explanation: (a+b+c)* matches anything before and after. (aa+bb+cc) mandates at
+                            least one occurrence of a double letter. The RE accepts all strings over {a,b,c} containing
+                            "aa" or "bb" or "cc" as a substring.</p>
+                        <hr class="d">
+                        <div class="alabel">Q7b — Moore to Mealy (4-state Moore from diagram: q0/1, q1/0, q2/1, q3/1)
+                        </div>
+                        <p class="a"><strong>Algorithm:</strong> For each Moore transition δ(qᵢ, input)=qⱼ, the Mealy
+                            output = λ_Moore(qⱼ) (the output of the TARGET state).</p>
+                        <div class="tw">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Moore: State/Output</th>
+                                        <th>On a → Next</th>
+                                        <th>On b → Next</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>→ q0/1</td>
+                                        <td>q1</td>
+                                        <td>q0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>q1/0</td>
+                                        <td>q2</td>
+                                        <td>q3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>q2/1</td>
+                                        <td>q2</td>
+                                        <td>q2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>q3/1</td>
+                                        <td>q0</td>
+                                        <td>q2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tw">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Mealy: State</th>
+                                        <th>a → Next/Output</th>
+                                        <th>b → Next/Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>→ q0</td>
+                                        <td>q1 / 0</td>
+                                        <td>q0 / 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>q1</td>
+                                        <td>q2 / 1</td>
+                                        <td>q3 / 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>q2</td>
+                                        <td>q2 / 1</td>
+                                        <td>q2 / 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>q3</td>
+                                        <td>q0 / 1</td>
+                                        <td>q2 / 1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="a">Each Mealy output is the Moore output of the state being entered. Initial Moore
+                            output (1 at q0 before input) is lost — Moore gives n+1 outputs for n inputs; Mealy gives n.
+                        </p>
+                        <hr class="d">
+                        <div class="alabel">Q7c — Universal Turing Machine (UTM)</div>
+                        <p class="a">A <strong>UTM</strong> is a TM U that can simulate any TM M on any input w, given
+                            ⟨M⟩ (encoding of M) and w as its own input. U(⟨M⟩, w) behaves exactly like M(w).</p>
+                        <ul class="al">
+                            <li><strong>Foundation:</strong> UTM is the theoretical basis of the stored-program computer
+                            </li>
+                            <li><strong>Analogy:</strong> UTM = general-purpose computer; ⟨M⟩ = software program; w =
+                                data input</li>
+                            <li><strong>Von Neumann architecture</strong> directly implements the UTM concept</li>
+                            <li>Any computation a real computer performs, a UTM can simulate (ignoring speed/memory
+                                limits)</li>
+                        </ul>
+                        <hr class="d">
+                        <div class="alabel">Q7d — Formal Language</div>
+                        <p class="a">A <strong>formal language</strong> L over alphabet Σ is any subset of Σ* defined by
+                            precise mathematical rules (grammar, automaton, or RE) — unlike natural languages which are
+                            informal and ambiguous.</p>
+                        <p class="a"><strong>Formation:</strong> 1) Define Σ = {a,b}, 2) Σ* = all finite strings over Σ,
+                            3) Pick a subset by a rule. Example: L = {w∈{a,b}* | w starts and ends with 'a'} is a formal
+                            language defined by RE: a(a+b)*a + a.</p>
+                    </div>
+                </div>
+
+            </div><!-- end p1 -->
+    </div> <!-- end main -->
+
+    
+    <footer style="text-align:center;padding:28px 40px;border-top:1px solid #30363d;font-size:13px;color:#8b949e;background:#0d1117;margin-top:40px;">
+        <p>TCS Notes &middot; <span style="color:#58a6ff;font-weight:600;">NMIMS MPSTME</span> &middot; B.Tech CSE Sem 4 &middot; Theory of Computation</p>
+        <p style="margin-top:6px;">Made by <span style="color:#58a6ff;font-weight:600;">Jay Naik</span></p>
+    </footer>
+</body>
+</html>
