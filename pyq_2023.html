@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCS PYQ Solutions — NMIMS MPSTME Shirpur</title>
+    <title>TCS PYQ Solutions — NMIMS MPSTME</title>
     <style>
         :root { --bg: #0d1117; --bg2: #161b22; --bg3: #1c2128; --bg4: #21262d; --border: #30363d; --cyan: #79c0ff; --gold: #f0c040; --green: #3fb950; --orange: #ffa657; --purple: #d2a8ff; --red: #f85149; --pink: #f778ba; --blue: #58a6ff; --text: #e6edf3; --text2: #8b949e; --text3: #c9d1d9; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -72,396 +72,481 @@
         </div>
     </div>
     <div class="main">
-        
-            <div class="ph">
-                <h2>Final/Re-Examination — Academic Year 2022-23</h2>
-                <div class="ph-meta">
-                    <span>Date: 03 May 2023</span>
-                    <span>Marks: 100</span>
-                    <span>Time: 3 hrs</span>
-                    <span>Subject: Theoretical Computer Science</span>
-                </div>
+        <div class="ph">
+            <h2>Final/Re-Examination — Academic Year 2022-23</h2>
+            <div class="ph-meta">
+                <span>Date: 03 May 2023</span>
+                <span>Marks: 100</span>
+                <span>Time: 3 hrs</span>
+                <span>Subject: Theoretical Computer Science</span>
             </div>
+        </div>
 
-            <!-- Q1a -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c1">Q1a</div>
-                    <div class="qt">Formal Language and Finite Automata</div>
-                    <div class="qm">[5]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">What do you understand by formal language and finite automata? Explain</div>
-                    <div class="alabel">Formal Language</div>
-                    <p class="a">A <strong>Formal Language</strong> is a set of strings of symbols constrained by rules (a grammar). It consists of an alphabet Σ (set of symbols) and a set of valid words formed from these symbols. Examples include regular languages, context-free languages, and recursively enumerable languages. Unlike natural languages, formal languages have strict mathematical definitions, making them suitable for parsing by machines.</p>
-                    <div class="alabel">Finite Automata</div>
-                    <p class="a">A <strong>Finite Automata (FA)</strong> is the simplest computational model (or abstract machine) used to recognize patterns and accept regular languages. It has a finite number of states, reads input symbols one by one, and transitions between states. It lacks external memory (like a stack or tape), meaning it can only remember its current state. FAs are widely used in lexical analysis, text searching, and protocol design.</p>
-                </div>
+        <!-- Q1a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1a</div>
+                <div class="qt">Formal Language and Finite Automata</div>
+                <div class="qm">[5]</div>
             </div>
+            <div class="qbody">
+                <div class="qstmt">What do you understand by formal language and finite automata? Explain</div>
+                <div class="alabel">Formal Language</div>
+                <p class="a">A <strong>Formal Language</strong> is a set of strings of symbols constrained by rules (a grammar). It consists of an alphabet Σ (set of symbols) and a set of valid words formed from these symbols. Examples include regular languages, context-free languages, and recursively enumerable languages. Unlike natural languages, formal languages have strict mathematical definitions, making them suitable for parsing by machines.</p>
+                <div class="alabel">Finite Automata</div>
+                <p class="a">A <strong>Finite Automata (FA)</strong> is the simplest computational model (or abstract machine) used to recognize patterns and accept regular languages. It has a finite number of states, reads input symbols one by one, and transitions between states. It lacks external memory (like a stack or tape), meaning it can only remember its current state. FAs are widely used in lexical analysis, text searching, and protocol design.</p>
+            </div>
+        </div>
 
-            <!-- Q1b -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c1">Q1b</div>
-                    <div class="qt">Regular Expressions to English Statements</div>
-                    <div class="qm">[5]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">Define Regular Expression and convert the following into equivalent English statements:<br>
-                    R1 = b*ab*ab*<br>
-                    R2 = (a+b)*(aa+bb)(a+b)*<br>
-                    R3 = a(a+b)*a</div>
-                    <div class="alabel">Definition</div>
-                    <p class="a">A <strong>Regular Expression (RE)</strong> is an algebraic formula that describes a regular language using operations like union (+), concatenation (·), and Kleene closure (*). It serves as a declarative way to specify patterns that a Finite Automaton can recognize.</p>
-                    <div class="alabel">Conversions</div>
-                    <ul class="al">
-                        <li><strong>R1 = b*ab*ab*:</strong> The set of all strings over {a, b} that contain <em>exactly two 'a's</em>.</li>
-                        <li><strong>R2 = (a+b)*(aa+bb)(a+b)*:</strong> The set of all strings over {a, b} that contain <em>either 'aa' or 'bb' as a substring</em> (i.e., at least two consecutive identical symbols).</li>
-                        <li><strong>R3 = a(a+b)*a:</strong> The set of all strings over {a, b} that <em>start and end with the symbol 'a'</em>, with a length of at least 2.</li>
+        <!-- Q1b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1b</div>
+                <div class="qt">Regular Expressions to English Statements</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Define Regular Expression and convert the following into equivalent English statements:<br>
+                R1 = b*ab*ab*<br>
+                R2 = (a+b)*(aa+bb)(a+b)*<br>
+                R3 = a(a+b)*a</div>
+                <div class="alabel">Definition</div>
+                <p class="a">A <strong>Regular Expression (RE)</strong> is an algebraic formula that describes a regular language using operations like union (+), concatenation (·), and Kleene closure (*). It serves as a declarative way to specify patterns that a Finite Automaton can recognize.</p>
+                <div class="alabel">Conversions</div>
+                <ul class="a-list">
+                    <li><strong>R1 = b*ab*ab*:</strong> The set of all strings over {a, b} that contain <em>exactly two 'a's</em>.</li>
+                    <li><strong>R2 = (a+b)*(aa+bb)(a+b)*:</strong> The set of all strings over {a, b} that contain <em>either 'aa' or 'bb' as a substring</em> (i.e., at least two consecutive identical symbols).</li>
+                    <li><strong>R3 = a(a+b)*a:</strong> The set of all strings over {a, b} that <em>start and end with the symbol 'a'</em>, with a length of at least 2.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Q1c -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1c</div>
+                <div class="qt">CFG for Regular Expression (011+1)*(01)*</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Write context-free grammar for the regular expression (011+1)*(01)*</div>
+                <div class="alabel">Grammar Construction</div>
+                <p class="a">Let the RE be broken into two parts: L1 = (011+1)* and L2 = (01)*. The final language is L1 concatenated with L2.</p>
+                <div class="grammar"><span class="nt">S</span> → <span class="nt">A</span><span class="nt">B</span><br><span class="nt">A</span> → <span class="t">011</span><span class="nt">A</span> | <span class="t">1</span><span class="nt">A</span> | <span class="t">ε</span><br><span class="nt">B</span> → <span class="t">01</span><span class="nt">B</span> | <span class="t">ε</span></div>
+            </div>
+        </div>
+
+        <!-- Q1d -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1d</div>
+                <div class="qt">Turing Machine as Finite Control</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Explain Turing Machine as finite control and tuples of the Turing machine with suitable example.</div>
+                <div class="alabel">Turing Machine Control</div>
+                <p class="a">A <strong>Turing Machine (TM)</strong> consists of a finite control (a state machine), an infinite read/write tape divided into cells, and a moving tape head. The finite control dictates the machine's actions based on its current state and the symbol the head is currently reading. The machine can overwrite the symbol, change its state, and move the head one step left (L) or right (R).</p>
+                <div class="tbox">
+                    <div class="tl">7-Tuple Definition M = (Q, Σ, Γ, δ, q0, B, F)</div>
+                    <ul>
+                        <li><code>Q</code>: Finite set of states (e.g., {q0, q1, qacc})</li>
+                        <li><code>Σ</code>: Input alphabet (e.g., {0, 1})</li>
+                        <li><code>Γ</code>: Tape alphabet, where Σ ⊂ Γ (e.g., {0, 1, X, Y, B})</li>
+                        <li><code>δ</code>: Transition function Q × Γ → Q × Γ × {L, R}</li>
+                        <li><code>q0</code>: Start state (q0 ∈ Q)</li>
+                        <li><code>B</code>: Blank symbol (B ∈ Γ, B ∉ Σ)</li>
+                        <li><code>F</code>: Set of final/accepting states (F ⊆ Q)</li>
                     </ul>
                 </div>
             </div>
+        </div>
 
-            <!-- Q1c -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c1">Q1c</div>
-                    <div class="qt">CFG for Regular Expression (011+1)*(01)*</div>
-                    <div class="qm">[5]</div>
+        <!-- Q2a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c2">Q2a</div>
+                <div class="qt">Moore vs Mealy Machine & Conversion</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">What is the difference between the Moore machine and the Mealy machine? Convert the given Moore machine to Mealy Machine. (Assuming a sequence detector for "11" with states q0/0, q1/0, q2/1)</div>
+                <div class="alabel">Differences</div>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>Moore Machine</th><th>Mealy Machine</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Output depends <strong>only on the current state</strong>.</td><td>Output depends on both the <strong>current state and input</strong>.</td></tr>
+                            <tr><td>Output is placed on the states (e.g., q0/0).</td><td>Output is placed on the transitions (e.g., 1/0).</td></tr>
+                            <tr><td>Generally requires more states to implement a logic.</td><td>Generally requires fewer states.</td></tr>
+                            <tr><td>Output length is always |Input| + 1.</td><td>Output length is strictly equal to |Input|.</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="qbody">
-                    <div class="qstmt">Write context-free grammar for the regular expression (011+1)*(01)*</div>
-                    <div class="alabel">Grammar Construction</div>
-                    <p class="a">Let the RE be broken into two parts: L1 = (011+1)* and L2 = (01)*. The final language is L1 concatenated with L2.</p>
-                    <div class="grammar"><span class="nt">S</span> → <span class="nt">A</span><span class="nt">B</span><br><span class="nt">A</span> → <span class="t">011</span><span class="nt">A</span> | <span class="t">1</span><span class="nt">A</span> | <span class="t">ε</span> (Generates (011+1)*)<br><span class="nt">B</span> → <span class="t">01</span><span class="nt">B</span> | <span class="t">ε</span> (Generates (01)*)</div>
+                <div class="alabel">Moore to Mealy Conversion</div>
+                <p class="a">For a Moore machine, if state <code>q</code> has output <code>y</code>, any incoming transition to <code>q</code> in the Mealy machine will output <code>y</code>.</p>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -50 600 200" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="m2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
+                        </defs>
+                        <!-- Moore -->
+                        <text x="120" y="-30" fill="#c9d1d9" font-weight="bold" font-size="14">Moore Machine</text>
+                        <circle cx="50" cy="60" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="50" y="64" text-anchor="middle" font-size="11" fill="#58a6ff">q0 / 0</text>
+                        <circle cx="150" cy="60" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="150" y="64" text-anchor="middle" font-size="11" fill="#58a6ff">q1 / 0</text>
+                        <circle cx="250" cy="60" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="250" y="64" text-anchor="middle" font-size="11" fill="#58a6ff">q2 / 1</text>
+                        
+                        <path d="M75,60 L120,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="97" y="55" text-anchor="middle" font-size="11" fill="#c9d1d9">1</text>
+                        <path d="M175,60 L220,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="197" y="55" text-anchor="middle" font-size="11" fill="#c9d1d9">1</text>
+                        
+                        <path d="M35,40 Q50,0 65,40" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="50" y="-5" text-anchor="middle" font-size="11" fill="#c9d1d9">0</text>
+                        <path d="M140,80 Q100,130 60,80" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="100" y="125" text-anchor="middle" font-size="11" fill="#c9d1d9">0</text>
+                        
+                        <!-- Divider -->
+                        <line x1="300" y1="-40" x2="300" y2="140" stroke="#30363d" stroke-dasharray="4,4"/>
+                        
+                        <!-- Mealy -->
+                        <text x="450" y="-30" fill="#c9d1d9" font-weight="bold" font-size="14">Equivalent Mealy Machine</text>
+                        <circle cx="350" cy="60" r="25" fill="none" stroke="#3fb950" stroke-width="2"/>
+                        <text x="350" y="64" text-anchor="middle" font-size="11" fill="#3fb950">q0</text>
+                        <circle cx="450" cy="60" r="25" fill="none" stroke="#3fb950" stroke-width="2"/>
+                        <text x="450" y="64" text-anchor="middle" font-size="11" fill="#3fb950">q1</text>
+                        <circle cx="550" cy="60" r="25" fill="none" stroke="#3fb950" stroke-width="2"/>
+                        <text x="550" y="64" text-anchor="middle" font-size="11" fill="#3fb950">q2</text>
+                        
+                        <path d="M375,60 L420,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="397" y="55" text-anchor="middle" font-size="11" fill="#c9d1d9">1 / 0</text>
+                        <path d="M475,60 L520,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="497" y="55" text-anchor="middle" font-size="11" fill="#c9d1d9">1 / 1</text>
+                        
+                        <path d="M335,40 Q350,0 365,40" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="350" y="-5" text-anchor="middle" font-size="11" fill="#c9d1d9">0 / 0</text>
+                        <path d="M440,80 Q400,130 360,80" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="400" y="125" text-anchor="middle" font-size="11" fill="#c9d1d9">0 / 0</text>
+                    </svg>
+                    <div class="dcap">Pushing outputs from states (Moore) onto the incoming transition arrows (Mealy).</div>
                 </div>
             </div>
+        </div>
 
-            <!-- Q1d -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c1">Q1d</div>
-                    <div class="qt">Turing Machine as Finite Control</div>
-                    <div class="qm">[5]</div>
+        <!-- Q2b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c2">Q2b</div>
+                <div class="qt">Proper Subtraction Turing Machine</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Construct TM for proper subtraction. F(x-y) = x-y if x>y, else 0. Simulate for 3-2 and 2-3.</div>
+                <div class="alabel">Logic</div>
+                <p class="a">Format input as <code>0^m 1 0^n</code> where m=x, n=y. The TM repeatedly replaces the first '0' of x with a blank (B), scans past '1', replaces a '0' of y with a '1', and returns. If y runs out of 0s, the remaining 0s in x represent x-y. If x runs out of 0s first, the result is 0.</p>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>State</th><th>Read 0</th><th>Read 1</th><th>Read B</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>q0 (Start)</td><td>(q1, B, R) <br><em>Erase one 0 from x</em></td><td>(q5, B, R) <br><em>x is empty, clear y</em></td><td>-</td></tr>
+                            <tr><td>q1 (Scan R)</td><td>(q1, 0, R)</td><td>(q2, 1, R) <br><em>Found separator</em></td><td>-</td></tr>
+                            <tr><td>q2 (Find y)</td><td>(q3, 1, L) <br><em>Cross off 0 in y</em></td><td>(q2, 1, R)</td><td>(q4, B, L) <br><em>y is empty, finish</em></td></tr>
+                            <tr><td>q3 (Return)</td><td>(q3, 0, L)</td><td>(q3, 1, L)</td><td>(q0, B, R) <br><em>Back to start of x</em></td></tr>
+                            <tr><td>q4 (Cleanup x-y)</td><td>(q4, 0, L)</td><td>(q4, B, L) <br><em>Erase 1s</em></td><td>(q_acc, B, R) <br><em>Done (x > y)</em></td></tr>
+                            <tr><td>q5 (Cleanup 0)</td><td>(q5, B, R) <br><em>Erase 0s</em></td><td>(q5, B, R) <br><em>Erase 1s</em></td><td>(q_acc, B, R) <br><em>Done (x ≤ y)</em></td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="qbody">
-                    <div class="qstmt">Explain Turing Machine as finite control and tuples of the Turing machine with suitable example.</div>
-                    <div class="alabel">Turing Machine Control</div>
-                    <p class="a">A <strong>Turing Machine (TM)</strong> consists of a finite control (a state machine), an infinite read/write tape divided into cells, and a moving tape head. The finite control dictates the machine's actions based on its current state and the symbol the head is currently reading. The machine can overwrite the symbol, change its state, and move the head one step left (L) or right (R).</p>
-                    <div class="tbox">
-                        <div class="tl">7-Tuple Definition M = (Q, Σ, Γ, δ, q0, B, F)</div>
-                        <ul>
-                            <li><code>Q</code>: Finite set of states (e.g., {q0, q1, qacc})</li>
-                            <li><code>Σ</code>: Input alphabet (e.g., {0, 1})</li>
-                            <li><code>Γ</code>: Tape alphabet, where Σ ⊂ Γ (e.g., {0, 1, X, Y, B})</li>
-                            <li><code>δ</code>: Transition function Q × Γ → Q × Γ × {L, R}</li>
-                            <li><code>q0</code>: Start state (q0 ∈ Q)</li>
-                            <li><code>B</code>: Blank symbol (B ∈ Γ, B ∉ Σ)</li>
-                            <li><code>F</code>: Set of final/accepting states (F ⊆ Q)</li>
-                        </ul>
-                    </div>
+                <div class="trace">Simulation for 3-2 (Result should be 1):
+q0 B 000 1 00 B
+-> B q1 00 1 00 B (Erase 1st 0 of x)
+-> B 00 q1 1 00 B (Scan right)
+-> B 00 1 q2 00 B (Pass 1)
+-> B 00 q3 1 10 B (Cross off 1st 0 of y)
+-> B q3 00 1 10 B (Scan left)
+-> q3 B 00 1 10 B
+-> B q0 00 1 10 B (Back to start)
+-> B B q1 0 1 10 B (Erase 2nd 0 of x)
+... repeats ...
+-> B B B q1 1 11 B
+-> B B B 1 q2 11 B
+-> B B B 1 1 q2 1 B
+-> B B B 1 1 1 q2 B (Pass all 1s, hit B. y is empty)
+-> B B B 1 1 q4 1 B (Transition to cleanup)
+-> B B B q_acc 0 B B (Leaves one 0 on tape. Result = 1)</div>
+                <div class="trace">Simulation for 2-3 (Result should be 0):
+q0 B 00 1 000 B
+-> B q1 0 1 000 B (Erase 1st 0 of x)
+... crosses off 1st 0 of y ...
+-> B B q1 1 000 B (Erase 2nd 0 of x)
+... crosses off 2nd 0 of y ...
+-> B B B q0 1 110 B (Back to start. x is empty, reading 1)
+-> B B B B q5 110 B (Erase 1, transition to q5 cleanup)
+-> B B B B B q5 10 B
+... erases all remaining symbols ...
+-> Tape is completely blank. Result = 0.</div>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -30 650 250" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="m2bb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
+                        </defs>
+                        <circle cx="50" cy="100" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="50" y="104" text-anchor="middle" font-size="11" fill="#58a6ff">q0</text>
+                        
+                        <circle cx="180" cy="50" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="180" y="54" text-anchor="middle" font-size="11" fill="#58a6ff">q1</text>
+                        
+                        <circle cx="310" cy="50" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="310" y="54" text-anchor="middle" font-size="11" fill="#58a6ff">q2</text>
+                        
+                        <circle cx="440" cy="50" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="440" y="54" text-anchor="middle" font-size="11" fill="#58a6ff">q3</text>
+                        
+                        <circle cx="310" cy="150" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="310" y="154" text-anchor="middle" font-size="11" fill="#58a6ff">q4</text>
+                        
+                        <circle cx="180" cy="150" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="180" y="154" text-anchor="middle" font-size="11" fill="#58a6ff">q5</text>
+                        
+                        <!-- Transitions -->
+                        <path d="M68,88 L160,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2bb)"/>
+                        <text x="110" y="65" text-anchor="middle" font-size="10" fill="#c9d1d9">0/B,R</text>
+                        
+                        <path d="M170,30 Q180,-10 190,30" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2bb)"/>
+                        <text x="180" y="-15" text-anchor="middle" font-size="10" fill="#c9d1d9">0/0,R</text>
+                        
+                        <path d="M202,50 L288,50" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2bb)"/>
+                        <text x="245" y="45" text-anchor="middle" font-size="10" fill="#c9d1d9">1/1,R</text>
+                        
+                        <path d="M300,30 Q310,-10 320,30" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2bb)"/>
+                        <text x="310" y="-15" text-anchor="middle" font-size="10" fill="#c9d1d9">1/1,R</text>
+                        
+                        <path d="M332,50 L418,50" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2bb)"/>
+                        <text x="375" y="45" text-anchor="middle" font-size="10" fill="#c9d1d9">0/1,L</text>
+                        
+                        <path d="M430,30 Q440,-10 450,30" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2bb)"/>
+                        <text x="440" y="-15" text-anchor="middle" font-size="10" fill="#c9d1d9">0/0,L | 1/1,L</text>
+                        
+                        <path d="M440,72 Q240,150 68,110" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2bb)"/>
+                        <text x="250" y="140" text-anchor="middle" font-size="10" fill="#c9d1d9">B/B,R</text>
+                        
+                        <!-- q2 to q4 -->
+                        <path d="M310,72 L310,128" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2bb)"/>
+                        <text x="330" y="105" text-anchor="middle" font-size="10" fill="#c9d1d9">B/B,L</text>
+                        
+                        <!-- q0 to q5 -->
+                        <path d="M68,112 L160,140" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2bb)"/>
+                        <text x="110" y="145" text-anchor="middle" font-size="10" fill="#c9d1d9">1/B,R</text>
+                    </svg>
                 </div>
             </div>
+        </div>
 
-            <!-- Q2a -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c2">Q2a</div>
-                    <div class="qt">Moore vs Mealy Machine & Conversion</div>
-                    <div class="qm">[10]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">What is the difference between the Moore machine and the Mealy machine? Convert the given Moore machine to Mealy Machine. (Assuming a sequence detector for "11" with states q0/0, q1/0, q2/1)</div>
-                    <div class="alabel">Differences</div>
-                    <div class="tw">
-                        <table>
-                            <thead>
-                                <tr><th>Moore Machine</th><th>Mealy Machine</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Output depends <strong>only on the current state</strong>.</td><td>Output depends on both the <strong>current state and input</strong>.</td></tr>
-                                <tr><td>Output is placed on the states (e.g., q0/0).</td><td>Output is placed on the transitions (e.g., 1/0).</td></tr>
-                                <tr><td>Generally requires more states to implement a logic.</td><td>Generally requires fewer states.</td></tr>
-                                <tr><td>Output length is always |Input| + 1.</td><td>Output length is strictly equal to |Input|.</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="alabel">Moore to Mealy Conversion</div>
-                    <p class="a">For a Moore machine, if state <code>q</code> has output <code>y</code>, any incoming transition to <code>q</code> in the Mealy machine will output <code>y</code>.</p>
-                    <div class="dbox">
-                        <svg width="100%" viewBox="0 -30 600 160" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <marker id="m2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
-                            </defs>
-                            <!-- Moore -->
-                            <text x="120" y="-15" fill="#c9d1d9" font-weight="bold">Moore Machine</text>
-                            <circle cx="50" cy="60" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                            <text x="50" y="64" text-anchor="middle" font-size="11" fill="#58a6ff">q0 / 0</text>
-                            <circle cx="150" cy="60" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                            <text x="150" y="64" text-anchor="middle" font-size="11" fill="#58a6ff">q1 / 0</text>
-                            <circle cx="250" cy="60" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                            <text x="250" y="64" text-anchor="middle" font-size="11" fill="#58a6ff">q2 / 1</text>
-                            
-                            <path d="M75,60 L120,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
-                            <text x="97" y="55" text-anchor="middle" font-size="11" fill="#c9d1d9">1</text>
-                            <path d="M175,60 L220,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
-                            <text x="197" y="55" text-anchor="middle" font-size="11" fill="#c9d1d9">1</text>
-                            
-                            <path d="M35,40 Q50,0 65,40" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
-                            <text x="50" y="-5" text-anchor="middle" font-size="11" fill="#c9d1d9">0</text>
-                            <path d="M140,80 Q100,120 60,80" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
-                            <text x="100" y="115" text-anchor="middle" font-size="11" fill="#c9d1d9">0</text>
-                            
-                            <!-- Divider -->
-                            <line x1="300" y1="-20" x2="300" y2="120" stroke="#30363d" stroke-dasharray="4,4"/>
-                            
-                            <!-- Mealy -->
-                            <text x="450" y="-15" fill="#c9d1d9" font-weight="bold">Equivalent Mealy Machine</text>
-                            <circle cx="350" cy="60" r="25" fill="none" stroke="#3fb950" stroke-width="2"/>
-                            <text x="350" y="64" text-anchor="middle" font-size="11" fill="#3fb950">q0</text>
-                            <circle cx="450" cy="60" r="25" fill="none" stroke="#3fb950" stroke-width="2"/>
-                            <text x="450" y="64" text-anchor="middle" font-size="11" fill="#3fb950">q1</text>
-                            <circle cx="550" cy="60" r="25" fill="none" stroke="#3fb950" stroke-width="2"/>
-                            <text x="550" y="64" text-anchor="middle" font-size="11" fill="#3fb950">q2</text>
-                            
-                            <path d="M375,60 L420,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
-                            <text x="397" y="55" text-anchor="middle" font-size="11" fill="#c9d1d9">1 / 0</text>
-                            <path d="M475,60 L520,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
-                            <text x="497" y="55" text-anchor="middle" font-size="11" fill="#c9d1d9">1 / 1</text>
-                            
-                            <path d="M335,40 Q350,0 365,40" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
-                            <text x="350" y="-5" text-anchor="middle" font-size="11" fill="#c9d1d9">0 / 0</text>
-                            <path d="M440,80 Q400,120 360,80" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
-                            <text x="400" y="115" text-anchor="middle" font-size="11" fill="#c9d1d9">0 / 0</text>
-                        </svg>
-                        <div class="dcap">Pushing outputs from states (Moore) onto the incoming transition arrows (Mealy).</div>
-                    </div>
-                </div>
+        <!-- Q3a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c3">Q3a</div>
+                <div class="qt">DFA for Decimal Numbers Divisible by 3</div>
+                <div class="qm">[10]</div>
             </div>
-
-            <!-- Q2b -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c2">Q2b</div>
-                    <div class="qt">Proper Subtraction Turing Machine</div>
-                    <div class="qm">[10]</div>
+            <div class="qbody">
+                <div class="qstmt">Design a DFA for accepting all decimal numbers divisible by 3. Verify w="31" & w="45"</div>
+                <div class="alabel">State Design</div>
+                <p class="a">A number is divisible by 3 if the sum of its digits is divisible by 3. The DFA will have 3 states representing the running modulo 3 of the digit sum: <code>q0</code> (sum % 3 = 0, Accept state), <code>q1</code> (sum % 3 = 1), <code>q2</code> (sum % 3 = 2).</p>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>State</th><th>Input: 0,3,6,9</th><th>Input: 1,4,7</th><th>Input: 2,5,8</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>→ ★ q0</td><td>q0</td><td>q1</td><td>q2</td></tr>
+                            <tr><td>q1</td><td>q1</td><td>q2</td><td>q0</td></tr>
+                            <tr><td>q2</td><td>q2</td><td>q0</td><td>q1</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="qbody">
-                    <div class="qstmt">Construct TM for proper subtraction. F(x-y) = x-y if x>y, else 0. Input 3-2 and 2-3.</div>
-                    <div class="alabel">Logic</div>
-                    <p class="a">Format input as <code>0^m 1 0^n</code> where m=x, n=y. The TM repeatedly replaces the first '0' of x with a blank (B), scans past '1', replaces a '0' of y with a '1', and returns. If y runs out of 0s, the remaining 0s in x represent x-y. If x runs out of 0s first, the result is 0 (all remaining 0s are erased).</p>
-                    <div class="trace">Input 3-2: B 000 1 00 B
-1. Erase first 0 in x (B 00 1 00 B)
-2. Scan to y, cross off a 0 (B 00 1 10 B)
-3. Return to start of x, erase another 0 (B 0 1 10 B)
-4. Scan to y, cross off a 0 (B 0 1 11 B)
-5. Return, erase another 0 (B B 1 11 B) -> Wait, proper subtraction erases 1 for 1. 
-Actual TM output leaves `0` on tape. Result = 1 zero = 1.</div>
-                    <div class="dbox">
-                        <svg width="100%" viewBox="0 -10 600 180" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <marker id="m2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
-                            </defs>
-                            <circle cx="50" cy="80" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                            <text x="50" y="84" text-anchor="middle" font-size="11" fill="#58a6ff">q0</text>
-                            
-                            <circle cx="180" cy="40" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                            <text x="180" y="44" text-anchor="middle" font-size="11" fill="#58a6ff">q1</text>
-                            
-                            <circle cx="310" cy="40" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                            <text x="310" y="44" text-anchor="middle" font-size="11" fill="#58a6ff">q2</text>
-                            
-                            <circle cx="440" cy="40" r="22" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                            <text x="440" y="44" text-anchor="middle" font-size="11" fill="#58a6ff">q3</text>
-                            
-                            <!-- q0 to q1 on 0 -> B -->
-                            <path d="M68,68 L160,50" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2b)"/>
-                            <text x="110" y="55" text-anchor="middle" font-size="10" fill="#c9d1d9">0/B,R</text>
-                            
-                            <!-- q1 self loop 0,1 -->
-                            <path d="M170,20 Q180,-10 190,20" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2b)"/>
-                            <text x="180" y="-10" text-anchor="middle" font-size="9" fill="#c9d1d9">0/0,R | 1/1,R</text>
-                            
-                            <!-- q1 to q2 on B (end of tape) -->
-                            <path d="M202,40 L288,40" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2b)"/>
-                            <text x="245" y="35" text-anchor="middle" font-size="10" fill="#c9d1d9">B/B,L</text>
-                            
-                            <!-- q2 self loop 1 -->
-                            <path d="M300,20 Q310,-10 320,20" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2b)"/>
-                            <text x="310" y="-10" text-anchor="middle" font-size="9" fill="#c9d1d9">1/1,L</text>
-                            
-                            <!-- q2 to q3 on 0 (crossing off y) -->
-                            <path d="M332,40 L418,40" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2b)"/>
-                            <text x="375" y="35" text-anchor="middle" font-size="10" fill="#c9d1d9">0/1,L</text>
-                            
-                            <!-- q3 self loop 0,1 -->
-                            <path d="M430,20 Q440,-10 450,20" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2b)"/>
-                            <text x="440" y="-10" text-anchor="middle" font-size="9" fill="#c9d1d9">0/0,L | 1/1,L</text>
-                            
-                            <!-- q3 back to q0 -->
-                            <path d="M440,62 Q240,140 68,90" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2b)"/>
-                            <text x="240" y="125" text-anchor="middle" font-size="10" fill="#c9d1d9">B/B,R</text>
-                            
-                            <!-- Accept paths simplified -->
-                            <text x="280" y="160" text-anchor="middle" font-size="11" fill="#3fb950" font-weight="bold">Additional states required for cleaning up the tape and Halt.</text>
-                        </svg>
-                        <div class="dcap">Conceptual Proper Subtraction TM: It pairs 0s from x with 0s from y until one is exhausted.</div>
-                    </div>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -50 500 250" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="m3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
+                        </defs>
+                        <!-- q0 -->
+                        <circle cx="100" cy="100" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <circle cx="100" cy="100" r="24" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+                        <text x="100" y="104" text-anchor="middle" font-size="12" font-weight="bold" fill="#3fb950">q0</text>
+                        
+                        <!-- q1 -->
+                        <circle cx="250" cy="50" r="30" fill="none" stroke="#f0c040" stroke-width="2"/>
+                        <text x="250" y="54" text-anchor="middle" font-size="12" font-weight="bold" fill="#f0c040">q1</text>
+                        
+                        <!-- q2 -->
+                        <circle cx="400" cy="100" r="30" fill="none" stroke="#f0c040" stroke-width="2"/>
+                        <text x="400" y="104" text-anchor="middle" font-size="12" font-weight="bold" fill="#f0c040">q2</text>
+                        
+                        <!-- self loops -->
+                        <path d="M80,75 Q100,0 120,75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
+                        <text x="100" y="-5" text-anchor="middle" font-size="10" fill="#c9d1d9">0,3,6,9</text>
+                        
+                        <path d="M230,25 Q250,-50 270,25" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
+                        <text x="250" y="-35" text-anchor="middle" font-size="10" fill="#c9d1d9">0,3,6,9</text>
+                        
+                        <path d="M380,75 Q400,0 420,75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
+                        <text x="400" y="-5" text-anchor="middle" font-size="10" fill="#c9d1d9">0,3,6,9</text>
+                        
+                        <!-- q0 to q1 -->
+                        <path d="M125,85 Q185,50 220,55" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
+                        <text x="170" y="55" text-anchor="middle" font-size="10" fill="#c9d1d9">1,4,7</text>
+                        
+                        <!-- q1 to q2 -->
+                        <path d="M280,55 Q315,50 375,85" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
+                        <text x="330" y="55" text-anchor="middle" font-size="10" fill="#c9d1d9">1,4,7</text>
+                        
+                        <!-- q2 to q0 -->
+                        <path d="M385,120 Q250,180 115,120" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
+                        <text x="250" y="160" text-anchor="middle" font-size="10" fill="#c9d1d9">1,4,7</text>
+                        
+                        <!-- q0 to q2 -->
+                        <path d="M128,110 L372,110" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)" stroke-dasharray="4"/>
+                        <text x="250" y="105" text-anchor="middle" font-size="10" fill="#c9d1d9">2,5,8 (Reverse paths)</text>
+                    </svg>
                 </div>
-            </div>
-
-            <!-- Q3a -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c3">Q3a</div>
-                    <div class="qt">DFA for Decimal Numbers Divisible by 3</div>
-                    <div class="qm">[10]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">Design a DFA for accepting all decimal numbers divisible by 3. Verify w="31" & w="45"</div>
-                    <div class="alabel">State Design</div>
-                    <p class="a">A number is divisible by 3 if the sum of its digits is divisible by 3. The DFA will have 3 states representing the running modulo 3 of the digit sum: <code>q0</code> (sum % 3 = 0, Accept state), <code>q1</code> (sum % 3 = 1), <code>q2</code> (sum % 3 = 2).</p>
-                    <div class="tw">
-                        <table>
-                            <thead>
-                                <tr><th>State</th><th>Input: 0,3,6,9</th><th>Input: 1,4,7</th><th>Input: 2,5,8</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>→ ★ q0</td><td>q0</td><td>q1</td><td>q2</td></tr>
-                                <tr><td>q1</td><td>q1</td><td>q2</td><td>q0</td></tr>
-                                <tr><td>q2</td><td>q2</td><td>q0</td><td>q1</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="dbox">
-                        <svg width="100%" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <marker id="m3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
-                            </defs>
-                            <!-- q0 -->
-                            <circle cx="100" cy="100" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
-                            <circle cx="100" cy="100" r="24" fill="none" stroke="#3fb950" stroke-width="1.5"/>
-                            <text x="100" y="104" text-anchor="middle" font-size="12" font-weight="bold" fill="#3fb950">q0</text>
-                            
-                            <!-- q1 -->
-                            <circle cx="250" cy="50" r="30" fill="none" stroke="#f0c040" stroke-width="2"/>
-                            <text x="250" y="54" text-anchor="middle" font-size="12" font-weight="bold" fill="#f0c040">q1</text>
-                            
-                            <!-- q2 -->
-                            <circle cx="400" cy="100" r="30" fill="none" stroke="#f0c040" stroke-width="2"/>
-                            <text x="400" y="104" text-anchor="middle" font-size="12" font-weight="bold" fill="#f0c040">q2</text>
-                            
-                            <!-- self loops -->
-                            <path d="M80,75 Q100,20 120,75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
-                            <text x="100" y="15" text-anchor="middle" font-size="10" fill="#c9d1d9">0,3,6,9</text>
-                            
-                            <path d="M230,25 Q250,-30 270,25" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
-                            <text x="250" y="-15" text-anchor="middle" font-size="10" fill="#c9d1d9">0,3,6,9</text>
-                            
-                            <path d="M380,75 Q400,20 420,75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
-                            <text x="400" y="15" text-anchor="middle" font-size="10" fill="#c9d1d9">0,3,6,9</text>
-                            
-                            <!-- q0 to q1 -->
-                            <path d="M125,85 Q185,50 220,55" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
-                            <text x="170" y="55" text-anchor="middle" font-size="10" fill="#c9d1d9">1,4,7</text>
-                            
-                            <!-- q1 to q2 -->
-                            <path d="M280,55 Q315,50 375,85" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
-                            <text x="330" y="55" text-anchor="middle" font-size="10" fill="#c9d1d9">1,4,7</text>
-                            
-                            <!-- q2 to q0 -->
-                            <path d="M385,120 Q250,180 115,120" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)"/>
-                            <text x="250" y="160" text-anchor="middle" font-size="10" fill="#c9d1d9">1,4,7</text>
-                            
-                            <!-- q0 to q2 -->
-                            <path d="M128,110 L372,110" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m3a)" stroke-dasharray="4"/>
-                            <text x="250" y="105" text-anchor="middle" font-size="10" fill="#c9d1d9">2,5,8 (Reverse of 1,4,7 paths)</text>
-                        </svg>
-                    </div>
-                    <div class="trace">Verification:
+                <div class="trace">Verification:
 w = "31": q0 -(3)-> q0 -(1)-> q1. Ends in q1. Not Divisible (REJECT)
 w = "45": q0 -(4)-> q1 -(5)-> q0. Ends in q0. Divisible (ACCEPT)</div>
+            </div>
+        </div>
+
+        <!-- Q3b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c3">Q3b</div>
+                <div class="qt">PDA for L = {aⁿbcⁿ | n ≥ 0}</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Construct the pushdown automata (PDA) with the final state to recognize L={aⁿbcⁿ | n≥0}</div>
+                <div class="alabel">Logic & Transitions Table</div>
+                <p class="a">The PDA must push a symbol 'A' onto the stack for every 'a' encountered. When it sees 'b', it changes state without pushing or popping (exactly one 'b' is allowed). Then, for every 'c', it pops an 'A' from the stack. Finally, it accepts if the stack is empty (showing Z0).</p>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>Current State</th><th>Input Symbol</th><th>Top of Stack</th><th>Next State</th><th>Stack Operation</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>q0</td><td>a</td><td>Z0</td><td>q0</td><td>Push A (AZ0)</td></tr>
+                            <tr><td>q0</td><td>a</td><td>A</td><td>q0</td><td>Push A (AA)</td></tr>
+                            <tr><td>q0</td><td>b</td><td>Z0</td><td>q1</td><td>Skip (Z0) - For n=0 case (bc)</td></tr>
+                            <tr><td>q0</td><td>b</td><td>A</td><td>q1</td><td>Skip (A)</td></tr>
+                            <tr><td>q1</td><td>c</td><td>A</td><td>q1</td><td>Pop (ε)</td></tr>
+                            <tr><td>q1</td><td>ε</td><td>Z0</td><td>qf (Final)</td><td>Accept (Z0)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tbox">
+                    <div class="tl">7-Tuple PDA: M = (Q, Σ, Γ, δ, q0, Z0, F)</div>
+                    <ul>
+                        <li><code>Q = {q0, q1, qf}</code></li>
+                        <li><code>Σ = {a, b, c}</code></li>
+                        <li><code>Γ = {A, Z0}</code></li>
+                        <li><code>δ</code>: Defined by the transition table above.</li>
+                        <li><code>q0</code>: Start state</li>
+                        <li><code>Z0</code>: Initial stack symbol</li>
+                        <li><code>F = {qf}</code>: Final state</li>
+                    </ul>
                 </div>
             </div>
+        </div>
 
-            <!-- Q3b -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c3">Q3b</div>
-                    <div class="qt">PDA for L = {aⁿbcⁿ | n ≥ 0}</div>
-                    <div class="qm">[10]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">Construct the pushdown automata (PDA) with the final state to recognize L={aⁿbcⁿ | n≥0}</div>
-                    <div class="alabel">Logic & Tuples</div>
-                    <p class="a">The PDA must push a symbol (like 'A') onto the stack for every 'a' encountered. When it sees 'b', it simply changes state without pushing or popping (since there's exactly one 'b'). Then, for every 'c', it pops an 'A' from the stack. Finally, it accepts if the stack is empty (showing Z0).</p>
-                    <div class="tbox">
-                        <div class="tl">7-Tuple PDA: M = (Q, Σ, Γ, δ, q0, Z0, F)</div>
-                        <ul>
-                            <li><code>Q = {q0, q1, q2, qf}</code></li>
-                            <li><code>Σ = {a, b, c}</code></li>
-                            <li><code>Γ = {A, Z0}</code></li>
-                            <li><code>δ</code> transitions:
-                                <br>δ(q0, a, Z0) = (q0, AZ0)
-                                <br>δ(q0, a, A) = (q0, AA)
-                                <br>δ(q0, b, A) = (q1, A)  --  δ(q0, b, Z0) = (q1, Z0)
-                                <br>δ(q1, c, A) = (q1, ε)
-                                <br>δ(q1, ε, Z0) = (qf, Z0)
-                            </li>
-                            <li><code>F = {qf}</code></li>
-                        </ul>
-                    </div>
-                </div>
+        <!-- Q4a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c4">Q4a</div>
+                <div class="qt">Arden's Theorem</div>
+                <div class="qm">[10]</div>
             </div>
+            <div class="qbody">
+                <div class="qstmt">Using Arden's Theorem obtain a regular expression for the following deterministic finite automata.</div>
+                <div class="alabel">Given Automata & Equations</div>
+                <p class="a">Assume the given DFA has states q1 (start), q2, q3 (final) with transitions:<br>
+                q1 -0-> q1, q1 -1-> q2<br>
+                q2 -0-> q3, q2 -1-> q2<br>
+                q3 -0-> q1, q3 -1-> q2</p>
+                
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>State Equations (Incoming Transitions)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>q1 = q1.0 + q3.0 + ε  (ε since q1 is start state)</td></tr>
+                            <tr><td>q2 = q1.1 + q2.1 + q3.1</td></tr>
+                            <tr><td>q3 = q2.0</td></tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <!-- Q4a -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c4">Q4a</div>
-                    <div class="qt">Arden's Theorem</div>
-                    <div class="qm">[10]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">Using Arden's Theorem obtain a regular expression for a deterministic finite automata.</div>
-                    <div class="alabel">Arden's Theorem</div>
-                    <p class="a">Arden's Theorem states that if <code>R = Q + RP</code> (where P does not contain ε), then the unique solution is <code>R = QP*</code>. This is used to solve simultaneous equations derived from DFA states to find the final Regular Expression.</p>
-                    <div class="trace">Steps to solve:
-1. Write an equation for each state based on incoming transitions.
-2. Example: q1 = q0·a + q1·b
-3. Substitute and apply R = Q + RP -> q1 = q0·a·b*
-4. Find the expression for the final state(s).</div>
-                </div>
+                <div class="alabel">Applying Arden's Theorem (R = Q + RP → R = QP*)</div>
+                <div class="trace">Step 1: Substitute q3 into q2
+q2 = q1.1 + q2.1 + (q2.0).1
+q2 = q1.1 + q2.(1 + 01)
+
+Step 2: Apply Arden's Theorem to q2
+Here R = q2, Q = q1.1, P = (1 + 01)
+q2 = q1.1.(1 + 01)*
+
+Step 3: Substitute q2 into q3
+q3 = q2.0 = q1.1.(1 + 01)*.0
+
+Step 4: Substitute q3 into q1
+q1 = q1.0 + (q1.1.(1 + 01)*.0).0 + ε
+q1 = q1.(0 + 1.(1 + 01)*.00) + ε
+
+Step 5: Apply Arden's Theorem to q1
+q1 = ε.(0 + 1.(1 + 01)*.00)*
+q1 = (0 + 1.(1 + 01)*.00)*
+
+Step 6: Final Regular Expression (Value of final state q3)
+q3 = q1 . 1.(1 + 01)*.0
+RE = (0 + 1(1+01)*00)* 1(1+01)* 0</div>
             </div>
+        </div>
 
-            <!-- Q4b -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c4">Q4b</div>
-                    <div class="qt">Universal Turing Machine & Halting Problem</div>
-                    <div class="qm">[10]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">Write a short note on: i. Universal Turing machine, ii. Halting problem</div>
-                    <div class="alabel">Universal Turing Machine (UTM)</div>
-                    <p class="a">A UTM is a Turing Machine capable of simulating any other Turing Machine. It takes as input the encoded description of a TM <code>M</code> and an input string <code>w</code>. The UTM then simulates the execution of <code>M</code> on <code>w</code>. This proves that software is conceptually equivalent to hardware, forming the basis of modern stored-program computers.</p>
-                    <div class="alabel">Halting Problem</div>
-                    <p class="a">The Halting Problem asks whether it is possible to write a general program (or TM) that can determine, for any given program <code>M</code> and input <code>w</code>, if <code>M</code> will eventually halt (finish) or run forever in an infinite loop. Alan Turing proved this is <strong>undecidable</strong>. No such general algorithm exists, which places a fundamental limit on what computers can compute or verify.</p>
-                </div>
+        <!-- Q4b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c4">Q4b</div>
+                <div class="qt">Universal Turing Machine & Halting Problem</div>
+                <div class="qm">[10]</div>
             </div>
+            <div class="qbody">
+                <div class="qstmt">Write a short note on: i. Universal Turing machine, ii. Halting problem</div>
+                <div class="alabel">Universal Turing Machine (UTM)</div>
+                <p class="a">A UTM is a Turing Machine capable of simulating any other Turing Machine. It takes as input the encoded description of a TM <code>M</code> and an input string <code>w</code>. The UTM then simulates the execution of <code>M</code> on <code>w</code>. This proves that software is conceptually equivalent to hardware, forming the basis of modern stored-program computers.</p>
+                <div class="alabel">Halting Problem</div>
+                <p class="a">The Halting Problem asks whether it is possible to write a general program (or TM) that can determine, for any given program <code>M</code> and input <code>w</code>, if <code>M</code> will eventually halt (finish) or run forever in an infinite loop. Alan Turing proved this is <strong>undecidable</strong>. No such general algorithm exists, which places a fundamental limit on what computers can compute or verify.</p>
+            </div>
+        </div>
 
-            <!-- Q5a -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c5">Q5a</div>
-                    <div class="qt">Greibach Normal Form (GNF)</div>
-                    <div class="qm">[10]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">Discuss GNF and convert: S→AB|A, A→aA|ε, B→bB|ε</div>
-                    <div class="alabel">Greibach Normal Form</div>
-                    <p class="a">A CFG is in GNF if all productions are of the form <code>A → aα</code>, where <code>a</code> is a single terminal and <code>α</code> is a string of zero or more non-terminals. It is useful for proving properties of CFLs and constructing PDAs.</p>
-                    <div class="alabel">Conversion Steps</div>
-                    <div class="trace">1. Remove ε-productions: Nullable = {A, B, S}.
+        <!-- Q5a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c5">Q5a</div>
+                <div class="qt">Greibach Normal Form (GNF)</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Discuss GNF and convert: S→AB|A, A→aA|ε, B→bB|ε</div>
+                <div class="alabel">Greibach Normal Form</div>
+                <p class="a">A CFG is in GNF if all productions are of the form <code>A → aα</code>, where <code>a</code> is a single terminal and <code>α</code> is a string of zero or more non-terminals. It is useful for proving properties of CFLs and constructing PDAs.</p>
+                <div class="alabel">Conversion Steps</div>
+                <div class="trace">1. Remove ε-productions: Nullable = {A, B, S}.
 New productions:
 A → aA | a
 B → bB | b
@@ -473,72 +558,278 @@ A → aA | a
 B → bB | b
 
 The grammar is now in GNF since every RHS starts with exactly one terminal.</div>
-                </div>
             </div>
-
-            <!-- Q5b -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c5">Q5b</div>
-                    <div class="qt">Language Identification & Derivation Trees</div>
-                    <div class="qm">[5]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">Identify language: i. S→aSbS | ab, ii. S→aSa | bSb | a | b | ε</div>
-                    <div class="alabel">i. S → aSbS | ab</div>
-                    <p class="a">Generates strings with an equal number of 'a's and 'b's where every prefix has at least as many 'a's as 'b's. This is the language of valid parentheses (if a=( and b=)). Grammar class: Context-Free Language.</p>
-                    <div class="alabel">ii. S → aSa | bSb | a | b | ε</div>
-                    <p class="a">Generates all palindromes over {a, b}. Strings that read the same forwards and backwards. Grammar class: Context-Free Language.</p>
-                </div>
-            </div>
-
-            <!-- Q6a -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c6">Q6a</div>
-                    <div class="qt">Derivations and Ambiguity</div>
-                    <div class="qm">[10]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">Find LMD, RMD for "00110101" in S→0B|1A, A→0|0S|1AA, B→1|1S|0BB. Comment on ambiguity.</div>
-                    <div class="alabel">Derivation</div>
-                    <div class="trace">S ⇒ 0B ⇒ 00BB ⇒ 001B ⇒ 0011S ⇒ 00110B ⇒ 001101S ⇒ 0011010B ⇒ 00110101</div>
-                    <p class="a"><strong>Ambiguity:</strong> The grammar is ambiguous because there are multiple valid Leftmost Derivations (and parse trees) for the same string (e.g., multiple ways to balance the 0s and 1s using A and B).</p>
-                </div>
-            </div>
-
-            <!-- Q7a -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c7">Q7a</div>
-                    <div class="qt">Pumping Lemma & L = a^2n</div>
-                    <div class="qm">[10]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">State pumping lemma for regular language and prove L={a²ⁿ | n≥1} is regular.</div>
-                    <div class="alabel">Pumping Lemma Statement</div>
-                    <p class="a">If L is regular, there exists an integer p ≥ 1 such that any string w in L with |w| ≥ p can be divided into three parts, w = xyz, such that: |y| > 0, |xy| ≤ p, and for all i ≥ 0, xyⁱz is also in L.</p>
-                    <div class="alabel">Proof L is Regular</div>
-                    <p class="a">L = {a², a⁴, a⁶, ...} consists of strings of 'a's with even length ≥ 2. This can be expressed by the Regular Expression <code>aa(aa)*</code>. Because a regular expression can be written for it, the language is fundamentally regular. It can be easily accepted by a 2-state DFA. Thus, it satisfies the Pumping Lemma (e.g., choose p=2, y=aa).</p>
-                </div>
-            </div>
-
-            <!-- Q7b & 7c -->
-            <div class="qb">
-                <div class="qh">
-                    <div class="qn c7">Q7b & c</div>
-                    <div class="qt">Compiler Lexical Analysis & Power of PDA</div>
-                    <div class="qm">[10]</div>
-                </div>
-                <div class="qbody">
-                    <div class="qstmt">Application of TCS in Lexical Analyzers and Power of PDA over FSM.</div>
-                    <div class="alabel">Lexical Analyzer (TCS Application)</div>
-                    <p class="a">A lexical analyzer scans source code and groups characters into meaningful tokens (keywords, identifiers, numbers). <strong>Theoretical Computer Science</strong> applies here because token patterns are defined using <strong>Regular Expressions</strong>, and the analyzer engine is implemented as a <strong>Deterministic Finite Automaton (DFA)</strong>. The steps involve reading character streams, matching against regex rules via DFA transitions, and emitting recognized tokens.</p>
-                    <div class="alabel">Power of PDA over FSM</div>
-                    <p class="a">A Pushdown Automaton (PDA) is strictly more powerful than a Finite State Machine (FSM). While an FSM has severely limited memory (only its current state), a PDA includes an <strong>infinite stack</strong>. This stack allows a PDA to count and match nested structures (like checking if <code>n</code> 'a's match <code>n</code> 'b's in <code>aⁿbⁿ</code>), which an FSM fundamentally cannot do. FSMs recognize Regular Languages, while PDAs recognize the larger class of Context-Free Languages.</p>
-                </div>
-            </div>
-
         </div>
+
+        <!-- Q5b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c5">Q5b</div>
+                <div class="qt">Language Identification & Derivation Trees</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Identify language: i. S→aSbS | ab, ii. S→aSa | bSb | a | b | ε</div>
+                <div class="alabel">i. S → aSbS | ab</div>
+                <p class="a">Generates strings with an equal number of 'a's and 'b's where every prefix has at least as many 'a's as 'b's. This is the language of valid parentheses (if a=( and b=)). Grammar class: Context-Free Language.</p>
+                <div class="alabel">ii. S → aSa | bSb | a | b | ε</div>
+                <p class="a">Generates all palindromes over {a, b}. Strings that read the same forwards and backwards. Grammar class: Context-Free Language.</p>
+            </div>
+        </div>
+
+        <!-- Q5c -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c5">Q5c</div>
+                <div class="qt">NFA to DFA Conversion</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Convert the following non-deterministic finite automata to deterministic finite automata.</div>
+                <div class="alabel">Given NFA Table</div>
+                <div class="tw">
+                    <table>
+                        <thead><tr><th>State</th><th>a</th><th>b</th></tr></thead>
+                        <tbody>
+                            <tr><td>→ p</td><td>{p, q}</td><td>{p}</td></tr>
+                            <tr><td>q</td><td>{r}</td><td>Φ</td></tr>
+                            <tr><td>★ r</td><td>Φ</td><td>Φ</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alabel">DFA Conversion Table (Subset Construction)</div>
+                <p class="a">We start with the initial state [p] and generate new subset states based on the transitions.</p>
+                <div class="tw">
+                    <table>
+                        <thead><tr><th>DFA State</th><th>Input a</th><th>Input b</th><th>Is Final?</th></tr></thead>
+                        <tbody>
+                            <tr><td>→ [p]</td><td>[p, q]</td><td>[p]</td><td>No</td></tr>
+                            <tr><td>[p, q]</td><td>[p, q] U [r] = [p, q, r]</td><td>[p] U Φ = [p]</td><td>No</td></tr>
+                            <tr><td>★ [p, q, r]</td><td>[p, q] U [r] U Φ = [p, q, r]</td><td>[p] U Φ U Φ = [p]</td><td>Yes (contains r)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q6a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c6">Q6a</div>
+                <div class="qt">Derivations and Ambiguity</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Find LMD, RMD, and derivation tree for "00110101" in S→0B|1A, A→0|0S|1AA, B→1|1S|0BB. Comment on ambiguity.</div>
+                <div class="alabel">Leftmost Derivation (LMD)</div>
+                <div class="trace">S ⇒ 0B 
+  ⇒ 00BB       (Using B → 0BB)
+  ⇒ 001B       (Using B → 1)
+  ⇒ 0011S      (Using B → 1S)
+  ⇒ 00110B     (Using S → 0B)
+  ⇒ 001101S    (Using B → 1S)
+  ⇒ 0011010B   (Using S → 0B)
+  ⇒ 00110101   (Using B → 1)</div>
+  
+                <div class="alabel">Rightmost Derivation (RMD)</div>
+                <div class="trace">S ⇒ 0B 
+  ⇒ 00BB       (Using B → 0BB)
+  ⇒ 00B1S      (Using B → 1S)
+  ⇒ 00B10B     (Using S → 0B)
+  ⇒ 00B101S    (Using B → 1S)
+  ⇒ 00B1010B   (Using S → 0B)
+  ⇒ 00B10101   (Using B → 1)
+  ⇒ 00110101   (Using B → 1)</div>
+
+                <div class="alabel">Derivation Tree</div>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 0 400 300" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                        <text x="200" y="20" font-weight="bold" fill="#c9d1d9">S</text>
+                        <path d="M195,25 L150,60" stroke="#8b949e" fill="none"/>
+                        <path d="M205,25 L250,60" stroke="#8b949e" fill="none"/>
+                        
+                        <text x="145" y="80" fill="#3fb950">0</text>
+                        <text x="245" y="80" font-weight="bold" fill="#c9d1d9">B</text>
+                        
+                        <path d="M240,85 L200,120" stroke="#8b949e" fill="none"/>
+                        <path d="M245,85 L245,120" stroke="#8b949e" fill="none"/>
+                        <path d="M250,85 L290,120" stroke="#8b949e" fill="none"/>
+                        
+                        <text x="195" y="140" fill="#3fb950">0</text>
+                        <text x="240" y="140" font-weight="bold" fill="#c9d1d9">B</text>
+                        <text x="285" y="140" font-weight="bold" fill="#c9d1d9">B</text>
+                        
+                        <path d="M245,145 L245,180" stroke="#8b949e" fill="none"/>
+                        <text x="240" y="200" fill="#3fb950">1</text>
+                        
+                        <path d="M280,145 L260,180" stroke="#8b949e" fill="none"/>
+                        <path d="M290,145 L310,180" stroke="#8b949e" fill="none"/>
+                        <text x="255" y="200" fill="#3fb950">1</text>
+                        <text x="305" y="200" font-weight="bold" fill="#c9d1d9">S</text>
+                        
+                        <path d="M300,205 L280,240" stroke="#8b949e" fill="none"/>
+                        <path d="M310,205 L330,240" stroke="#8b949e" fill="none"/>
+                        <text x="275" y="260" fill="#3fb950">0</text>
+                        <text x="325" y="260" font-weight="bold" fill="#c9d1d9">B</text>
+                        
+                        <path d="M320,265 L300,300" stroke="#8b949e" fill="none"/>
+                        <path d="M330,265 L350,300" stroke="#8b949e" fill="none"/>
+                        <text x="295" y="320" fill="#3fb950">1</text>
+                        <text x="345" y="320" font-weight="bold" fill="#c9d1d9">S</text>
+                        
+                        <path d="M340,325 L320,360" stroke="#8b949e" fill="none"/>
+                        <path d="M350,325 L370,360" stroke="#8b949e" fill="none"/>
+                        <text x="315" y="380" fill="#3fb950">0</text>
+                        <text x="365" y="380" font-weight="bold" fill="#c9d1d9">B</text>
+                        
+                        <path d="M365,385 L365,420" stroke="#8b949e" fill="none"/>
+                        <text x="360" y="440" fill="#3fb950">1</text>
+                    </svg>
+                </div>
+                
+                <p class="a" style="margin-top:20px;"><strong>Ambiguity:</strong> The grammar is ambiguous because there are multiple valid Leftmost Derivations (and parse trees) for the same string. There are multiple ways to generate equal numbers of 0s and 1s using A and B.</p>
+            </div>
+        </div>
+
+        <!-- Q6b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c6">Q6b</div>
+                <div class="qt">Limitations of Finite State Machine</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">State and explain the limitations of the finite state machine (FSM).</div>
+                <div class="alabel">Limitations</div>
+                <ul class="a-list">
+                    <li><strong>No Auxiliary Memory:</strong> An FSM relies entirely on its current state to "remember" past inputs. It does not have an external stack or tape.</li>
+                    <li><strong>Cannot Count Arbitrarily:</strong> Because the number of states is finite, an FSM cannot count an unbounded sequence. It cannot verify if two arbitrarily large sequences have the same length.</li>
+                    <li><strong>Cannot Recognize Context-Free Languages:</strong> FSMs cannot process strings with nested dependencies, such as matching parentheses or languages like <code>L = {aⁿbⁿ | n ≥ 0}</code>.</li>
+                    <li><strong>No Complex Arithmetic:</strong> Multiplication or division of arbitrarily large numbers cannot be computed purely with an FSM.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Q6c -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c6">Q6c</div>
+                <div class="qt">Moore Machine for Modulo 3</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Design a Moore machine for residue mod 3 of a binary number.</div>
+                <div class="alabel">Logic</div>
+                <p class="a">When reading a binary string from left to right, appending a '0' multiplies the current value by 2. Appending a '1' multiplies by 2 and adds 1. <br>
+                <code>Next State = (Current State * 2 + Input) mod 3</code>. <br>
+                States: <code>q0</code> (residue 0), <code>q1</code> (residue 1), <code>q2</code> (residue 2).</p>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>Current State</th><th>Input = 0</th><th>Input = 1</th><th>Output</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>q0</td><td>(0*2+0)%3 = q0</td><td>(0*2+1)%3 = q1</td><td>0</td></tr>
+                            <tr><td>q1</td><td>(1*2+0)%3 = q2</td><td>(1*2+1)%3 = q0</td><td>1</td></tr>
+                            <tr><td>q2</td><td>(2*2+0)%3 = q1</td><td>(2*2+1)%3 = q2</td><td>2</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -50 500 200" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="m6c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
+                        </defs>
+                        <!-- q0 -->
+                        <circle cx="100" cy="100" r="30" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="100" y="104" text-anchor="middle" font-size="12" fill="#58a6ff">q0 / 0</text>
+                        
+                        <!-- q1 -->
+                        <circle cx="250" cy="50" r="30" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="250" y="54" text-anchor="middle" font-size="12" fill="#58a6ff">q1 / 1</text>
+                        
+                        <!-- q2 -->
+                        <circle cx="400" cy="100" r="30" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="400" y="104" text-anchor="middle" font-size="12" fill="#58a6ff">q2 / 2</text>
+                        
+                        <!-- q0 to q0 on 0 -->
+                        <path d="M80,75 Q100,0 120,75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m6c)"/>
+                        <text x="100" y="-5" text-anchor="middle" font-size="10" fill="#c9d1d9">0</text>
+                        
+                        <!-- q0 to q1 on 1 -->
+                        <path d="M125,85 Q185,50 220,55" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m6c)"/>
+                        <text x="170" y="55" text-anchor="middle" font-size="10" fill="#c9d1d9">1</text>
+                        
+                        <!-- q1 to q0 on 1 -->
+                        <path d="M230,70 Q160,110 125,100" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m6c)"/>
+                        <text x="180" y="105" text-anchor="middle" font-size="10" fill="#c9d1d9">1</text>
+                        
+                        <!-- q1 to q2 on 0 -->
+                        <path d="M280,55 Q315,50 375,85" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m6c)"/>
+                        <text x="330" y="55" text-anchor="middle" font-size="10" fill="#c9d1d9">0</text>
+                        
+                        <!-- q2 to q1 on 0 -->
+                        <path d="M380,80 Q320,110 270,70" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m6c)"/>
+                        <text x="320" y="105" text-anchor="middle" font-size="10" fill="#c9d1d9">0</text>
+                        
+                        <!-- q2 to q2 on 1 -->
+                        <path d="M380,75 Q400,0 420,75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m6c)"/>
+                        <text x="400" y="-5" text-anchor="middle" font-size="10" fill="#c9d1d9">1</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q7a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c7">Q7a</div>
+                <div class="qt">Pumping Lemma & L = a^2n</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">State pumping lemma for regular language and prove L={a²ⁿ | n≥1} is regular.</div>
+                <div class="alabel">Pumping Lemma Statement</div>
+                <p class="a">If L is regular, there exists an integer p ≥ 1 such that any string w in L with |w| ≥ p can be divided into three parts, w = xyz, such that: |y| > 0, |xy| ≤ p, and for all i ≥ 0, xyⁱz is also in L.</p>
+                <div class="alabel">Proof L is Regular</div>
+                <p class="a">L = {a², a⁴, a⁶, ...} consists of strings of 'a's with even length ≥ 2. This can be expressed by the Regular Expression <code>aa(aa)*</code>. Because a regular expression can be written for it, the language is fundamentally regular. It can be easily accepted by a 2-state DFA. Thus, it automatically satisfies the Pumping Lemma conditions (e.g., choose p=2, y=aa).</p>
+            </div>
+        </div>
+
+        <!-- Q7b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c7">Q7b</div>
+                <div class="qt">Compiler Lexical Analysis</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">How is TCS applicable in the implementation of a lexical analyzer? What are the steps?</div>
+                <div class="alabel">Lexical Analyzer (TCS Application)</div>
+                <p class="a">A lexical analyzer scans source code and groups characters into meaningful tokens (keywords, identifiers, numbers). <strong>Theoretical Computer Science</strong> applies here because token patterns are defined using <strong>Regular Expressions</strong>, and the analyzer engine is implemented as a <strong>Deterministic Finite Automaton (DFA)</strong>.</p>
+                <div class="trace">Steps followed by lexical analyzer:
+1. Read the input stream of characters.
+2. Apply Regular Expressions (converted to NFAs, then minimized DFAs internally).
+3. Identify the longest matching prefix for a token.
+4. Emit the token and value to the parser.
+5. Discard whitespaces and comments.</div>
+            </div>
+        </div>
+
+        <!-- Q7c -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c7">Q7c</div>
+                <div class="qt">Power of PDA</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Explain the power of PDA over FSM.</div>
+                <div class="alabel">Power of PDA over FSM</div>
+                <p class="a">A Pushdown Automaton (PDA) is strictly more powerful than a Finite State Machine (FSM). While an FSM has severely limited memory (only its current state), a PDA includes an <strong>infinite stack</strong>. This stack allows a PDA to count and match nested structures (like checking if <code>n</code> 'a's match <code>n</code> 'b's in <code>aⁿbⁿ</code>), which an FSM fundamentally cannot do. FSMs recognize Regular Languages, while PDAs recognize the larger class of Context-Free Languages.</p>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>
