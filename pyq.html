@@ -125,22 +125,21 @@ E ⇒ E * E
                     <li><span class="tuple-highlight">F (Final States):</span> {q_acc}</li>
                     <li><span class="tuple-highlight">δ (Transition Function):</span> Defined as follows:</li>
                 </ul>
-                <div class="formula">Transitions mapping:
-// 1. Push start symbol S onto stack
-Transition 1: δ(q0, ε, Z₀) = { (q1, S Z₀) }
-
-// 2. CFG Production Transitions (Replace Non-Terminal with RHS)
-Transition 2: δ(q1, ε, S) = { (q1, SS), (q1, (S)), (q1, ()) }
-
-// 3. Terminal Match Transitions (Pop matching terminals)
-Transition 3: δ(q1, '(', '(') = { (q1, ε) }
-Transition 4: δ(q1, ')', ')') = { (q1, ε) }
-
-// 4. Acceptance on empty stack
-Transition 5: δ(q1, ε, Z₀) = { (q_acc, Z₀) }</div>
+                <div class="tw">
+    <table>
+        <tr><th>Current State</th><th>Input</th><th>Stack Top</th><th>Action / Pop</th><th>Next State</th><th>Push to Stack</th><th>Description</th></tr>
+        <tr><td>q0</td><td>ε</td><td>Z₀</td><td>-</td><td>q1</td><td>S Z₀</td><td>Initialize Start Symbol S</td></tr>
+        <tr><td>q1</td><td>ε</td><td>S</td><td>Pop S</td><td>q1</td><td>SS</td><td>Apply CFG Rule S → SS</td></tr>
+        <tr><td>q1</td><td>ε</td><td>S</td><td>Pop S</td><td>q1</td><td>(S)</td><td>Apply CFG Rule S → (S)</td></tr>
+        <tr><td>q1</td><td>ε</td><td>S</td><td>Pop S</td><td>q1</td><td>()</td><td>Apply CFG Rule S → ()</td></tr>
+        <tr><td>q1</td><td>(</td><td>(</td><td>Pop (</td><td>q1</td><td>ε</td><td>Match terminal '('</td></tr>
+        <tr><td>q1</td><td>)</td><td>)</td><td>Pop )</td><td>q1</td><td>ε</td><td>Match terminal ')'</td></tr>
+        <tr><td>q1</td><td>ε</td><td>Z₀</td><td>-</td><td>q_acc</td><td>Z₀</td><td>Accept on empty stack</td></tr>
+    </table>
+</div>
 
                 <div class="dbox">
-                    <svg width="100%" viewBox="0 -30 600 200" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="100%" viewBox="0 -50 600 240" xmlns="http://www.w3.org/2000/svg">
                         <defs><marker id="arr1b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
                         <!-- Start -->
                         <line x1="40" y1="80" x2="74" y2="80" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr1b)"/>
@@ -377,24 +376,25 @@ Transition 5: δ(q1, ε, Z₀) = { (q_acc, Z₀) }</div>
                 <strong>Step 4:</strong> At q3, scan left past 'Y's and 'a's until 'X' is found. Move right, return to q1.<br>
                 <strong>Step 5:</strong> Repeat until q1 sees a 'Y' (meaning all 'a's are marked). Move to q4, verify only 'Y's remain until 'B' is hit, then go to q_acc.</p>
                 
-                <div class="formula">Transition Mapping:
-δ(q0, a) = (q1, a, R)     // Skip first extra 'a'
-
-δ(q1, a) = (q2, X, R)     // Mark a with X
-δ(q2, a) = (q2, a, R)     // Scan right
-δ(q2, Y) = (q2, Y, R)
-δ(q2, b) = (q3, Y, L)     // Mark b with Y
-
-δ(q3, Y) = (q3, Y, L)     // Scan left
-δ(q3, a) = (q3, a, L)
-δ(q3, X) = (q1, X, R)     // Found last marked X, loop back
-
-δ(q1, Y) = (q4, Y, R)     // All a's processed
-δ(q4, Y) = (q4, Y, R)     // Verify remaining tape
-δ(q4, B) = (q_acc, B, N)  // Accept!</div>
+                <div class="tw">
+    <table>
+        <tr><th>State</th><th>Read</th><th>Write</th><th>Direction</th><th>Next State</th><th>Description</th></tr>
+        <tr><td>q0</td><td>a</td><td>a</td><td>R (Right)</td><td>q1</td><td>Skip the first extra 'a'</td></tr>
+        <tr><td>q1</td><td>a</td><td>X</td><td>R (Right)</td><td>q2</td><td>Mark current 'a' as 'X'</td></tr>
+        <tr><td>q2</td><td>a</td><td>a</td><td>R (Right)</td><td>q2</td><td>Scan right over unmarked 'a's</td></tr>
+        <tr><td>q2</td><td>Y</td><td>Y</td><td>R (Right)</td><td>q2</td><td>Scan right over previously marked 'Y's</td></tr>
+        <tr><td>q2</td><td>b</td><td>Y</td><td>L (Left)</td><td>q3</td><td>Found matching 'b', mark as 'Y', reverse direction</td></tr>
+        <tr><td>q3</td><td>Y</td><td>Y</td><td>L (Left)</td><td>q3</td><td>Scan left over marked 'Y's</td></tr>
+        <tr><td>q3</td><td>a</td><td>a</td><td>L (Left)</td><td>q3</td><td>Scan left over unmarked 'a's</td></tr>
+        <tr><td>q3</td><td>X</td><td>X</td><td>R (Right)</td><td>q1</td><td>Hit the last 'X', step right to process next 'a'</td></tr>
+        <tr><td>q1</td><td>Y</td><td>Y</td><td>R (Right)</td><td>q4</td><td>No more 'a's found, only 'Y's remain</td></tr>
+        <tr><td>q4</td><td>Y</td><td>Y</td><td>R (Right)</td><td>q4</td><td>Verify tape only contains 'Y's to the right</td></tr>
+        <tr><td>q4</td><td>B</td><td>B</td><td>N (None)</td><td>q_acc</td><td>Found Blank (B), String exactly matches format, Accept!</td></tr>
+    </table>
+</div>
 
                 <div class="dbox">
-                    <svg width="100%" viewBox="0 -30 760 200" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="100%" viewBox="0 -50 760 240" xmlns="http://www.w3.org/2000/svg">
                         <defs><marker id="t1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
                         <!-- q0 -> skip first a -->
                         <line x1="10" y1="80" x2="40" y2="80" stroke="#8b949e" marker-end="url(#t1)" />
@@ -613,7 +613,7 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
                 </ul>
 
                 <div class="dbox">
-                    <svg width="100%" viewBox="0 -30 600 240" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="100%" viewBox="0 -60 600 300" xmlns="http://www.w3.org/2000/svg">
                         <defs><marker id="arr4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
                         <!-- Start -->
                         <line x1="20" y1="100" x2="60" y2="100" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr4)"/>
@@ -691,32 +691,28 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
                 - If we search for a '1' in m but hit '0', then `m` is exhausted. We check `n`. If `n` has more '1's left, then `m < n` (Output 'S'). If `n` is also exhausted (only hits 'Y' or 'B'), then `m = n` (Output 'E').<br>
                 - If we mark a '1' in m, scan right, but hit 'B' before finding a '1' in n, then `n` exhausted first, so `m > n` (Output 'G').</p>
                 
-                <div class="formula">Transition Logic (Partial function mapping):
-// Start cycle: mark m
-δ(q0, 1) = (q1, X, R)
-
-// Scan right to cross '0' and find n
-δ(q1, 1) = (q1, 1, R)
-δ(q1, 0) = (q2, 0, R)
-δ(q2, Y) = (q2, Y, R)
-
-// Mark n, return left
-δ(q2, 1) = (q3, Y, L)
-δ(q3, Y) = (q3, Y, L)
-δ(q3, 0) = (q3, 0, L)
-δ(q3, 1) = (q3, 1, L)
-δ(q3, X) = (q0, X, R)   // Found X, loop back to q0
-
-// Outcome conditions
-δ(q0, 0) = (q4, 0, R)   // Hit 0 immediately: m is exhausted
-δ(q4, Y) = (q4, Y, R)
-δ(q4, B) = (q_E, E, N)  // Hit B: n also exhausted -> Equal
-δ(q4, 1) = (q_S, S, N)  // Hit 1: n has more -> Smaller
-
-δ(q2, B) = (q_G, G, N)  // Scanned for n but hit B -> Greater</div>
+                <div class="tw">
+    <table>
+        <tr><th>Phase</th><th>State</th><th>Read</th><th>Write</th><th>Dir</th><th>Next</th><th>Description</th></tr>
+        <tr><td rowspan="1">1. Mark m</td><td>q0</td><td>1</td><td>X</td><td>R</td><td>q1</td><td>Mark a '1' in left number (m) as 'X'</td></tr>
+        <tr><td rowspan="3">2. Scan Right</td><td>q1</td><td>1</td><td>1</td><td>R</td><td>q1</td><td>Move right past remaining 1s in m</td></tr>
+        <tr><td>q1</td><td>0</td><td>0</td><td>R</td><td>q2</td><td>Cross the '0' separator</td></tr>
+        <tr><td>q2</td><td>Y</td><td>Y</td><td>R</td><td>q2</td><td>Move right past already marked Ys in n</td></tr>
+        <tr><td rowspan="1">3. Mark n</td><td>q2</td><td>1</td><td>Y</td><td>L</td><td>q3</td><td>Found '1' in n, mark as 'Y', head left</td></tr>
+        <tr><td rowspan="4">4. Scan Left</td><td>q3</td><td>Y</td><td>Y</td><td>L</td><td>q3</td><td>Scan left over Ys</td></tr>
+        <tr><td>q3</td><td>0</td><td>0</td><td>L</td><td>q3</td><td>Cross the '0' separator leftwards</td></tr>
+        <tr><td>q3</td><td>1</td><td>1</td><td>L</td><td>q3</td><td>Scan left over remaining 1s in m</td></tr>
+        <tr><td>q3</td><td>X</td><td>X</td><td>R</td><td>q0</td><td>Hit last X, loop back to start of m</td></tr>
+        <tr><td rowspan="4">5. Check Exhausted m</td><td>q0</td><td>0</td><td>0</td><td>R</td><td>q4</td><td>No '1's left in m. Moving to check n.</td></tr>
+        <tr><td>q4</td><td>Y</td><td>Y</td><td>R</td><td>q4</td><td>Scan past matched Ys</td></tr>
+        <tr><td>q4</td><td>B</td><td>E</td><td>N</td><td>q_E</td><td>Found Blank. Both m and n exhausted. <strong>Equal (E)</strong></td></tr>
+        <tr><td>q4</td><td>1</td><td>S</td><td>N</td><td>q_S</td><td>Found '1' in n. n is larger. <strong>Smaller (S)</strong></td></tr>
+        <tr><td rowspan="1">6. Check Exhausted n</td><td>q2</td><td>B</td><td>G</td><td>N</td><td>q_G</td><td>Looked for '1' in n but found Blank. m is larger. <strong>Greater (G)</strong></td></tr>
+    </table>
+</div>
 
                 <div class="dbox">
-                    <svg width="100%" viewBox="0 -30 700 280" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="100%" viewBox="0 -60 700 340" xmlns="http://www.w3.org/2000/svg">
                         <defs><marker id="arrTM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
                         
                         <!-- q0 -->
@@ -815,23 +811,22 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
                     <li><span class="tuple-highlight">Z₀:</span> Initial stack symbol</li>
                     <li><span class="tuple-highlight">F:</span> {q1} (Accept state)</li>
                 </ul>
-                <div class="formula">Transition Details:
-// Push surplus
-δ(q0, 0, Z₀) = {(q0, 0Z₀)}
-δ(q0, 1, Z₀) = {(q0, 1Z₀)}
-δ(q0, 0, 0)  = {(q0, 00)}
-δ(q0, 1, 1)  = {(q0, 11)}
-
-// Pop matches
-δ(q0, 1, 0)  = {(q0, ε)}
-δ(q0, 0, 1)  = {(q0, ε)}
-
-// End of string - Accept if stack has surplus 0s or 1s
-δ(q0, ε, 0)  = {(q1, 0)}  [Accepted: unequal 0s]
-δ(q0, ε, 1)  = {(q1, 1)}  [Accepted: unequal 1s]</div>
+                <div class="tw">
+    <table>
+        <tr><th>State</th><th>Input</th><th>Stack Top</th><th>Action / Pop</th><th>Next State</th><th>Push</th><th>Description</th></tr>
+        <tr><td>q0</td><td>0</td><td>Z₀</td><td>-</td><td>q0</td><td>0 Z₀</td><td>Stack empty, store '0' surplus</td></tr>
+        <tr><td>q0</td><td>1</td><td>Z₀</td><td>-</td><td>q0</td><td>1 Z₀</td><td>Stack empty, store '1' surplus</td></tr>
+        <tr><td>q0</td><td>0</td><td>0</td><td>Pop 0</td><td>q0</td><td>0 0</td><td>More '0's incoming, increase surplus</td></tr>
+        <tr><td>q0</td><td>1</td><td>1</td><td>Pop 1</td><td>q0</td><td>1 1</td><td>More '1's incoming, increase surplus</td></tr>
+        <tr><td>q0</td><td>1</td><td>0</td><td>Pop 0</td><td>q0</td><td>ε</td><td>Matched incoming '1' with '0', reduce surplus</td></tr>
+        <tr><td>q0</td><td>0</td><td>1</td><td>Pop 1</td><td>q0</td><td>ε</td><td>Matched incoming '0' with '1', reduce surplus</td></tr>
+        <tr><td>q0</td><td>ε</td><td>0</td><td>-</td><td>q1</td><td>0</td><td>End of string, '0' surplus remains -> Accept (Unequal)</td></tr>
+        <tr><td>q0</td><td>ε</td><td>1</td><td>-</td><td>q1</td><td>1</td><td>End of string, '1' surplus remains -> Accept (Unequal)</td></tr>
+    </table>
+</div>
 
                 <div class="dbox">
-                    <svg width="100%" viewBox="0 -30 600 240" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="100%" viewBox="0 -60 600 300" xmlns="http://www.w3.org/2000/svg">
                         <defs><marker id="arr5a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
                         <!-- Start -->
                         <line x1="80" y1="100" x2="120" y2="100" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr5a)"/>
