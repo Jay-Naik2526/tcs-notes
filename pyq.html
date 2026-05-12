@@ -31,7 +31,6 @@
         .alabel { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan); margin-bottom: 12px; display: inline-block; background: rgba(121,192,255,.1); padding: 4px 10px; border-radius: 4px; }
         .a { margin-bottom: 16px; color: var(--text3); }
         
-        /* THIS IS THE FIX FOR PROPER NEWLINES IN CODE BLOCKS */
         .formula { background: var(--bg3); border: 1px solid var(--border); padding: 16px; border-radius: 6px; font-family: monospace; font-size: 13.5px; color: var(--cyan); margin: 16px 0; overflow-x: auto; white-space: pre-wrap; line-height: 1.5;}
         
         .dbox { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; overflow-x: auto; }
@@ -126,18 +125,59 @@ E ⇒ E * E
                     <li><span class="tuple-highlight">F (Final States):</span> {q_acc}</li>
                     <li><span class="tuple-highlight">δ (Transition Function):</span> Defined as follows:</li>
                 </ul>
-                <div class="formula">// 1. Push start symbol S onto stack
-δ(q0, ε, Z₀) = { (q1, S Z₀) }
+                <div class="formula">Transitions mapping:
+// 1. Push start symbol S onto stack
+Transition 1: δ(q0, ε, Z₀) = { (q1, S Z₀) }
 
 // 2. CFG Production Transitions (Replace Non-Terminal with RHS)
-δ(q1, ε, S) = { (q1, SS), (q1, (S)), (q1, ()) }
+Transition 2: δ(q1, ε, S) = { (q1, SS), (q1, (S)), (q1, ()) }
 
 // 3. Terminal Match Transitions (Pop matching terminals)
-δ(q1, '(', '(') = { (q1, ε) }
-δ(q1, ')', ')') = { (q1, ε) }
+Transition 3: δ(q1, '(', '(') = { (q1, ε) }
+Transition 4: δ(q1, ')', ')') = { (q1, ε) }
 
 // 4. Acceptance on empty stack
-δ(q1, ε, Z₀) = { (q_acc, Z₀) }</div>
+Transition 5: δ(q1, ε, Z₀) = { (q_acc, Z₀) }</div>
+
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -30 600 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs><marker id="arr1b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
+                        <!-- Start -->
+                        <line x1="40" y1="80" x2="74" y2="80" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr1b)"/>
+                        
+                        <!-- q0 -->
+                        <circle cx="110" cy="80" r="28" fill="rgba(88,166,255,.1)" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="110" y="84" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">q0</text>
+                        
+                        <!-- q0 -> q1 -->
+                        <line x1="138" y1="80" x2="262" y2="80" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr1b)"/>
+                        <text x="200" y="70" text-anchor="middle" font-size="12" fill="#e6edf3">ε, Z₀/S Z₀</text>
+
+                        <!-- q1 -->
+                        <circle cx="290" cy="80" r="28" fill="rgba(240,192,64,.1)" stroke="#f0c040" stroke-width="2"/>
+                        <text x="290" y="84" text-anchor="middle" font-size="13" font-weight="bold" fill="#f0c040">q1</text>
+
+                        <!-- q1 self loop -->
+                        <path d="M 280 52 Q 290 -30 300 52" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr1b)"/>
+                        <text x="290" y="-10" text-anchor="middle" font-size="12" fill="#e6edf3">ε, S / SS</text>
+                        <text x="290" y="5" text-anchor="middle" font-size="12" fill="#e6edf3">ε, S / (S)</text>
+                        <text x="290" y="20" text-anchor="middle" font-size="12" fill="#e6edf3">ε, S / ()</text>
+                        
+                        <path d="M 275 105 Q 290 170 305 105" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr1b)"/>
+                        <text x="290" y="140" text-anchor="middle" font-size="12" fill="#e6edf3">(, ( / ε</text>
+                        <text x="290" y="155" text-anchor="middle" font-size="12" fill="#e6edf3">), ) / ε</text>
+
+                        <!-- q1 -> q_acc -->
+                        <line x1="318" y1="80" x2="442" y2="80" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr1b)"/>
+                        <text x="380" y="70" text-anchor="middle" font-size="12" fill="#e6edf3">ε, Z₀/Z₀</text>
+
+                        <!-- q_acc -->
+                        <circle cx="470" cy="80" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <circle cx="470" cy="80" r="22" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+                        <text x="470" y="84" text-anchor="middle" font-size="13" font-weight="bold" fill="#3fb950">q_acc</text>
+                    </svg>
+                </div>
+
             </div>
         </div>
 
@@ -337,7 +377,7 @@ E ⇒ E * E
                 <strong>Step 4:</strong> At q3, scan left past 'Y's and 'a's until 'X' is found. Move right, return to q1.<br>
                 <strong>Step 5:</strong> Repeat until q1 sees a 'Y' (meaning all 'a's are marked). Move to q4, verify only 'Y's remain until 'B' is hit, then go to q_acc.</p>
                 
-                <div class="formula">Transition Functions:
+                <div class="formula">Transition Mapping:
 δ(q0, a) = (q1, a, R)     // Skip first extra 'a'
 
 δ(q1, a) = (q2, X, R)     // Mark a with X
@@ -514,9 +554,15 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
             <div class="qbody">
                 <div class="qstmt">Develop Minimal DFA for the following ε-NFA transition table: <br>
                 Start: →q0 <br>
-                q0: b → q1, a → q2, ε → q1 <br>
-                q1: b → q0, a → q3, ε → q2 <br>
-                q2: b → q2, a → q3, ε → q1</div>
+                <div class="tw">
+                    <table>
+                        <tr><th>State</th><th>Input 'a'</th><th>Input 'b'</th><th>ε</th></tr>
+                        <tr><td><strong>→ q0</strong></td><td>q2</td><td>q1</td><td>q1</td></tr>
+                        <tr><td><strong>q1</strong></td><td>q3</td><td>q0</td><td>q2</td></tr>
+                        <tr><td><strong>q2</strong></td><td>q3</td><td>q2</td><td>q1</td></tr>
+                    </table>
+                </div>
+                </div>
                 
                 <div class="alabel">Step 1: Compute ε-closures</div>
                 <p class="a">The ε-closure of a state includes the state itself and all states reachable strictly via ε transitions.</p>
@@ -528,22 +574,22 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
                 </ul>
                 
                 <div class="alabel">Step 2: Subset Construction (DFA Table)</div>
-                <p class="a">Start state of DFA is A = ε-closure(q0) = {q0, q1, q2}. Let's assume q3 is the final state based on typical problem patterns (since it has no outgoing edges defined).</p>
+                <p class="a">Start state of DFA is A = ε-closure(q0) = {q0, q1, q2}. Since q3 has no transitions defined except leading to dead-ends, it acts as the final state in standard textbook problems. Thus, any subset containing q3 is a final state.</p>
                 <div class="tw">
                     <table>
                         <tr><th>DFA State</th><th>Input 'a'</th><th>Input 'b'</th></tr>
                         <tr>
-                            <td><strong>A</strong> {q0, q1, q2} (Start)</td>
+                            <td><strong>→ A</strong> {q0, q1, q2} (Start)</td>
                             <td>ε-cl(δ({q0,q1,q2}, a)) = ε-cl({q2, q3}) = {q1, q2, q3} <strong>[B]</strong></td>
                             <td>ε-cl(δ({q0,q1,q2}, b)) = ε-cl({q1, q0, q2}) = {q0, q1, q2} <strong>[A]</strong></td>
                         </tr>
                         <tr>
-                            <td><strong>B</strong> {q1, q2, q3} (Final)</td>
+                            <td><strong>* B</strong> {q1, q2, q3} (Final)</td>
                             <td>ε-cl(δ({q1,q2,q3}, a)) = ε-cl({q3}) = {q3} <strong>[C]</strong></td>
                             <td>ε-cl(δ({q1,q2,q3}, b)) = ε-cl({q0, q2}) = {q0, q1, q2} <strong>[A]</strong></td>
                         </tr>
                         <tr>
-                            <td><strong>C</strong> {q3} (Final)</td>
+                            <td><strong>* C</strong> {q3} (Final)</td>
                             <td>ε-cl(δ(q3, a)) = Φ <strong>[D]</strong></td>
                             <td>ε-cl(δ(q3, b)) = Φ <strong>[D]</strong></td>
                         </tr>
@@ -556,15 +602,64 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
                 </div>
                 
                 <div class="alabel">Step 3: Minimal DFA Tuples</div>
-                <p class="a">Minimization using Moore's Partition Theorem (π0, π1, etc.) yields no further combinable states since paths differentiate them all.</p>
+                <p class="a">Minimization using Moore's Partition Theorem yields no further combinable states since paths differentiate them all.</p>
                 <p class="a"><strong>Minimal DFA M = (Q, Σ, δ, q₀, F)</strong></p>
                 <ul class="tuple-list">
                     <li><span class="tuple-highlight">Q:</span> {A, B, C, D}</li>
                     <li><span class="tuple-highlight">Σ:</span> {a, b}</li>
                     <li><span class="tuple-highlight">q₀:</span> A</li>
                     <li><span class="tuple-highlight">F:</span> {B, C}</li>
-                    <li><span class="tuple-highlight">δ:</span> Defined strictly by the generated subset table above.</li>
+                    <li><span class="tuple-highlight">δ:</span> Defined strictly by the table above and diagram below.</li>
                 </ul>
+
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -30 600 240" xmlns="http://www.w3.org/2000/svg">
+                        <defs><marker id="arr4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
+                        <!-- Start -->
+                        <line x1="20" y1="100" x2="60" y2="100" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr4)"/>
+                        
+                        <!-- A -->
+                        <circle cx="90" cy="100" r="28" fill="rgba(88,166,255,.1)" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="90" y="104" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">A</text>
+                        <!-- A self 'b' -->
+                        <path d="M 100 75 Q 90 20 80 75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr4)"/>
+                        <text x="90" y="15" font-size="12" fill="#e6edf3">b</text>
+
+                        <!-- B -->
+                        <circle cx="240" cy="100" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <circle cx="240" cy="100" r="22" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+                        <text x="240" y="104" text-anchor="middle" font-size="13" font-weight="bold" fill="#3fb950">B</text>
+
+                        <!-- C -->
+                        <circle cx="390" cy="100" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <circle cx="390" cy="100" r="22" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+                        <text x="390" y="104" text-anchor="middle" font-size="13" font-weight="bold" fill="#3fb950">C</text>
+
+                        <!-- D -->
+                        <circle cx="540" cy="100" r="28" fill="rgba(240,192,64,.1)" stroke="#f0c040" stroke-width="2"/>
+                        <text x="540" y="104" text-anchor="middle" font-size="13" font-weight="bold" fill="#f0c040">D</text>
+                        <!-- D self 'a,b' -->
+                        <path d="M 550 75 Q 540 20 530 75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr4)"/>
+                        <text x="540" y="15" font-size="12" fill="#e6edf3">a,b</text>
+
+                        <!-- A -> B 'a' -->
+                        <line x1="118" y1="90" x2="212" y2="90" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr4)"/>
+                        <text x="165" y="80" font-size="12" fill="#e6edf3">a</text>
+                        
+                        <!-- B -> A 'b' -->
+                        <line x1="212" y1="110" x2="118" y2="110" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr4)"/>
+                        <text x="165" y="130" font-size="12" fill="#e6edf3">b</text>
+
+                        <!-- B -> C 'a' -->
+                        <line x1="268" y1="100" x2="362" y2="100" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr4)"/>
+                        <text x="315" y="90" font-size="12" fill="#e6edf3">a</text>
+
+                        <!-- C -> D 'a,b' -->
+                        <line x1="418" y1="100" x2="512" y2="100" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr4)"/>
+                        <text x="465" y="90" font-size="12" fill="#e6edf3">a,b</text>
+
+                    </svg>
+                </div>
             </div>
         </div>
 
@@ -596,7 +691,7 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
                 - If we search for a '1' in m but hit '0', then `m` is exhausted. We check `n`. If `n` has more '1's left, then `m < n` (Output 'S'). If `n` is also exhausted (only hits 'Y' or 'B'), then `m = n` (Output 'E').<br>
                 - If we mark a '1' in m, scan right, but hit 'B' before finding a '1' in n, then `n` exhausted first, so `m > n` (Output 'G').</p>
                 
-                <div class="formula">Transition Logic (Partial δ mapping):
+                <div class="formula">Transition Logic (Partial function mapping):
 // Start cycle: mark m
 δ(q0, 1) = (q1, X, R)
 
@@ -619,6 +714,77 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
 δ(q4, 1) = (q_S, S, N)  // Hit 1: n has more -> Smaller
 
 δ(q2, B) = (q_G, G, N)  // Scanned for n but hit B -> Greater</div>
+
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -30 700 280" xmlns="http://www.w3.org/2000/svg">
+                        <defs><marker id="arrTM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
+                        
+                        <!-- q0 -->
+                        <circle cx="100" cy="120" r="28" fill="rgba(88,166,255,.1)" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="100" y="124" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">q0</text>
+                        <line x1="40" y1="120" x2="72" y2="120" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+
+                        <!-- q1 -->
+                        <circle cx="220" cy="60" r="28" fill="rgba(240,192,64,.1)" stroke="#f0c040" stroke-width="2"/>
+                        <text x="220" y="64" text-anchor="middle" font-size="13" font-weight="bold" fill="#f0c040">q1</text>
+                        <path d="M 210 32 Q 220 -20 230 32" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="220" y="-25" font-size="12" text-anchor="middle" fill="#e6edf3">1/1,R</text>
+
+                        <line x1="124" y1="105" x2="195" y2="75" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="145" y="80" font-size="12" fill="#e6edf3">1/X,R</text>
+
+                        <!-- q2 -->
+                        <circle cx="340" cy="60" r="28" fill="rgba(210,168,255,.1)" stroke="#d2a8ff" stroke-width="2"/>
+                        <text x="340" y="64" text-anchor="middle" font-size="13" font-weight="bold" fill="#d2a8ff">q2</text>
+                        <path d="M 330 32 Q 340 -20 350 32" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="340" y="-25" font-size="12" text-anchor="middle" fill="#e6edf3">Y/Y,R</text>
+
+                        <line x1="248" y1="60" x2="312" y2="60" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="280" y="50" text-anchor="middle" font-size="12" fill="#e6edf3">0/0,R</text>
+
+                        <!-- q3 -->
+                        <circle cx="220" cy="180" r="28" fill="rgba(255,166,87,.1)" stroke="#ffa657" stroke-width="2"/>
+                        <text x="220" y="184" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffa657">q3</text>
+                        <path d="M 230 208 Q 220 260 210 208" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="220" y="270" font-size="12" text-anchor="middle" fill="#e6edf3">1/1,L  0/0,L  Y/Y,L</text>
+
+                        <line x1="325" y1="85" x2="245" y2="165" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="295" y="145" font-size="12" fill="#e6edf3">1/Y,L</text>
+
+                        <!-- q3 to q0 -->
+                        <line x1="195" y1="165" x2="124" y2="135" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="145" y="170" font-size="12" fill="#e6edf3">X/X,R</text>
+
+                        <!-- q4 -->
+                        <circle cx="280" cy="120" r="28" fill="rgba(88,166,255,.1)" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="280" y="124" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">q4</text>
+                        <path d="M 270 92 Q 280 40 290 92" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="280" y="35" font-size="12" text-anchor="middle" fill="#e6edf3">Y/Y,R</text>
+
+                        <line x1="128" y1="120" x2="252" y2="120" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="190" y="110" font-size="12" text-anchor="middle" fill="#e6edf3">0/0,R</text>
+
+                        <!-- q_G -->
+                        <circle cx="480" cy="30" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <text x="480" y="34" text-anchor="middle" font-size="13" font-weight="bold" fill="#3fb950">q_G</text>
+                        <line x1="368" y1="50" x2="452" y2="35" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="410" y="35" font-size="12" fill="#e6edf3">B/G,N</text>
+
+                        <!-- q_E -->
+                        <circle cx="480" cy="120" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <text x="480" y="124" text-anchor="middle" font-size="13" font-weight="bold" fill="#3fb950">q_E</text>
+                        <line x1="308" y1="120" x2="452" y2="120" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="380" y="110" font-size="12" fill="#e6edf3">B/E,N</text>
+
+                        <!-- q_S -->
+                        <circle cx="480" cy="210" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <text x="480" y="214" text-anchor="middle" font-size="13" font-weight="bold" fill="#3fb950">q_S</text>
+                        <line x1="300" y1="140" x2="455" y2="195" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrTM)"/>
+                        <text x="375" y="185" font-size="12" fill="#e6edf3">1/S,N</text>
+
+                    </svg>
+                </div>
+
             </div>
         </div>
 
@@ -649,7 +815,7 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
                     <li><span class="tuple-highlight">Z₀:</span> Initial stack symbol</li>
                     <li><span class="tuple-highlight">F:</span> {q1} (Accept state)</li>
                 </ul>
-                <div class="formula">Transition Functions δ:
+                <div class="formula">Transition Details:
 // Push surplus
 δ(q0, 0, Z₀) = {(q0, 0Z₀)}
 δ(q0, 1, Z₀) = {(q0, 1Z₀)}
@@ -663,6 +829,39 @@ S → A X6 | A X4 | A X5 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a</div>
 // End of string - Accept if stack has surplus 0s or 1s
 δ(q0, ε, 0)  = {(q1, 0)}  [Accepted: unequal 0s]
 δ(q0, ε, 1)  = {(q1, 1)}  [Accepted: unequal 1s]</div>
+
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -30 600 240" xmlns="http://www.w3.org/2000/svg">
+                        <defs><marker id="arr5a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
+                        <!-- Start -->
+                        <line x1="80" y1="100" x2="120" y2="100" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr5a)"/>
+                        
+                        <!-- q0 -->
+                        <circle cx="150" cy="100" r="30" fill="rgba(88,166,255,.1)" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="150" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#58a6ff">q0</text>
+                        
+                        <!-- q0 -> q1 -->
+                        <line x1="180" y1="100" x2="360" y2="100" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr5a)"/>
+                        <text x="270" y="85" text-anchor="middle" font-size="12" fill="#e6edf3">ε, 0 / 0</text>
+                        <text x="270" y="125" text-anchor="middle" font-size="12" fill="#e6edf3">ε, 1 / 1</text>
+
+                        <!-- q1 -->
+                        <circle cx="390" cy="100" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <circle cx="390" cy="100" r="24" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+                        <text x="390" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#3fb950">q1</text>
+
+                        <!-- q0 self loops -->
+                        <path d="M 130 75 Q 150 -50 170 75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr5a)"/>
+                        <text x="150" y="20" text-anchor="middle" font-size="11" fill="#e6edf3">0,Z₀/0Z₀  |  1,Z₀/1Z₀</text>
+                        <text x="150" y="35" text-anchor="middle" font-size="11" fill="#e6edf3">0,0/00  |  1,1/11</text>
+                        
+                        <path d="M 130 125 Q 150 250 170 125" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr5a)"/>
+                        <text x="150" y="180" text-anchor="middle" font-size="11" fill="#e6edf3">1,0 / ε</text>
+                        <text x="150" y="195" text-anchor="middle" font-size="11" fill="#e6edf3">0,1 / ε</text>
+
+                    </svg>
+                </div>
+
             </div>
         </div>
 
@@ -725,10 +924,63 @@ Y → b</div>
                     </table>
                 </div>
 
-                <div class="alabel">Conversion from Mealy to Moore</div>
+                <div class="alabel">Conversion Example: Splitting States</div>
                 <p class="a">To convert a Mealy machine into a Moore machine, we must split states based on the diverse outputs of incoming edges.</p>
                 <p class="a">Assume state S1 receives some incoming edges with output '0' and some with output '1'. Because a Moore machine state can only have ONE output, we must split S1 into two distinct states: <strong>S1_0</strong> (which outputs 0) and <strong>S1_1</strong> (which outputs 1).</p>
-                <div class="formula">Conversion Algorithm Steps:
+                
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+                        <defs><marker id="arr5c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
+                        
+                        <!-- Mealy Label -->
+                        <text x="150" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#f0c040">Original Mealy Concept</text>
+                        
+                        <circle cx="80" cy="120" r="30" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="80" y="125" text-anchor="middle" font-size="14" fill="#58a6ff">S0</text>
+                        
+                        <circle cx="220" cy="120" r="30" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="220" y="125" text-anchor="middle" font-size="14" fill="#58a6ff">S1</text>
+                        
+                        <!-- S0 -> S1 top edge -->
+                        <path d="M 100 100 Q 150 50 200 100" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr5c)"/>
+                        <text x="150" y="65" text-anchor="middle" font-size="12" fill="#e6edf3">a / 0</text>
+
+                        <!-- S0 -> S1 bottom edge -->
+                        <path d="M 100 140 Q 150 190 200 140" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr5c)"/>
+                        <text x="150" y="185" text-anchor="middle" font-size="12" fill="#e6edf3">b / 1</text>
+                        
+                        <!-- Divider -->
+                        <line x1="300" y1="20" x2="300" y2="200" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5" />
+                        
+                        <!-- Moore Label -->
+                        <text x="450" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#3fb950">Converted Moore Result</text>
+                        
+                        <circle cx="360" cy="120" r="30" fill="none" stroke="#3fb950" stroke-width="2"/>
+                        <text x="360" y="120" text-anchor="middle" font-size="14" fill="#3fb950">S0</text>
+                        <text x="360" y="135" text-anchor="middle" font-size="10" fill="#8b949e">-</text>
+
+                        <!-- Splitting S1 into S1_0 and S1_1 -->
+                        <circle cx="500" cy="80" r="30" fill="none" stroke="#3fb950" stroke-width="2"/>
+                        <text x="500" y="80" text-anchor="middle" font-size="14" fill="#3fb950">S1</text>
+                        <text x="500" y="95" text-anchor="middle" font-size="10" fill="#3fb950">0</text>
+                        <text x="500" y="60" text-anchor="middle" font-size="10" fill="#8b949e">State / Output</text>
+
+                        <circle cx="500" cy="170" r="30" fill="none" stroke="#3fb950" stroke-width="2"/>
+                        <text x="500" y="170" text-anchor="middle" font-size="14" fill="#3fb950">S1'</text>
+                        <text x="500" y="185" text-anchor="middle" font-size="10" fill="#3fb950">1</text>
+                        
+                        <!-- S0 -> S1 (output 0) -->
+                        <path d="M 385 105 Q 430 80 470 80" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr5c)"/>
+                        <text x="420" y="85" text-anchor="middle" font-size="12" fill="#e6edf3">a</text>
+
+                        <!-- S0 -> S1' (output 1) -->
+                        <path d="M 380 140 Q 430 170 470 170" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr5c)"/>
+                        <text x="420" y="165" text-anchor="middle" font-size="12" fill="#e6edf3">b</text>
+
+                    </svg>
+                </div>
+                
+                <div class="formula">Algorithm Details:
 1. List all incoming transitions to state Si. Note the outputs associated with them.
 2. If Si receives inputs producing outputs x and y, split Si into Six and Siy.
 3. Assign the Moore static output: Output(Six) = x, Output(Siy) = y.
