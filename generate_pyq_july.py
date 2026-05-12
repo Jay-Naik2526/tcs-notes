@@ -1,69 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCS PYQ Solutions — NMIMS MPSTME</title>
-    <style>
-        :root { --bg: #0d1117; --bg2: #161b22; --bg3: #1c2128; --bg4: #21262d; --border: #30363d; --cyan: #79c0ff; --gold: #f0c040; --green: #3fb950; --orange: #ffa657; --purple: #d2a8ff; --red: #f85149; --pink: #f778ba; --blue: #58a6ff; --text: #e6edf3; --text2: #8b949e; --text3: #c9d1d9; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.7; padding-bottom:60px;}
-        .topnav { position: sticky; top: 0; z-index: 999; background: var(--bg2); border-bottom: 2px solid var(--border); padding: 12px 24px; display:flex; align-items:center; }
-        .brand { font-size: 14px; font-weight: 800; color: var(--gold); margin-right: 20px;}
-        .nav-links a { color: var(--text2); text-decoration: none; margin-right: 15px; font-size:13px; font-weight:600;}
-        .nav-links a:hover { color: var(--cyan); }
-        .main { max-width: 1020px; margin: 0 auto; padding: 32px 36px 80px; }
-        
-        .ph { background: var(--bg2); border: 1px solid var(--border); padding: 24px 30px; border-radius: 12px; margin-bottom: 30px; border-top: 4px solid var(--cyan); }
-        .ph h2 { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 12px; }
-        .ph-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--text2); font-family: monospace; }
-        .ph-meta span { background: var(--bg3); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
-        
-        .qb { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 24px; overflow: hidden; }
-        .qh { display: flex; align-items: stretch; background: var(--bg3); border-bottom: 1px solid var(--border); }
-        .qn { padding: 12px 18px; font-weight: 800; font-size: 14px; color: var(--bg); display: flex; align-items: center; justify-content: center; min-width: 60px; }
-        .c1 { background: var(--blue); } .c2 { background: var(--green); } .c3 { background: var(--orange); } .c4 { background: var(--purple); } .c5 { background: var(--red); } .c6 { background: var(--gold); }
-        .qt { padding: 12px 16px; font-weight: 600; color: var(--text); flex-grow: 1; align-self: center; }
-        .qm { padding: 12px 16px; font-weight: 700; color: var(--text2); font-family: monospace; align-self: center; border-left: 1px solid var(--border); }
-        
-        .qbody { padding: 24px 28px; }
-        .qstmt { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); line-height: 1.6; }
-        .alabel { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan); margin-bottom: 12px; display: inline-block; background: rgba(121,192,255,.1); padding: 4px 10px; border-radius: 4px; }
-        .a { margin-bottom: 16px; color: var(--text3); }
-        
-        .formula { background: var(--bg3); border: 1px solid var(--border); padding: 16px; border-radius: 6px; font-family: monospace; font-size: 13.5px; color: var(--cyan); margin: 16px 0; overflow-x: auto; white-space: pre-wrap; line-height: 1.5;}
-        
-        .dbox { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; overflow-x: auto; }
-        
-        .tw { margin: 20px 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
-        th { background: var(--bg3); color: var(--text); font-weight: 600; padding: 12px 16px; border-bottom: 1px solid var(--border); }
-        td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text3); font-family: monospace; vertical-align: top;}
-        tr:last-child td { border-bottom: none; }
-        
-        ul.a-list { margin-left: 20px; margin-bottom: 16px; color: var(--text3); }
-        ul.a-list li { margin-bottom: 6px; }
-        
-        .tuple-list { margin-left: 20px; margin-bottom: 16px; color: var(--text3); }
-        .tuple-list li { margin-bottom: 8px; list-style-type: disc; }
-        .tuple-highlight { color: var(--orange); font-weight: bold; }
-    
-        .grammar { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 11px 15px; font-family: 'Courier New', monospace; font-size: 13px; margin: 9px 0; line-height: 2.2; color: var(--text3); }
-        .grammar .nt { color: var(--orange); }
-        .grammar .t { color: var(--green); }
-        .trace { background: var(--bg4); border: 1px solid var(--border); border-radius: 6px; padding: 11px 15px; font-family: 'Courier New', monospace; font-size: 12.5px; color: var(--text3); margin: 9px 0; line-height: 1.95; white-space: pre-wrap; }
-        .tbox { background: rgba(240, 192, 64, .05); border: 1px solid rgba(240, 192, 64, .2); border-left: 3px solid var(--gold); border-radius: 5px; padding: 11px 15px; margin: 10px 0; }
-        .tbox .tl { font-size: 9px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
-        .tbox ul { padding-left: 15px; }
-        .tbox li { font-size: 13px; color: var(--text3); margin-bottom: 3px; }
-        .pbox { background: rgba(63, 185, 80, .05); border: 1px solid rgba(63, 185, 80, .15); border-left: 3px solid var(--green); border-radius: 5px; padding: 11px 15px; margin: 10px 0; }
-        .pbox .pl { font-size: 9px; font-weight: 800; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
-        .nbox { background: rgba(255, 166, 87, .05); border: 1px solid rgba(255, 166, 87, .18); border-left: 3px solid var(--orange); border-radius: 5px; padding: 10px 14px; margin: 9px 0; font-size: 13px; color: var(--text3); }
-        .nbox .nl { font-size: 9px; font-weight: 800; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .oosbox { background: rgba(248, 81, 73, .05); border: 1px solid rgba(248, 81, 73, .2); border-radius: 5px; padding: 11px 15px; margin: 9px 0; font-size: 13px; color: var(--red); }
+import re
 
-    </style>
-</head>
+with open('pyq_2024.html', 'r') as f:
+    template = f.read()
+
+# Extract CSS and <head>
+head_match = re.search(r'(<head>.*?</head>)', template, re.DOTALL)
+head_html = head_match.group(1) if head_match else ''
+
+html_content = r"""<!DOCTYPE html>
+<html lang="en">
+{{HEAD_PLACEHOLDER}}
 <body>
     <div class="topnav">
         <div class="brand">TCS Notes &bull; PYQ</div>
@@ -266,13 +212,11 @@ S2 → bS2 | b</div>
                 <div class="qm">[10]</div>
             </div>
             <div class="qbody">
-                <div class="qstmt">Give formal definitions of Mealy and Moore machines. Convert the given Mealy to Moore.</div>
-                <div class="alabel">Mealy & Moore Formal Definition</div>
-                <p class="a"><strong>Mealy Machine:</strong> M = (Q, Σ, Δ, δ, λ, q0). Output depends on both current state and input symbol. <code>λ: Q × Σ → Δ</code><br>
-                <strong>Moore Machine:</strong> M = (Q, Σ, Δ, δ, λ, q0). Output depends only on current state. <code>λ: Q → Δ</code></p>
-                
-                <div class="alabel">Original Mealy Machine (Reconstructed)</div>
-                <p class="a">Since the diagram was missing, we reconstruct a standard Mealy machine and convert it. State `q1` goes to `q2` with output `0` on input `0`, etc.</p>
+                <div class="qstmt">Convert the following Mealy Machine to Moore Machine.</div>
+                <div class="alabel">Mealy & Moore Definition</div>
+                <p class="a"><strong>Mealy Machine:</strong> Output depends on the current state and the input symbol (outputs are on transitions).<br>
+                <strong>Moore Machine:</strong> Output depends entirely on the current state (outputs are assigned to states).</p>
+                <div class="alabel">Assumed Given Mealy Machine Table</div>
                 <div class="tw">
                     <table>
                         <thead>
@@ -286,23 +230,20 @@ S2 → bS2 | b</div>
                         </tbody>
                     </table>
                 </div>
-
-                <div class="alabel">Step 1: Splitting States for Moore</div>
-                <p class="a">We look at all incoming transitions to each state and duplicate the state for every unique output value it receives.<br>
-                - `q1` receives outputs `0` and `1`. Split into <code>q1_0</code>, <code>q1_1</code>.<br>
-                - `q2` receives outputs `0` and `1`. Split into <code>q2_0</code>, <code>q2_1</code>.<br>
-                - `q3` receives outputs `0` and `1`. Split into <code>q3_0</code>, <code>q3_1</code>.<br>
-                Start state `q1` is assigned a default output (e.g., 0) as <code>q1_0</code>.
-                </p>
-
-                <div class="alabel">Step 2: Converted Moore Machine Table</div>
+                <div class="alabel">Moore Conversion Strategy</div>
+                <p class="a">Split states based on the unique outputs targeting them. <br>
+                - `q1` has incoming outputs 0 and 1 → Split into `q1_0` and `q1_1`<br>
+                - `q2` has incoming outputs 0 and 1 → Split into `q2_0` and `q2_1`<br>
+                - `q3` has incoming outputs 0 and 1 → Split into `q3_0` and `q3_1`<br>
+                Make initial state `q1` without output just `q1` or assign a dummy initial output.</p>
                 <div class="tw">
                     <table>
                         <thead>
-                            <tr><th>Moore State</th><th>Output (λ)</th><th>Input = 0</th><th>Input = 1</th></tr>
+                            <tr><th>Moore State</th><th>Output</th><th>Input = 0</th><th>Input = 1</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>→ q1_0</td><td>0</td><td>q2_0</td><td>q1_1</td></tr>
+                            <tr><td>→ q1_init</td><td>-</td><td>q2_0</td><td>q1_1</td></tr>
+                            <tr><td>q1_0</td><td>0</td><td>q2_0</td><td>q1_1</td></tr>
                             <tr><td>q1_1</td><td>1</td><td>q2_0</td><td>q1_1</td></tr>
                             <tr><td>q2_0</td><td>0</td><td>q3_1</td><td>q1_0</td></tr>
                             <tr><td>q2_1</td><td>1</td><td>q3_1</td><td>q1_0</td></tr>
@@ -324,7 +265,7 @@ S2 → bS2 | b</div>
             <div class="qbody">
                 <div class="qstmt">Construct pushdown automata to accept palindrome over Σ={a,b}</div>
                 <div class="alabel">Logic</div>
-                <p class="a">A palindrome reads the same forwards and backwards. The PDA pushes symbols during the first half. It non-deterministically guesses the middle of the string, switches to state `q1`, and pops symbols if they match the input.</p>
+                <p class="a">A palindrome like `abba` (even) or `abcba` (odd) reads the same forwards and backwards. The PDA pushes symbols into the stack during the first half of the string. Non-deterministically, it guesses the middle of the string, switches to state q1, and then starts popping symbols if they match the input.</p>
                 <div class="tw">
                     <table>
                         <thead>
@@ -406,81 +347,14 @@ A → ASA | SA | AS | aB | a | b</div>
             </div>
             <div class="qbody">
                 <div class="qstmt">Design a Turing Machine to find the reverse of a string over Σ={0,1}</div>
-                <div class="alabel">TM Logic (Copy in Reverse Strategy)</div>
-                <p class="a">Given input <code>w</code> (e.g., <code>01#</code>), the TM will create a reversed copy after a `#` delimiter resulting in <code>01#10</code>.<br>
-                1. <code>q0</code>: Scan right to find last unmarked symbol before `#`. Mark it (e.g., `X` or `Y`). Remember it via state (`q1_0` or `q1_1`).<br>
-                2. <code>q1_0 / q1_1</code>: Scan right past `#` and past any already copied bits until a Blank (`B`) is found.<br>
-                3. Write the remembered bit, transition to <code>q2</code>, and scan left all the way back to the marks (`X` or `Y`).<br>
-                4. Step right to the next unmarked bit and repeat until all original bits are marked. Once `#` is reached in `q0`, halt.</p>
-                
-                <div class="alabel">Turing Machine State Diagram</div>
-                <div class="dbox">
-                    <svg width="100%" viewBox="0 -20 600 350" overflow="visible" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <marker id="tm4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
-                        </defs>
-                        <!-- Start State q0 -->
-                        <circle cx="100" cy="150" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                        <text x="100" y="154" text-anchor="middle" font-size="12" fill="#58a6ff">q0</text>
-                        <path d="M40,150 L70,150" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-
-                        <!-- q_find_last (Scanning right to find last unmarked) -->
-                        <circle cx="250" cy="150" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                        <text x="250" y="154" text-anchor="middle" font-size="12" fill="#58a6ff">qf</text>
-
-                        <!-- Transitions q0 -> qf -->
-                        <path d="M125,150 L220,150" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-                        <text x="175" y="140" text-anchor="middle" font-size="11" fill="#c9d1d9">0/0,R | 1/1,R</text>
-
-                        <!-- Self loop on qf -->
-                        <path d="M250,125 Q250,50 300,125" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-                        <text x="310" y="90" text-anchor="middle" font-size="11" fill="#c9d1d9">0/0,R</text>
-                        <text x="310" y="105" text-anchor="middle" font-size="11" fill="#c9d1d9">1/1,R</text>
-
-                        <!-- q_read0 & q_read1 (Found bit) -->
-                        <circle cx="400" cy="70" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                        <text x="400" y="74" text-anchor="middle" font-size="12" fill="#58a6ff">qr0</text>
-
-                        <circle cx="400" cy="230" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                        <text x="400" y="234" text-anchor="middle" font-size="12" fill="#58a6ff">qr1</text>
-
-                        <!-- qf -> qr0 / qr1 -->
-                        <path d="M270,135 L380,85" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-                        <text x="315" y="100" text-anchor="middle" font-size="11" fill="#c9d1d9">0/X,R</text>
-
-                        <path d="M270,165 L380,215" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-                        <text x="315" y="210" text-anchor="middle" font-size="11" fill="#c9d1d9">1/Y,R</text>
-
-                        <!-- q_copy (Scanning right to end) -->
-                        <circle cx="550" cy="150" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                        <text x="550" y="154" text-anchor="middle" font-size="12" fill="#58a6ff">qw</text>
-                        
-                        <path d="M425,75 Q500,75 540,130" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-                        <text x="500" y="90" text-anchor="middle" font-size="11" fill="#c9d1d9">B/0,L</text>
-
-                        <path d="M425,225 Q500,225 540,170" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-                        <text x="500" y="220" text-anchor="middle" font-size="11" fill="#c9d1d9">B/1,L</text>
-
-                        <!-- qw scan left back to X/Y -->
-                        <circle cx="250" cy="280" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                        <text x="250" y="284" text-anchor="middle" font-size="12" fill="#58a6ff">q_ret</text>
-                        
-                        <path d="M535,170 Q400,320 275,285" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-                        <text x="420" y="275" text-anchor="middle" font-size="11" fill="#c9d1d9">0/0,L | 1/1,L | #/#,L</text>
-
-                        <!-- q_ret back to q0 -->
-                        <path d="M225,275 Q100,270 100,180" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-                        <text x="140" y="250" text-anchor="middle" font-size="11" fill="#c9d1d9">X/X,R | Y/Y,R</text>
-
-                        <!-- Accept state -->
-                        <circle cx="100" cy="40" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2"/>
-                        <circle cx="100" cy="40" r="24" fill="none" stroke="#3fb950" stroke-width="1.5"/>
-                        <text x="100" y="44" text-anchor="middle" font-size="11" font-weight="bold" fill="#3fb950">q_halt</text>
-                        
-                        <path d="M100,125 L100,75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm4b)"/>
-                        <text x="125" y="105" text-anchor="middle" font-size="11" fill="#c9d1d9">#/#,S</text>
-                    </svg>
-                </div>
+                <div class="alabel">High Level Logic</div>
+                <p class="a">Given input <code>w</code>, the TM must create a reversed copy of it on the tape (e.g., <code>011#110</code>).<br>
+                1. The TM scans the input from left to right. It picks the first unmarked symbol, marks it (e.g., replace '0' with 'X', '1' with 'Y').<br>
+                2. It remembers the symbol in its state (q_read0 or q_read1).<br>
+                3. It scans all the way to the right, past the '#' separator (if not placed, it places one) and past any already reversed symbols.<br>
+                4. It writes the remembered symbol ('0' or '1') at the first blank space on the right.<br>
+                5. It moves left all the way back to the marked symbols (X or Y), steps one right, and repeats the process until all original symbols are marked.<br>
+                6. Finally, it cleans up the tape by replacing X and Y back to 0 and 1.</p>
             </div>
         </div>
 
@@ -655,41 +529,14 @@ B → SbS | bS | Sb | b | bb | aAS | aA | a</div>
             </div>
             <div class="qbody">
                 <div class="alabel">a. Closure properties of Regular Languages</div>
-                <p class="a">Regular languages are closed under the following operations. This means if L1 and L2 are regular languages, applying these mathematical operations will produce another valid regular language.</p>
-                <ul class="a-list">
-                    <li><strong>Union (L1 ∪ L2):</strong> Closed. The language containing strings that are in L1, L2, or both.</li>
-                    <li><strong>Intersection (L1 ∩ L2):</strong> Closed. The language containing strings strictly in both L1 and L2.</li>
-                    <li><strong>Concatenation (L1L2):</strong> Closed. Strings formed by appending a string in L2 to a string in L1.</li>
-                    <li><strong>Kleene Star (L1*):</strong> Closed. Zero or more concatenations of strings from L1.</li>
-                    <li><strong>Complement (L1'):</strong> Closed. All strings over Σ that are NOT in L1.</li>
-                </ul>
+                <p class="a">Regular languages are closed under Union (A∪B), Intersection (A∩B), Complement, Concatenation (AB), Kleene Star (A*), and Reversal. This means applying these operations to a regular language guarantees the resulting language is also mathematically regular.</p>
 
                 <div class="alabel">b. Syntax for Type-2 Grammar (CFG)</div>
-                <p class="a">According to the Chomsky Hierarchy, Type-2 Grammars are Context-Free Grammars (CFG). They generate Context-Free Languages which are accepted by Pushdown Automata.</p>
-                <div class="tbox">
-                    <div class="tl">Strict Type-2 Syntax Rule: A → α</div>
-                    <ul>
-                        <li><strong>A</strong> must be exactly one Non-Terminal symbol (<code>A ∈ V</code>). Context is irrelevant, hence "context-free".</li>
-                        <li><strong>α</strong> can be any combination of Terminals and Non-Terminals, including ε (<code>α ∈ (V∪T)*</code>).</li>
-                    </ul>
-                </div>
+                <p class="a">Type-2 Grammars are Context-Free Grammars. The strict syntax rule is: <code>A → α</code>, where the left side <strong>must</strong> be a single Non-Terminal variable (<code>A ∈ V</code>), and the right side <code>α</code> can be any combination of terminals and non-terminals (<code>α ∈ (V∪T)*</code>). Example: <code>S → aSb | ε</code>.</p>
 
                 <div class="alabel">c. Moore machine for Even/Odd 1s</div>
-                <p class="a"><strong>Logic:</strong> We need two states. <code>q0</code> handles strings with an EVEN number of 1s and statically outputs <code>1</code>. <code>q1</code> handles strings with an ODD number of 1s and statically outputs <code>0</code>. The input `0` does not change the parity, so it causes a self-loop.</p>
-                
-                <div class="tw">
-                    <table>
-                        <thead>
-                            <tr><th>Current State</th><th>Output (λ)</th><th>Input = 0</th><th>Input = 1</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>→ q0 (Even 1s)</td><td>1</td><td>q0</td><td>q1</td></tr>
-                            <tr><td>q1 (Odd 1s)</td><td>0</td><td>q1</td><td>q0</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="dbox" style="margin-top:16px;">
+                <p class="a">States: <code>q0</code> (Even 1s, Output = 1), <code>q1</code> (Odd 1s, Output = 0).</p>
+                <div class="dbox">
                     <svg width="100%" viewBox="0 -30 400 150" overflow="visible" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <marker id="m7c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
@@ -718,60 +565,17 @@ B → SbS | bS | Sb | b | bb | aAS | aA | a</div>
                 </div>
 
                 <div class="alabel">d. Turing machine to add two unary numbers</div>
-                <p class="a"><strong>Input format:</strong> <code>0^m 1 0^n</code>. To compute <code>m+n</code>, the TM merges the two blocks of 0s by converting the separator `1` into a `0`, and then erasing the very last `0` to keep the count strictly equal to <code>m+n</code>.</p>
-                <div class="tw">
-                    <table>
-                        <thead>
-                            <tr><th>State</th><th>Input</th><th>Operation</th><th>Next State</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>q0 (Scan Right)</td><td>0</td><td>Write 0, Move R</td><td>q0</td></tr>
-                            <tr><td>q0 (Found separator)</td><td>1</td><td>Write 0, Move R</td><td>q1</td></tr>
-                            <tr><td>q1 (Scan to End)</td><td>0</td><td>Write 0, Move R</td><td>q1</td></tr>
-                            <tr><td>q1 (Found End)</td><td>B (Blank)</td><td>Write B, Move L</td><td>q2</td></tr>
-                            <tr><td>q2 (Erase extra 0)</td><td>0</td><td>Write B, Move R</td><td>q_halt</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="dbox" style="margin-top:16px;">
-                    <svg width="100%" viewBox="0 -10 500 150" overflow="visible" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <marker id="tm7d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
-                        </defs>
-                        <circle cx="50" cy="50" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                        <text x="50" y="54" text-anchor="middle" font-size="12" fill="#58a6ff">q0</text>
-                        <path d="M10,50 L25,50" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm7d)"/>
-
-                        <path d="M50,25 Q50,-20 90,25" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm7d)"/>
-                        <text x="70" y="5" text-anchor="middle" font-size="11" fill="#c9d1d9">0/0,R</text>
-
-                        <circle cx="200" cy="50" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                        <text x="200" y="54" text-anchor="middle" font-size="12" fill="#58a6ff">q1</text>
-
-                        <path d="M75,50 L175,50" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm7d)"/>
-                        <text x="125" y="45" text-anchor="middle" font-size="11" fill="#c9d1d9">1/0,R</text>
-
-                        <path d="M200,25 Q200,-20 240,25" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm7d)"/>
-                        <text x="220" y="5" text-anchor="middle" font-size="11" fill="#c9d1d9">0/0,R</text>
-
-                        <circle cx="350" cy="50" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                        <text x="350" y="54" text-anchor="middle" font-size="12" fill="#58a6ff">q2</text>
-
-                        <path d="M225,50 L325,50" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm7d)"/>
-                        <text x="275" y="45" text-anchor="middle" font-size="11" fill="#c9d1d9">B/B,L</text>
-
-                        <circle cx="450" cy="50" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2"/>
-                        <circle cx="450" cy="50" r="24" fill="none" stroke="#3fb950" stroke-width="1.5"/>
-                        <text x="450" y="54" text-anchor="middle" font-size="11" font-weight="bold" fill="#3fb950">q_halt</text>
-
-                        <path d="M375,50 L420,50" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#tm7d)"/>
-                        <text x="397" y="45" text-anchor="middle" font-size="11" fill="#c9d1d9">0/B,R</text>
-                    </svg>
-                </div>
+                <p class="a">Input format: <code>0^m 1 0^n</code>. To compute <code>m+n</code>, the TM simply needs to merge the two blocks of 0s. The algorithm is: Scan right to find the separator <code>'1'</code>. Overwrite the <code>'1'</code> with a <code>'0'</code> (tape now has one extra zero). Move all the way to the right end of the 0s. Overwrite the very last <code>'0'</code> with a Blank (<code>B</code>). Halt. The remaining contiguous 0s represent m+n.</p>
             </div>
         </div>
 
     </div>
 </body>
-</html>
+</html>"""
+
+html_content = html_content.replace('{{HEAD_PLACEHOLDER}}', head_html)
+
+with open('pyq_2023_july.html', 'w') as f:
+    f.write(html_content)
+
+print("Generated pyq_2023_july.html")

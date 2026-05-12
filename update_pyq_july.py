@@ -1,69 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCS PYQ Solutions — NMIMS MPSTME</title>
-    <style>
-        :root { --bg: #0d1117; --bg2: #161b22; --bg3: #1c2128; --bg4: #21262d; --border: #30363d; --cyan: #79c0ff; --gold: #f0c040; --green: #3fb950; --orange: #ffa657; --purple: #d2a8ff; --red: #f85149; --pink: #f778ba; --blue: #58a6ff; --text: #e6edf3; --text2: #8b949e; --text3: #c9d1d9; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.7; padding-bottom:60px;}
-        .topnav { position: sticky; top: 0; z-index: 999; background: var(--bg2); border-bottom: 2px solid var(--border); padding: 12px 24px; display:flex; align-items:center; }
-        .brand { font-size: 14px; font-weight: 800; color: var(--gold); margin-right: 20px;}
-        .nav-links a { color: var(--text2); text-decoration: none; margin-right: 15px; font-size:13px; font-weight:600;}
-        .nav-links a:hover { color: var(--cyan); }
-        .main { max-width: 1020px; margin: 0 auto; padding: 32px 36px 80px; }
-        
-        .ph { background: var(--bg2); border: 1px solid var(--border); padding: 24px 30px; border-radius: 12px; margin-bottom: 30px; border-top: 4px solid var(--cyan); }
-        .ph h2 { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 12px; }
-        .ph-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--text2); font-family: monospace; }
-        .ph-meta span { background: var(--bg3); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
-        
-        .qb { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 24px; overflow: hidden; }
-        .qh { display: flex; align-items: stretch; background: var(--bg3); border-bottom: 1px solid var(--border); }
-        .qn { padding: 12px 18px; font-weight: 800; font-size: 14px; color: var(--bg); display: flex; align-items: center; justify-content: center; min-width: 60px; }
-        .c1 { background: var(--blue); } .c2 { background: var(--green); } .c3 { background: var(--orange); } .c4 { background: var(--purple); } .c5 { background: var(--red); } .c6 { background: var(--gold); }
-        .qt { padding: 12px 16px; font-weight: 600; color: var(--text); flex-grow: 1; align-self: center; }
-        .qm { padding: 12px 16px; font-weight: 700; color: var(--text2); font-family: monospace; align-self: center; border-left: 1px solid var(--border); }
-        
-        .qbody { padding: 24px 28px; }
-        .qstmt { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); line-height: 1.6; }
-        .alabel { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan); margin-bottom: 12px; display: inline-block; background: rgba(121,192,255,.1); padding: 4px 10px; border-radius: 4px; }
-        .a { margin-bottom: 16px; color: var(--text3); }
-        
-        .formula { background: var(--bg3); border: 1px solid var(--border); padding: 16px; border-radius: 6px; font-family: monospace; font-size: 13.5px; color: var(--cyan); margin: 16px 0; overflow-x: auto; white-space: pre-wrap; line-height: 1.5;}
-        
-        .dbox { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; overflow-x: auto; }
-        
-        .tw { margin: 20px 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
-        th { background: var(--bg3); color: var(--text); font-weight: 600; padding: 12px 16px; border-bottom: 1px solid var(--border); }
-        td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text3); font-family: monospace; vertical-align: top;}
-        tr:last-child td { border-bottom: none; }
-        
-        ul.a-list { margin-left: 20px; margin-bottom: 16px; color: var(--text3); }
-        ul.a-list li { margin-bottom: 6px; }
-        
-        .tuple-list { margin-left: 20px; margin-bottom: 16px; color: var(--text3); }
-        .tuple-list li { margin-bottom: 8px; list-style-type: disc; }
-        .tuple-highlight { color: var(--orange); font-weight: bold; }
-    
-        .grammar { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 11px 15px; font-family: 'Courier New', monospace; font-size: 13px; margin: 9px 0; line-height: 2.2; color: var(--text3); }
-        .grammar .nt { color: var(--orange); }
-        .grammar .t { color: var(--green); }
-        .trace { background: var(--bg4); border: 1px solid var(--border); border-radius: 6px; padding: 11px 15px; font-family: 'Courier New', monospace; font-size: 12.5px; color: var(--text3); margin: 9px 0; line-height: 1.95; white-space: pre-wrap; }
-        .tbox { background: rgba(240, 192, 64, .05); border: 1px solid rgba(240, 192, 64, .2); border-left: 3px solid var(--gold); border-radius: 5px; padding: 11px 15px; margin: 10px 0; }
-        .tbox .tl { font-size: 9px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
-        .tbox ul { padding-left: 15px; }
-        .tbox li { font-size: 13px; color: var(--text3); margin-bottom: 3px; }
-        .pbox { background: rgba(63, 185, 80, .05); border: 1px solid rgba(63, 185, 80, .15); border-left: 3px solid var(--green); border-radius: 5px; padding: 11px 15px; margin: 10px 0; }
-        .pbox .pl { font-size: 9px; font-weight: 800; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
-        .nbox { background: rgba(255, 166, 87, .05); border: 1px solid rgba(255, 166, 87, .18); border-left: 3px solid var(--orange); border-radius: 5px; padding: 10px 14px; margin: 9px 0; font-size: 13px; color: var(--text3); }
-        .nbox .nl { font-size: 9px; font-weight: 800; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .oosbox { background: rgba(248, 81, 73, .05); border: 1px solid rgba(248, 81, 73, .2); border-radius: 5px; padding: 11px 15px; margin: 9px 0; font-size: 13px; color: var(--red); }
+import re
 
-    </style>
-</head>
+with open('pyq_2024.html', 'r') as f:
+    template = f.read()
+
+head_match = re.search(r'(<head>.*?</head>)', template, re.DOTALL)
+head_html = head_match.group(1) if head_match else ''
+
+html_content = r"""<!DOCTYPE html>
+<html lang="en">
+{{HEAD_PLACEHOLDER}}
 <body>
     <div class="topnav">
         <div class="brand">TCS Notes &bull; PYQ</div>
@@ -774,4 +719,11 @@ B → SbS | bS | Sb | b | bb | aAS | aA | a</div>
 
     </div>
 </body>
-</html>
+</html>"""
+
+html_content = html_content.replace('{{HEAD_PLACEHOLDER}}', head_html)
+
+with open('pyq_2023_july.html', 'w') as f:
+    f.write(html_content)
+
+print("Re-Generated pyq_2023_july.html with deep TM diagrams and detail")
