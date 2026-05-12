@@ -58,11 +58,6 @@
         .tbox li { font-size: 13px; color: var(--text3); margin-bottom: 3px; }
         .pbox { background: rgba(63, 185, 80, .05); border: 1px solid rgba(63, 185, 80, .15); border-left: 3px solid var(--green); border-radius: 5px; padding: 11px 15px; margin: 10px 0; }
         .pbox .pl { font-size: 9px; font-weight: 800; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
-        
-        /* SVG Label Styles */
-        .lbg { fill: var(--bg); opacity: 1; }
-        .lt { font-size: 11px; fill: var(--cyan); text-anchor: middle; dominant-baseline: middle; font-family: 'Courier New', monospace; font-weight: 700; }
-        
         .nbox { background: rgba(255, 166, 87, .05); border: 1px solid rgba(255, 166, 87, .18); border-left: 3px solid var(--orange); border-radius: 5px; padding: 10px 14px; margin: 9px 0; font-size: 13px; color: var(--text3); }
         .nbox .nl { font-size: 9px; font-weight: 800; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
         .oosbox { background: rgba(248, 81, 73, .05); border: 1px solid rgba(248, 81, 73, .2); border-radius: 5px; padding: 11px 15px; margin: 9px 0; font-size: 13px; color: var(--red); }
@@ -503,77 +498,75 @@
                         <li>q4→'a'→q1: new 'a' after 'ba' — 'ba' suffix broken, track new 'a'</li>
                         <li>q4→'b'→q2: 'ba' followed by 'b' → we had 'ab' at the 'ab' inside 'bab' → q2</li>
                     </ul>
-                        <svg width="100%" viewBox="0 -80 640 350" xmlns="http://www.w3.org/2000/svg">
+                    <div class="dbox"><svg width="100%" viewBox="0 -50 640 280" xmlns="http://www.w3.org/2000/svg">
                             <defs>
-                                <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                                    <path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5" stroke-linecap="round" />
+                                <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                                    orient="auto">
+                                    <path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                        stroke-linecap="round" />
                                 </marker>
                             </defs>
-                            
-                            <!-- transitions -->
-                            <!-- q0 to q1 a -->
-                            <line x1="111" y1="88" x2="213" y2="64" stroke="#8b949e" stroke-width="1.4" marker-end="url(#a3)" />
-                            <rect x="150" y="65" width="12" height="14" rx="2" class="lbg"/>
-                            <text x="156" y="72" class="lt">a</text>
-                            
-                            <!-- q0 to q3 b -->
-                            <line x1="111" y1="112" x2="213" y2="141" stroke="#8b949e" stroke-width="1.4" marker-end="url(#a3)" />
-                            <rect x="150" y="120" width="12" height="14" rx="2" class="lbg"/>
-                            <text x="156" y="127" class="lt">b</text>
-                            
-                            <!-- q1 self a -->
-                            <path d="M218,22 Q240,-15 262,22" fill="none" stroke="#8b949e" stroke-width="1.4" marker-end="url(#a3)" />
-                            <rect x="234" y="-18" width="12" height="14" rx="2" class="lbg"/>
-                            <text x="240" y="-11" class="lt">a</text>
-                            
-                            <!-- q1 to q2 b -->
-                            <line x1="271" y1="50" x2="398" y2="50" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a3)" />
-                            <rect x="328" y="43" width="12" height="14" rx="2" class="lbg"/>
-                            <text x="334" y="50" class="lt">b</text>
-                            
-                            <!-- q2 self a,b -->
-                            <path d="M408,22 Q430,-15 452,22" fill="none" stroke="#3fb950" stroke-width="1.4" marker-end="url(#a3)" />
-                            <rect x="415" y="-18" width="30" height="14" rx="2" class="lbg"/>
-                            <text x="430" y="-11" class="lt">a,b</text>
-                            
-                            <!-- q3 self b -->
-                            <path d="M218,175 Q240,210 262,175" fill="none" stroke="#8b949e" stroke-width="1.4" marker-end="url(#a3)" />
-                            <rect x="234" y="195" width="12" height="14" rx="2" class="lbg"/>
-                            <text x="240" y="202" class="lt">b</text>
-                            
-                            <!-- q3→q4 a -->
-                            <line x1="271" y1="155" x2="398" y2="155" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a3)" />
-                            <rect x="328" y="148" width="12" height="14" rx="2" class="lbg"/>
-                            <text x="334" y="155" class="lt">a</text>
-                            
-                            <!-- q4→q1 a -->
-                            <path d="M412,128 Q320,96 268,68" fill="none" stroke="#8b949e" stroke-width="1.4" marker-end="url(#a3)" />
-                            <rect x="325" y="85" width="12" height="14" rx="2" class="lbg"/>
-                            <text x="331" y="92" class="lt">a</text>
-                            
-                            <!-- q4→q2 b -->
-                            <path d="M430,125 Q430,90 430,82" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a3)" />
-                            <rect x="424" y="100" width="12" height="14" rx="2" class="lbg"/>
-                            <text x="430" y="107" class="lt">b</text>
-
-                            <!-- states after transitions to ensure they are on top -->
-                            <line x1="12" y1="100" x2="48" y2="100" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a3)" />
-                            <circle cx="84" cy="100" r="30" fill="rgba(240,192,64,.08)" stroke="#f0c040" stroke-width="2" />
-                            <text x="84" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="#f0c040">q0</text>
-                            
-                            <circle cx="240" cy="50" r="30" fill="rgba(88,166,255,.08)" stroke="#58a6ff" stroke-width="1.5" />
-                            <text x="240" y="55" text-anchor="middle" font-size="12" font-weight="700" fill="#58a6ff">q1</text>
-                            
-                            <circle cx="430" cy="50" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5" />
+                            <line x1="12" y1="100" x2="48" y2="100" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a3)" />
+                            <circle cx="84" cy="100" r="30" fill="rgba(240,192,64,.08)" stroke="#f0c040"
+                                stroke-width="2" />
+                            <text x="84" y="105" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#f0c040">q0</text>
+                            <circle cx="240" cy="50" r="30" fill="rgba(88,166,255,.08)" stroke="#58a6ff"
+                                stroke-width="1.5" />
+                            <text x="240" y="55" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#58a6ff">q1</text>
+                            <circle cx="430" cy="50" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2.5" />
                             <circle cx="430" cy="50" r="23" fill="none" stroke="#3fb950" stroke-width="1.5" />
-                            <text x="430" y="46" text-anchor="middle" font-size="11" font-weight="700" fill="#3fb950">q2★</text>
-                            
-                            <circle cx="240" cy="155" r="30" fill="rgba(210,168,255,.08)" stroke="#d2a8ff" stroke-width="1.5" />
-                            <text x="240" y="160" text-anchor="middle" font-size="12" font-weight="700" fill="#d2a8ff">q3</text>
-                            
-                            <circle cx="430" cy="155" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5" />
+                            <text x="430" y="46" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#3fb950">q2★</text>
+                            <text x="430" y="62" text-anchor="middle" font-size="8" fill="#3fb950">ab found</text>
+                            <circle cx="240" cy="155" r="30" fill="rgba(210,168,255,.08)" stroke="#d2a8ff"
+                                stroke-width="1.5" />
+                            <text x="240" y="160" text-anchor="middle" font-size="12" font-weight="700"
+                                fill="#d2a8ff">q3</text>
+                            <circle cx="430" cy="155" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950"
+                                stroke-width="2.5" />
                             <circle cx="430" cy="155" r="23" fill="none" stroke="#3fb950" stroke-width="1.5" />
-                            <text x="430" y="151" text-anchor="middle" font-size="11" font-weight="700" fill="#3fb950">q4★</text>
+                            <text x="430" y="151" text-anchor="middle" font-size="11" font-weight="700"
+                                fill="#3fb950">q4★</text>
+                            <text x="430" y="167" text-anchor="middle" font-size="8" fill="#3fb950">ba suffix</text>
+                            <!-- transitions -->
+                            <line x1="111" y1="88" x2="213" y2="64" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="148" y="64" text-anchor="middle" font-size="10" fill="#3fb950">a</text>
+                            <line x1="111" y1="112" x2="213" y2="141" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="148" y="140" text-anchor="middle" font-size="10" fill="#3fb950">b</text>
+                            <!-- q1 self a -->
+                            <path d="M218,22 Q240,-8 262,22" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="240" y="-6" text-anchor="middle" font-size="10" fill="#3fb950">a</text>
+                            <!-- q1→q2 b -->
+                            <line x1="271" y1="50" x2="398" y2="50" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a3)" />
+                            <text x="335" y="40" text-anchor="middle" font-size="10" fill="#3fb950">b</text>
+                            <!-- q2 self a,b -->
+                            <path d="M408,22 Q430,-8 452,22" fill="none" stroke="#3fb950" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="430" y="-4" text-anchor="middle" font-size="10" fill="#3fb950">a,b</text>
+                            <!-- q3 self b -->
+                            <path d="M218,175 Q240,200 262,175" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="240" y="200" text-anchor="middle" font-size="10" fill="#3fb950">b</text>
+                            <!-- q3→q4 a -->
+                            <line x1="271" y1="155" x2="398" y2="155" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a3)" />
+                            <text x="335" y="145" text-anchor="middle" font-size="10" fill="#3fb950">a</text>
+                            <!-- q4→q1 a -->
+                            <path d="M412,128 Q320,96 268,68" fill="none" stroke="#8b949e" stroke-width="1.4"
+                                marker-end="url(#a3)" />
+                            <text x="330" y="90" text-anchor="middle" font-size="10" fill="#3fb950">a</text>
+                            <!-- q4→q2 b -->
+                            <path d="M430,125 Q430,90 430,82" fill="none" stroke="#8b949e" stroke-width="1.5"
+                                marker-end="url(#a3)" />
+                            <text x="445" y="105" font-size="10" fill="#3fb950">b</text>
                         </svg>
                         <div class="dcap">DFA for L = {w contains 'ab' OR ends with 'ba'}. q2 is absorbing accept (once
                             'ab' found, always accept). q4 accepts if string currently ends with 'ba'.</div>
