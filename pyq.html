@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCS PYQ Solutions — NMIMS MPSTME</title>
+    <style>
+        :root { --bg: #0d1117; --bg2: #161b22; --bg3: #1c2128; --bg4: #21262d; --border: #30363d; --cyan: #79c0ff; --gold: #f0c040; --green: #3fb950; --orange: #ffa657; --purple: #d2a8ff; --red: #f85149; --pink: #f778ba; --blue: #58a6ff; --text: #e6edf3; --text2: #8b949e; --text3: #c9d1d9; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.7; padding-bottom:60px;}
+        .topnav { position: sticky; top: 0; z-index: 999; background: var(--bg2); border-bottom: 2px solid var(--border); padding: 12px 24px; display:flex; align-items:center; }
+        .brand { font-size: 14px; font-weight: 800; color: var(--gold); margin-right: 20px;}
+        .nav-links a { color: var(--text2); text-decoration: none; margin-right: 15px; font-size:13px; font-weight:600;}
+        .nav-links a:hover { color: var(--cyan); }
+        .main { max-width: 1020px; margin: 0 auto; padding: 32px 36px 80px; }
+        
+        .ph { background: var(--bg2); border: 1px solid var(--border); padding: 24px 30px; border-radius: 12px; margin-bottom: 30px; border-top: 4px solid var(--cyan); }
+        .ph h2 { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 12px; }
+        .ph-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--text2); font-family: monospace; }
+        .ph-meta span { background: var(--bg3); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
+        
+        .qb { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 24px; overflow: hidden; }
+        .qh { display: flex; align-items: stretch; background: var(--bg3); border-bottom: 1px solid var(--border); }
+        .qn { padding: 12px 18px; font-weight: 800; font-size: 14px; color: var(--bg); display: flex; align-items: center; justify-content: center; min-width: 60px; }
+        .c1 { background: var(--blue); } .c2 { background: var(--green); } .c3 { background: var(--orange); } .c4 { background: var(--purple); } .c5 { background: var(--red); } .c6 { background: var(--gold); }
+        .qt { padding: 12px 16px; font-weight: 600; color: var(--text); flex-grow: 1; align-self: center; }
+        .qm { padding: 12px 16px; font-weight: 700; color: var(--text2); font-family: monospace; align-self: center; border-left: 1px solid var(--border); }
+        
+        .qbody { padding: 24px 28px; }
+        .qstmt { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); line-height: 1.6; }
+        .alabel { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan); margin-bottom: 12px; display: inline-block; background: rgba(121,192,255,.1); padding: 4px 10px; border-radius: 4px; }
+        .a { margin-bottom: 16px; color: var(--text3); }
+        .formula { background: var(--bg3); border: 1px solid var(--border); padding: 12px 16px; border-radius: 6px; font-family: monospace; font-size: 13.5px; color: var(--cyan); margin: 16px 0; overflow-x: auto; }
+        .dbox { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; overflow-x: auto; }
+        
+        .tw { margin: 20px 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
+        th { background: var(--bg3); color: var(--text); font-weight: 600; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text3); font-family: monospace;}
+        tr:last-child td { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <div class="topnav">
+        <div class="brand">TCS Notes &bull; PYQ</div>
+        <div class="nav-links">
+            <a href="index.html">← Back to Chapters</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="ph">
+            <h2>Re-Examination (2021-22)</h2>
+            <div class="ph-meta">
+                <span>Date: 08 June 2022</span>
+                <span>Marks: 100</span>
+                <span>Time: 3 hrs</span>
+                <span>Sem: IV</span>
+            </div>
+        </div>
+
+        <!-- Q1a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1a</div>
+                <div class="qt">Ambiguous Grammar & Testing</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">What is ambiguous grammar? Test the following grammar G for ambiguity, and if G is ambiguous, what is the cause of ambiguity?<br> G = {E, (+,*,a), {E → E+E, E → E*E, E → a}, E}</div>
+                <div class="alabel">Answer</div>
+                <p class="a"><strong>Ambiguous Grammar:</strong> A Context-Free Grammar (CFG) is ambiguous if there exists at least one string in its language that can be generated by <strong>more than one leftmost derivation</strong> (or equivalently, has more than one distinct parse tree).</p>
+                <p class="a"><strong>Testing for Ambiguity:</strong> Let's test the string <code>w = a + a * a</code></p>
+                <div class="formula">
+Parse Tree 1 (Leftmost derivation prioritizing +):
+E ⇒ E + E ⇒ a + E ⇒ a + E * E ⇒ a + a * E ⇒ a + a * a
+
+Parse Tree 2 (Leftmost derivation prioritizing *):
+E ⇒ E * E ⇒ E + E * E ⇒ a + E * E ⇒ a + a * E ⇒ a + a * a
+                </div>
+                <p class="a">Since the string <code>a + a * a</code> has two distinct leftmost derivations (and two distinct parse trees), the grammar <strong>G is ambiguous</strong>.</p>
+                <p class="a"><strong>Cause of Ambiguity:</strong> The grammar lacks <strong>precedence</strong> and <strong>associativity</strong> rules. Both '+' and '*' are at the same hierarchical level, allowing the parser to arbitrarily choose which operation to bind first.</p>
+            </div>
+        </div>
+
+        <!-- Q1b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1b</div>
+                <div class="qt">Design PDA for CFG</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Design pushdown automata for the following context-free grammar: S → SS | (S) | ()</div>
+                <div class="alabel">Answer</div>
+                <p class="a">To construct a PDA from a CFG, we use top-down parsing (simulating leftmost derivation on the stack). We push the start symbol 'S' and replace non-terminals with their productions.</p>
+                <p class="a"><strong>PDA M = (Q, Σ, Γ, δ, q0, Z, F)</strong> where Q={q0, q1, q_acc}, Σ={(, )}, Γ={S, (, ), Z}</p>
+                <div class="formula">
+δ(q0, ε, Z) = {(q1, SZ)}       // Push start symbol
+
+// CFG Production Transitions (replace NT with RHS)
+δ(q1, ε, S) = {(q1, SS), (q1, (S)), (q1, ())}
+
+// Terminal Match Transitions (pop matching terminals)
+δ(q1, '(', '(') = {(q1, ε)}
+δ(q1, ')', ')') = {(q1, ε)}
+
+// Acceptance on empty stack
+δ(q1, ε, Z) = {(q_acc, Z)}
+                </div>
+            </div>
+        </div>
+
+        <!-- Q1c -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1c</div>
+                <div class="qt">Turing Machine vs Mealy Machine</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Give Formal Definition of Turing Machine & Mealy Machine. How they are different from each other.</div>
+                <div class="alabel">Formal Definitions</div>
+                <p class="a"><strong>Turing Machine (7-tuple):</strong> M = (Q, Σ, Γ, δ, q₀, B, F)<br>
+                Q: States, Σ: Input Alphabet, Γ: Tape Alphabet, δ: Transition function (Q × Γ → Q × Γ × {L, R}), q₀: Start state, B: Blank symbol, F: Final states.</p>
+                <p class="a"><strong>Mealy Machine (6-tuple):</strong> M = (Q, Σ, Δ, δ, λ, q₀)<br>
+                Q: States, Σ: Input Alphabet, Δ: Output Alphabet, δ: Transition function (Q × Σ → Q), λ: Output function (Q × Σ → Δ), q₀: Start state.</p>
+                
+                <div class="alabel">Key Differences</div>
+                <div class="tw">
+                    <table>
+                        <tr><th>Feature</th><th>Turing Machine</th><th>Mealy Machine</th></tr>
+                        <tr><td><strong>Memory</strong></td><td>Infinite Tape (Read/Write)</td><td>No external memory (only states)</td></tr>
+                        <tr><td><strong>Movement</strong></td><td>Head moves Left or Right</td><td>Head moves Right only (one-way)</td></tr>
+                        <tr><td><strong>Purpose</strong></td><td>Language acceptance / Computations</td><td>Transducer (generates output string)</td></tr>
+                        <tr><td><strong>Power</strong></td><td>Recognizes Recursively Enumerable languages</td><td>Recognizes Regular languages</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q1d -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1d</div>
+                <div class="qt">Applications of RE and Grammar</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">What are the applications of Regular Expression and Grammar in Compiler Constructions? Explain.</div>
+                <div class="alabel">Answer</div>
+                <p class="a"><strong>1. Regular Expressions (Lexical Analysis):</strong><br>
+                In the first phase of compilation (Lexical Analysis or Scanning), Regular Expressions are used to specify the patterns of valid <strong>tokens</strong>. For example, identifiers `[a-zA-Z][a-zA-Z0-9]*` or integers `[0-9]+`. The compiler builds a DFA from these REs to efficiently read the source code stream and group characters into meaningful tokens. Tools like <strong>Lex/Flex</strong> use REs to generate lexical analyzers.</p>
+                <p class="a"><strong>2. Grammars (Syntax Analysis):</strong><br>
+                In the second phase (Syntax Analysis or Parsing), Context-Free Grammars (CFG) are used to define the hierarchical structure (syntax) of the programming language. For example, `Stmt → if (Expr) Stmt else Stmt`. The compiler uses PDA-based parsing algorithms (like LL or LR parsers) to verify that the sequence of tokens forms a valid syntax tree. Tools like <strong>Yacc/Bison</strong> use CFGs to automatically generate parsers.</p>
+            </div>
+        </div>
+
+        <!-- Q2a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c2">Q2a</div>
+                <div class="qt">DFA vs NFA & DFA Construction</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">How is DFA different from NFA? Construct DFA, which accepts all strings ending with 00 or 11 over Σ={0,1}.</div>
+                <div class="alabel">DFA vs NFA</div>
+                <p class="a"><strong>DFA (Deterministic):</strong> For every state and input symbol, there is exactly ONE transition. No ε-transitions. Every input path is uniquely determined.<br>
+                <strong>NFA (Non-Deterministic):</strong> From a state, an input symbol can lead to ZERO, ONE, or MULTIPLE next states. Can include ε-transitions (moving without input). Guesses the correct path to acceptance.</p>
+                
+                <div class="alabel">DFA Construction (Ends in 00 or 11)</div>
+                <p class="a">States track the last two symbols seen: start (ε), seen '0', seen '1', seen '00' (accept), seen '11' (accept).</p>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -30 600 280" xmlns="http://www.w3.org/2000/svg">
+                        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
+                        <!-- Start -->
+                        <line x1="10" y1="130" x2="44" y2="130" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        
+                        <!-- q0 -->
+                        <circle cx="80" cy="130" r="28" fill="rgba(88,166,255,.1)" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="80" y="134" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">q0</text>
+                        
+                        <!-- q0_0 -->
+                        <circle cx="230" cy="60" r="28" fill="rgba(88,166,255,.1)" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="230" y="64" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">q1 (0)</text>
+                        
+                        <!-- q0_1 -->
+                        <circle cx="230" cy="200" r="28" fill="rgba(88,166,255,.1)" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="230" y="204" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">q2 (1)</text>
+
+                        <!-- q00 (Acc) -->
+                        <circle cx="380" cy="60" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <circle cx="380" cy="60" r="22" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+                        <text x="380" y="64" text-anchor="middle" font-size="13" font-weight="bold" fill="#3fb950">q3 (00)</text>
+
+                        <!-- q11 (Acc) -->
+                        <circle cx="380" cy="200" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <circle cx="380" cy="200" r="22" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+                        <text x="380" y="204" text-anchor="middle" font-size="13" font-weight="bold" fill="#3fb950">q4 (11)</text>
+
+                        <!-- Edges -->
+                        <!-- q0 -> q1(0) -->
+                        <line x1="105" y1="117" x2="205" y2="72" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="145" y="85" font-size="12" fill="#e6edf3">0</text>
+                        <!-- q0 -> q2(1) -->
+                        <line x1="105" y1="143" x2="205" y2="188" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="145" y="180" font-size="12" fill="#e6edf3">1</text>
+                        
+                        <!-- q1(0) -> q3(00) -->
+                        <line x1="258" y1="60" x2="345" y2="60" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="300" y="52" font-size="12" fill="#e6edf3">0</text>
+                        <!-- q1(0) -> q2(1) -->
+                        <line x1="230" y1="88" x2="230" y2="165" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="220" y="130" font-size="12" fill="#e6edf3">1</text>
+
+                        <!-- q2(1) -> q4(11) -->
+                        <line x1="258" y1="200" x2="345" y2="200" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="300" y="192" font-size="12" fill="#e6edf3">1</text>
+                        <!-- q2(1) -> q1(0) -->
+                        <path d="M 245 180 Q 280 130 245 80" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="270" y="130" font-size="12" fill="#e6edf3">0</text>
+
+                        <!-- q3(00) self 0 -->
+                        <path d="M 390 35 Q 380 -10 370 35" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="380" y="-15" font-size="12" fill="#e6edf3">0</text>
+                        <!-- q3(00) -> q2(1) -->
+                        <line x1="365" y1="85" x2="255" y2="185" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="320" y="150" font-size="12" fill="#e6edf3">1</text>
+
+                        <!-- q4(11) self 1 -->
+                        <path d="M 390 225 Q 380 270 370 225" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="380" y="275" font-size="12" fill="#e6edf3">1</text>
+                        <!-- q4(11) -> q1(0) -->
+                        <path d="M 355 185 Q 280 120 255 75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <text x="310" y="120" font-size="12" fill="#e6edf3">0</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q2b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c2">Q2b</div>
+                <div class="qt">Turing Machine for a^(n+1) b^n</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Construct & verify Turing machine to recognize the language L={aⁿ⁺¹bⁿ | n≥1}</div>
+                <div class="alabel">Strategy</div>
+                <p class="a">The string is formed by exactly one extra 'a' at the beginning, followed by equal a's and b's. (e.g. aabb, aaabbb).<br>
+                Step 1: Read the very first 'a', move Right (skipping it permanently).<br>
+                Step 2: Now match remaining a's with b's (standard aⁿbⁿ logic: mark 'a' as X, scan right to mark 'b' as Y, scan left to X, repeat).<br>
+                Step 3: If only Y's remain, Accept.</p>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -30 760 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs><marker id="t1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker></defs>
+                        <!-- q0 -> skip first a -->
+                        <line x1="10" y1="80" x2="40" y2="80" stroke="#8b949e" marker-end="url(#t1)" />
+                        <circle cx="70" cy="80" r="28" fill="rgba(88,166,255,.1)" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="70" y="84" text-anchor="middle" font-weight="bold" fill="#58a6ff">q0</text>
+                        
+                        <line x1="98" y1="80" x2="162" y2="80" stroke="#8b949e" marker-end="url(#t1)" />
+                        <text x="130" y="70" text-anchor="middle" fill="#f0c040" font-weight="bold" font-size="12">a/a,R</text>
+
+                        <!-- q1 -> start matching (mark a as X) -->
+                        <circle cx="190" cy="80" r="28" fill="rgba(240,192,64,.1)" stroke="#f0c040" stroke-width="2"/>
+                        <text x="190" y="84" text-anchor="middle" font-weight="bold" fill="#f0c040">q1</text>
+
+                        <!-- q2 -> scan right for b -->
+                        <line x1="218" y1="80" x2="312" y2="80" stroke="#8b949e" marker-end="url(#t1)" />
+                        <text x="265" y="70" text-anchor="middle" fill="#f0c040" font-weight="bold" font-size="12">a/X,R</text>
+
+                        <circle cx="340" cy="80" r="28" fill="rgba(210,168,255,.1)" stroke="#d2a8ff" stroke-width="2"/>
+                        <text x="340" y="84" text-anchor="middle" font-weight="bold" fill="#d2a8ff">q2</text>
+                        <path d="M 330 52 Q 340 10 350 52" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#t1)"/>
+                        <text x="340" y="5" text-anchor="middle" fill="#3fb950" font-weight="bold" font-size="11">a/a,R Y/Y,R</text>
+
+                        <!-- q3 -> scan left to X -->
+                        <line x1="368" y1="80" x2="462" y2="80" stroke="#8b949e" marker-end="url(#t1)" />
+                        <text x="415" y="70" text-anchor="middle" fill="#f0c040" font-weight="bold" font-size="12">b/Y,L</text>
+
+                        <circle cx="490" cy="80" r="28" fill="rgba(255,166,87,.1)" stroke="#ffa657" stroke-width="2"/>
+                        <text x="490" y="84" text-anchor="middle" font-weight="bold" fill="#ffa657">q3</text>
+                        <path d="M 480 52 Q 490 10 500 52" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#t1)"/>
+                        <text x="490" y="5" text-anchor="middle" fill="#3fb950" font-weight="bold" font-size="11">a/a,L Y/Y,L</text>
+
+                        <!-- loop back q3 -> q1 -->
+                        <path d="M 470 100 Q 340 160 210 100" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#t1)"/>
+                        <text x="340" y="150" text-anchor="middle" fill="#3fb950" font-weight="bold" font-size="12">X/X,R</text>
+
+                        <!-- q1 -> verify -->
+                        <path d="M 180 52 Q 220 -20 590 52" fill="none" stroke="#ffa657" stroke-dasharray="5,3" stroke-width="1.5" marker-end="url(#t1)"/>
+                        <text x="400" y="-10" text-anchor="middle" fill="#ffa657" font-weight="bold" font-size="12">Y/Y,R (no a's left)</text>
+
+                        <circle cx="610" cy="80" r="28" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2"/>
+                        <text x="610" y="84" text-anchor="middle" font-weight="bold" fill="#3fb950">q4</text>
+                        <path d="M 600 52 Q 610 10 620 52" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#t1)"/>
+                        <text x="610" y="5" text-anchor="middle" fill="#3fb950" font-weight="bold" font-size="11">Y/Y,R</text>
+
+                        <!-- qacc -->
+                        <line x1="638" y1="80" x2="682" y2="80" stroke="#8b949e" marker-end="url(#t1)" />
+                        <text x="660" y="70" text-anchor="middle" fill="#3fb950" font-weight="bold" font-size="12">B/B,N</text>
+                        
+                        <circle cx="710" cy="80" r="26" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2.5"/>
+                        <circle cx="710" cy="80" r="20" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+                        <text x="710" y="84" text-anchor="middle" font-weight="bold" font-size="11" fill="#3fb950">Acc</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q3a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c3">Q3a</div>
+                <div class="qt">Closure Properties of Regular & CFG Languages</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Prove the following languages are closed under operations union, concatenation, and Kleene closure: (i) Regular Language (ii) Context Free Language</div>
+                <div class="alabel">(i) Regular Languages</div>
+                <p class="a">If L1 and L2 are regular, they can be represented by Regular Expressions R1 and R2.</p>
+                <ul class="a" style="margin-left: 20px;">
+                    <li><strong>Union:</strong> The regular expression (R1 + R2) represents L1 ∪ L2. Since (R1 + R2) is a valid RE, the union is regular.</li>
+                    <li><strong>Concatenation:</strong> The regular expression (R1 • R2) represents L1 concatenated with L2. Since (R1R2) is a valid RE, concat is regular.</li>
+                    <li><strong>Kleene Closure:</strong> The expression (R1)* represents the Kleene closure of L1. Since it's a valid RE, it's regular.</li>
+                </ul>
+                <div class="alabel">(ii) Context-Free Languages</div>
+                <p class="a">If L1 and L2 are CFLs, they have Context-Free Grammars G1 (start S1) and G2 (start S2) with disjoint non-terminals.</p>
+                <ul class="a" style="margin-left: 20px;">
+                    <li><strong>Union:</strong> Create a new grammar G with start symbol S. Add rule: <code>S → S1 | S2</code>. This generates either a string from G1 or G2. Therefore, Union is CFL.</li>
+                    <li><strong>Concatenation:</strong> Create a new grammar G. Add rule: <code>S → S1 S2</code>. This generates a string from G1 followed by G2. Therefore, Concat is CFL.</li>
+                    <li><strong>Kleene Closure:</strong> Create a new grammar G for L1*. Add rule: <code>S → S1 S | ε</code>. This generates zero or more instances of strings from G1. Therefore, Kleene Closure is CFL.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Q3b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c3">Q3b</div>
+                <div class="qt">Conversion to Chomsky Normal Form (CNF)</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Consider the following grammar G, apply Chomsky Normal Form (CNF), and construct the equivalent grammar in CNF.<br>
+                S → AACD | A → aAb | ε | C → aC | a | D → aDa | bDb | ε</div>
+                <div class="alabel">Step 1: Eliminate ε-productions</div>
+                <p class="a">Nullable Non-Terminals = {A, D}</p>
+                <div class="formula">
+Replace A and D with ε in all possible combinations.
+A → aAb | ab
+D → aDa | aa | bDb | bb
+S → AACD | ACD | AAC | AC | AA | A | CD | C
+C → aC | a
+                </div>
+                
+                <div class="alabel">Step 2: Eliminate Unit Productions</div>
+                <p class="a">Unit productions in S: S → A, S → C.</p>
+                <div class="formula">
+Substitute A and C into S:
+S → AACD | ACD | AAC | AC | AA | CD | aAb | ab | aC | a
+A → aAb | ab
+D → aDa | aa | bDb | bb
+C → aC | a
+                </div>
+
+                <div class="alabel">Step 3: Convert to CNF (A → BC or A → a)</div>
+                <p class="a">Introduce new Non-Terminals for terminals: Ua → a, Ub → b.</p>
+                <div class="formula">
+A → Ua A Ub | Ua Ub
+D → Ua D Ua | Ua Ua | Ub D Ub | Ub Ub
+C → Ua C | a
+S → A A C D | A C D | A A C | A C | A A | C D | Ua A Ub | Ua Ub | Ua C | a
+                </div>
+                <p class="a">Now reduce RHS &gt; 2 using new intermediate Non-Terminals (X1, X2...):</p>
+                <div class="formula">
+A → Ua X1 | Ua Ub      (where X1 → A Ub)
+D → Ua X2 | Ua Ua | Ub X3 | Ub Ub    (where X2 → D Ua, X3 → D Ub)
+C → Ua C | a
+
+S → A X4 | A X5 | A X6 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a
+(where X4 → A C D, X5 → C D, X6 → A C)
+Note: X4 can be written as X4 → A X5.
+
+Final CNF Grammar:
+Ua → a
+Ub → b
+X1 → A Ub
+X2 → D Ua
+X3 → D Ub
+X5 → C D
+X6 → A C
+X4 → A X5
+A → Ua X1 | Ua Ub
+D → Ua X2 | Ua Ua | Ub X3 | Ub Ub
+C → Ua C | a
+S → A X4 | A X5 | A X6 | A C | A A | C D | Ua X1 | Ua Ub | Ua C | a
+                </div>
+            </div>
+        </div>
+
+        <!-- Q4a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c4">Q4a</div>
+                <div class="qt">ε-NFA to Minimal DFA</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Develop Minimal DFA for the ε-NFA transition table: q0(b:q1, a:q2, ε:q1), q1(b:q0, a:q3, ε:q2), q2(b:q2, a:q3, ε:q1). Start:q0.</div>
+                <div class="alabel">Step 1: Compute ε-closures</div>
+                <p class="a">ε-closure(q0) = {q0, q1, q2}<br>
+                ε-closure(q1) = {q1, q2}<br>
+                ε-closure(q2) = {q2, q1} = {q1, q2}<br>
+                ε-closure(q3) = {q3}</p>
+                
+                <div class="alabel">Step 2: Subset Construction (DFA Table)</div>
+                <p class="a">Start state A = ε-closure(q0) = {q0, q1, q2}</p>
+                <div class="tw">
+                    <table>
+                        <tr><th>DFA State</th><th>Input 'a'</th><th>Input 'b'</th></tr>
+                        <tr>
+                            <td><strong>A</strong> {q0, q1, q2}</td>
+                            <td>ε-cl(δ({q0,q1,q2}, a)) = ε-cl({q2, q3}) = {q1, q2, q3} <strong>[B]</strong></td>
+                            <td>ε-cl(δ({q0,q1,q2}, b)) = ε-cl({q1, q0, q2}) = {q0, q1, q2} <strong>[A]</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>B</strong> {q1, q2, q3}</td>
+                            <td>ε-cl(δ({q1,q2,q3}, a)) = ε-cl({q3}) = {q3} <strong>[C]</strong></td>
+                            <td>ε-cl(δ({q1,q2,q3}, b)) = ε-cl({q0, q2}) = {q0, q1, q2} <strong>[A]</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>C</strong> {q3}</td>
+                            <td>ε-cl(δ(q3, a)) = Φ <strong>[D]</strong></td>
+                            <td>ε-cl(δ(q3, b)) = Φ <strong>[D]</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>D</strong> (Dead state)</td>
+                            <td>D</td>
+                            <td>D</td>
+                        </tr>
+                    </table>
+                </div>
+                <p class="a">Since no final states were provided in the prompt, minimization depends on F. However, the states generated are A, B, C, D. All distinguishable based on paths.</p>
+            </div>
+        </div>
+
+        <!-- Q4b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c4">Q4b</div>
+                <div class="qt">Turing Machine to Compare Two Unary Numbers</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Design Turing Machine to Compare two numbers 'm' and 'n' in unary format and output 'G' (m>n), 'S' (m&lt;n), or 'E' (m=n).</div>
+                <div class="alabel">Strategy (Input: 1^m 0 1^n)</div>
+                <p class="a">We ping-pong between the left number (m) and the right number (n).<br>
+                1. Find the first '1' of m, replace with X.<br>
+                2. Scan right past the '0' to find the first '1' of n, replace with Y.<br>
+                3. Scan back left to X, move one step right, repeat.<br>
+                <strong>Outcomes:</strong><br>
+                - If we look for a '1' in m but hit '0' -> m is exhausted. Check if n is also exhausted. If n has more '1's -> Output 'S'. If n is exhausted -> Output 'E'.<br>
+                - If we mark a '1' in m, scan right, but hit 'B' before finding a '1' in n -> n is exhausted first -> Output 'G'.</p>
+                <div class="formula">
+δ(q0, 1) = (q1, X, R)   [Mark m's 1]
+δ(q1, 1) = (q1, 1, R)   [Scan right]
+δ(q1, 0) = (q2, 0, R)   [Cross boundary]
+δ(q2, Y) = (q2, Y, R)   [Skip matched n's]
+δ(q2, 1) = (q3, Y, L)   [Mark n's 1, head back]
+δ(q3, Y/0/1) = (q3, Y/0/1, L) [Scan left]
+δ(q3, X) = (q0, X, R)   [Found X, loop]
+
+// Base conditions:
+δ(q0, 0) = (q4, 0, R)   [m is empty. Check n]
+δ(q4, Y) = (q4, Y, R)
+δ(q4, B) = (q_E, E, N)  [Both empty = EQUAL]
+δ(q4, 1) = (q_S, S, N)  [n has extra = SMALLER]
+
+δ(q2, B) = (q_G, G, N)  [m had 1, but n is empty = GREATER]
+                </div>
+            </div>
+        </div>
+
+        <!-- Q5a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c5">Q5a</div>
+                <div class="qt">Pushdown Automata (Unequal 0s and 1s)</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Construct PDA for L = { w∈{0,1}* | n_0(w) ≠ n_1(w) }</div>
+                <div class="alabel">Strategy</div>
+                <p class="a">The PDA uses the stack to track the "surplus" of 0s or 1s. <br>
+                - If stack has Z₀ (empty) or 0s: Push on reading '0'.<br>
+                - If stack has Z₀ (empty) or 1s: Push on reading '1'.<br>
+                - If stack has 0s and we read '1': Pop.<br>
+                - If stack has 1s and we read '0': Pop.<br>
+                At the end of the string, if the stack contains ANY 0s or 1s (i.e., top is not Z₀), we accept using an ε-transition to the final state.</p>
+                <div class="formula">
+M = ( {q0, q1}, {0,1}, {0, 1, Z0}, δ, q0, Z0, {q1} )
+
+// Push surplus
+δ(q0, 0, Z0) = {(q0, 0Z0)}
+δ(q0, 1, Z0) = {(q0, 1Z0)}
+δ(q0, 0, 0)  = {(q0, 00)}
+δ(q0, 1, 1)  = {(q0, 11)}
+
+// Pop matches
+δ(q0, 1, 0)  = {(q0, ε)}
+δ(q0, 0, 1)  = {(q0, ε)}
+
+// Accept if stack has surplus 0s or 1s at end of string
+δ(q0, ε, 0)  = {(q1, 0)}  [Accept]
+δ(q0, ε, 1)  = {(q1, 1)}  [Accept]
+                </div>
+            </div>
+        </div>
+
+        <!-- Q5b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c5">Q5b</div>
+                <div class="qt">Simplify Grammar</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Simplify: S → a | Xb | aYa ; X → Y | ε ; Y → b | ε</div>
+                <div class="alabel">Step 1: Eliminate ε-productions</div>
+                <p class="a">Nullable variables: Y → ε. Since X → Y, X is also nullable (X → ε).</p>
+                <div class="formula">
+Substitute Y=ε and X=ε in RHS:
+Y → b
+X → Y | b | ε (since Y->b) => X → Y (remove e)
+S → a | Xb | b | aYa | aa
+                </div>
+                
+                <div class="alabel">Step 2: Eliminate Unit Productions</div>
+                <p class="a">Unit productions: X → Y. Substitute RHS of Y into X.</p>
+                <div class="formula">
+Y → b
+X → b
+S → a | Xb | b | aYa | aa
+                </div>
+
+                <div class="alabel">Step 3: Eliminate Useless Symbols</div>
+                <p class="a">Can we reach all variables from S? <br>
+                S produces 'Xb' and 'aYa', so X and Y are reachable. Both produce terminals. No useless symbols.</p>
+                <div class="formula">
+Final Simplified Grammar:
+S → a | Xb | b | aYa | aa
+X → b
+Y → b
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Q5c -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c5">Q5c</div>
+                <div class="qt">Moore vs Mealy Machine & Conversion</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Differentiate between Moore and Mealy Machines. Construct the Moore machine for the given Mealy machine. (Diagram references: a/0, b/0, a/1, b/1, S0, S1)</div>
+                
+                <div class="alabel">Moore vs Mealy</div>
+                <div class="tw">
+                    <table>
+                        <tr><th>Moore Machine</th><th>Mealy Machine</th></tr>
+                        <tr><td>Output depends ONLY on the current state.</td><td>Output depends on current state AND input symbol.</td></tr>
+                        <tr><td>Output is associated with the state (placed inside the state circle).</td><td>Output is associated with the transition (placed on the edges).</td></tr>
+                        <tr><td>More states usually required to represent the same logic.</td><td>Fewer states usually required.</td></tr>
+                        <tr><td>Reacts slower to input changes (output changes after transition).</td><td>Reacts faster (output changes during transition).</td></tr>
+                    </table>
+                </div>
+
+                <div class="alabel">Conversion from Mealy to Moore</div>
+                <p class="a">Given a Mealy machine with states S0 and S1 and inputs a/b producing outputs 0/1. To convert to a Moore machine, we must split states based on the incoming outputs.</p>
+                <p class="a">Assume S1 receives an edge with output '0' and an edge with output '1'. We split S1 into two states: <strong>S1_0</strong> (which outputs 0) and <strong>S1_1</strong> (which outputs 1). All incoming edges that had output '0' will now go to S1_0. All incoming edges that had output '1' will go to S1_1. Outgoing edges from S1_0 and S1_1 remain identical to the original S1.</p>
+                <div class="formula">
+Example Transformation Steps:
+1. Identify all incoming transition outputs for each state.
+2. If state S_i receives inputs with outputs x and y, split S_i into S_ix and S_iy.
+3. Assign the Moore output: Output(S_ix) = x, Output(S_iy) = y.
+4. Route incoming edges to the respective new states based on the edge's original output.
+5. Duplicate outgoing edges from the original S_i to all new split states.
+                </div>
+            </div>
+        </div>
+
+        <!-- Q6 Short Notes -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c6">Q6</div>
+                <div class="qt">Short Notes</div>
+                <div class="qm">[20]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Write short notes on Chomsky Hierarchy, Compare TM/PDA/FSM, PDA Tuples, Recursive vs RE.</div>
+                
+                <div class="alabel">a. Chomsky Hierarchy [5]</div>
+                <p class="a">Classifies grammars into 4 types: <br>
+                <strong>Type 3 (Regular):</strong> A → aB or A → a. Accepted by FA.<br>
+                <strong>Type 2 (Context-Free):</strong> A → γ (RHS can be anything). Accepted by PDA.<br>
+                <strong>Type 1 (Context-Sensitive):</strong> αAβ → αγβ (|LHS| ≤ |RHS|). Accepted by LBA.<br>
+                <strong>Type 0 (Unrestricted):</strong> α → β. Accepted by Turing Machine.</p>
+                
+                <div class="alabel">b. Compare TM, PDA, FSM [5]</div>
+                <div class="tw">
+                    <table>
+                        <tr><th>Machine</th><th>Memory</th><th>Power</th><th>Language</th></tr>
+                        <tr><td>FSM</td><td>None (Only states)</td><td>Weakest</td><td>Regular</td></tr>
+                        <tr><td>PDA</td><td>LIFO Stack (Infinite length)</td><td>Medium</td><td>Context-Free</td></tr>
+                        <tr><td>TM</td><td>Infinite Tape (R/W, 2-way)</td><td>Highest (General CPU)</td><td>Recursively Enumerable</td></tr>
+                    </table>
+                </div>
+
+                <div class="alabel">c. PDA Tuples & Elements [5]</div>
+                <p class="a">A PDA is a 7-tuple <strong>M = (Q, Σ, Γ, δ, q₀, Z₀, F)</strong>.<br>
+                Elements: <strong>Input Tape</strong> (one-way read-only), <strong>Finite Control</strong> (states), and <strong>Stack</strong> (infinite capacity, LIFO access, initialized with Z₀).</p>
+
+                <div class="alabel">d. Recursive vs Recursively Enumerable [5]</div>
+                <p class="a"><strong>Recursive (Decidable):</strong> A language L is recursive if there exists a TM that <strong>halts</strong> on every input. It accepts if w∈L, and explicitly REJECTS (halts) if w∉L.<br>
+                <strong>Recursively Enumerable (RE / Partially Decidable):</strong> A language L is RE if there exists a TM that halts and accepts if w∈L. If w∉L, the TM might reject OR <strong>loop forever</strong>.</p>
+            </div>
+        </div>
+
+    </div> <!-- end main -->
+
+
+  <footer style="text-align:center;padding:28px 40px;border-top:1px solid #30363d;font-size:13px;color:#8b949e;background:#0d1117;margin-top:40px;">
+    <p>TCS Notes &middot; <span style="color:#58a6ff;font-weight:600;">NMIMS MPSTME</span> &middot; B.Tech CSE Sem 4 &middot; Theory of Computation</p>
+    <p style="margin-top:6px;">Made by <span style="color:#58a6ff;font-weight:600;">Jay Naik</span></p>
+  </footer>
+</body>
+</html>
+
