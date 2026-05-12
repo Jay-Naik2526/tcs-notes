@@ -714,15 +714,14 @@
       <path d="M275 62 Q180 90 138 110" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
       <text x="200" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">1</text>
 
-      <!-- q2 → q1 on 1 -->
-      <path d="M340 175 Q430 130 340 66" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
-      <text x="430" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">1</text>
 
-      <!-- q2 → q0 on 0 -->
-      <path d="M278 175 Q160 190 118 152" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
-      <text x="185" y="202" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">0</text>
+      <!-- q2 → q1 on 0 -->
+      <path d="M280,180 Q250,150 285,75" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="250" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">0</text>
 
-      <!-- q1 self-loop (no — covered above) -->
+      <!-- q2 self-loop 1 -->
+      <path d="M330,215 Q310,270 290,215" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="310" y="275" text-anchor="middle" font-size="13" font-weight="700" fill="#e94560">1</text>
     </svg>
     <div class="diagram-caption">Figure 3 — DFA for binary strings whose value ≡ 0 (mod 3)</div>
   </div>
@@ -738,7 +737,7 @@
       <td>q1</td><td>q2</td><td>q0</td><td>1 mod 3 = 1</td>
     </tr>
     <tr>
-      <td>q2</td><td>q1</td><td>q0</td><td>2 mod 3 = 2</td>
+      <td>q2</td><td>q1</td><td>q2</td><td>2 mod 3 = 2</td>
     </tr>
   </table>
 

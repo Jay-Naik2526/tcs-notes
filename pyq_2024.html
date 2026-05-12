@@ -154,13 +154,13 @@
                                 <tr>
                                     <td>D = {q0,q1,q2,q3} ★</td>
                                     <td>D★</td>
-                                    <td>E★</td>
+                                    <td>D★</td>
                                     <td>Yes</td>
                                 </tr>
                                 <tr>
                                     <td>E = {q0,q1,q3} ★</td>
                                     <td>C</td>
-                                    <td>B</td>
+                                    <td>C</td>
                                     <td>Yes (has q3)</td>
                                 </tr>
                             </tbody>
@@ -234,17 +234,14 @@
                                 marker-end="url(#a1)" />
                             <text x="448" y="136" text-anchor="middle" font-size="10" fill="#3fb950">1</text>
                             <!-- D self on 0,1 -->
-                            <path d="M520,28 Q540,0 560,28" fill="none" stroke="#8b949e" stroke-width="1.4"
+                            <path d="M520,28 Q540,-20 560,28" fill="none" stroke="#8b949e" stroke-width="1.4"
                                 marker-end="url(#a1)" />
-                            <text x="540" y="-5" text-anchor="middle" font-size="10" fill="#3fb950">0,1→D,E</text>
-                            <!-- E→C on 0 -->
-                            <path d="M514,148 Q430,145 398,112" fill="none" stroke="#8b949e" stroke-width="1.4"
+                            <text x="540" y="-8" text-anchor="middle" font-size="10" fill="#3fb950">0,1</text>
+                            
+                            <!-- E→C on 0,1 -->
+                            <path d="M514,155 Q430,220 375,115" fill="none" stroke="#8b949e" stroke-width="1.4"
                                 marker-end="url(#a1)" />
-                            <text x="430" y="155" text-anchor="middle" font-size="9" fill="#3fb950">0→C</text>
-                            <!-- E→B on 1 -->
-                            <path d="M512,162 Q350,175 240,110" fill="none" stroke="#8b949e" stroke-width="1.3"
-                                stroke-dasharray="4,2" marker-end="url(#a1)" />
-                            <text x="350" y="182" text-anchor="middle" font-size="9" fill="#3fb950">1→B</text>
+                            <text x="430" y="210" text-anchor="middle" font-size="10" fill="#3fb950">0,1→C</text>
                         </svg>
                         <div class="dcap">DFA — 5 states {A,B,C,D★,E★}. D and E are accepting states (contain q3).
                             Language: binary strings where some path through original NFA reaches q3.</div>
