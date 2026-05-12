@@ -266,11 +266,7 @@
                     <p class="a"><strong>Language:</strong> All binary strings containing "00" followed (somewhere
                         later) by "11". (0+1)* before "00", (0+1)* between, "11" at the end — so actually strings that
                         have "00" as a substring and end with "11" after that.</p>
-                    <div class="grammar"><span class="nt">S</span> → <span class="nt">A</span> <span class="t">00</span>
-                        <span class="nt">A</span> <span class="t">11</span> <span class="nt">A</span>
-                        <span class="nt">A</span> → <span class="t">0</span><span class="nt">A</span> | <span
-                            class="t">1</span><span class="nt">A</span> | <span class="t">ε</span>
-                    </div>
+                    <div class="grammar"><span class="nt">S</span> → <span class="nt">A</span> <span class="t">00</span> <span class="nt">A</span> <span class="t">11</span> <span class="nt">A</span> <br><span class="nt">A</span> → <span class="t">0</span><span class="nt">A</span> | <span class="t">1</span><span class="nt">A</span> | <span class="t">ε</span></div>
                     <div class="tbox">
                         <div class="tl">4-Tuple G = (V, T, P, S)</div>
                         <ul>
@@ -1324,47 +1320,14 @@
                     <div class="alabel">Step 2 — Remove ε-Productions</div>
                     <p class="a">For S→AACD, A appears at positions 1,2; D appears at position 4. Enumerate subsets of
                         removing nullable symbols (A and D, but not both leaving nothing):</p>
-                    <div class="grammar"><span class="nt">S</span> → <span class="nt">AACD</span> | <span
-                            class="nt">ACD</span> | <span class="nt">AAC</span> | <span class="nt">CD</span> | <span
-                            class="nt">AC</span> | <span class="nt">C</span>
-                        <span class="nt">A</span> → <span class="t">a</span><span class="nt">A</span><span
-                            class="t">b</span> | <span class="t">ab</span> (from aAb removing A)
-                        <span class="nt">C</span> → <span class="t">a</span><span class="nt">C</span> | <span
-                            class="t">a</span>
-                        <span class="nt">D</span> → <span class="t">a</span><span class="nt">D</span><span
-                            class="t">a</span> | <span class="t">b</span><span class="nt">D</span><span
-                            class="t">b</span> | <span class="t">aa</span> | <span class="t">bb</span> (removing D from
-                        aDa, bDb)
-                    </div>
+                    <div class="grammar"><span class="nt">S</span> → <span class="nt">AACD</span> | <span class="nt">ACD</span> | <span class="nt">AAC</span> | <span class="nt">CD</span> | <span class="nt">AC</span> | <span class="nt">C</span> <br><span class="nt">A</span> → <span class="t">a</span><span class="nt">A</span><span class="t">b</span> | <span class="t">ab</span> (from aAb removing A) <br><span class="nt">C</span> → <span class="t">a</span><span class="nt">C</span> | <span class="t">a</span> <br><span class="nt">D</span> → <span class="t">a</span><span class="nt">D</span><span class="t">a</span> | <span class="t">b</span><span class="nt">D</span><span class="t">b</span> | <span class="t">aa</span> | <span class="t">bb</span> (removing D from aDa, bDb)</div>
                     <div class="alabel">Step 3 — Remove Unit Productions</div>
                     <p class="a">S→C is unit. Replace with C's productions: add S→aC, S→a. Remove S→C.</p>
                     <div class="alabel">Step 4 — Replace Terminals in Multi-Symbol RHS</div>
                     <p class="a">Create: Xa→a, Xb→b for each terminal in mixed productions.</p>
-                    <div class="grammar"><span class="nt">A</span> → <span class="nt">Xa</span><span
-                            class="nt">E1</span> where <span class="nt">E1</span> → <span class="nt">A</span><span
-                            class="nt">Xb</span> (from aAb → Xa·A·Xb, break into Xa·E1, E1→A·Xb)
-                        <span class="nt">A</span> → <span class="nt">Xa</span><span class="nt">Xb</span> (from ab)
-                        <span class="nt">C</span> → <span class="nt">Xa</span><span class="nt">C</span> (from aC →
-                        already binary with new NT)
-                        <span class="nt">D</span> → <span class="nt">Xa</span><span class="nt">E2</span> where <span
-                            class="nt">E2</span> → <span class="nt">D</span><span class="nt">Xa</span> (from aDa)
-                        <span class="nt">D</span> → <span class="nt">Xb</span><span class="nt">E3</span> where <span
-                            class="nt">E3</span> → <span class="nt">D</span><span class="nt">Xb</span> (from bDb)
-                        <span class="nt">D</span> → <span class="nt">Xa</span><span class="nt">Xa</span> | <span
-                            class="nt">Xb</span><span class="nt">Xb</span> (from aa, bb)
-                        <span class="nt">Xa</span> → <span class="t">a</span> | <span class="nt">Xb</span> → <span
-                            class="t">b</span>
-                    </div>
+                    <div class="grammar"><span class="nt">A</span> → <span class="nt">Xa</span><span class="nt">E1</span> where <span class="nt">E1</span> → <span class="nt">A</span><span class="nt">Xb</span> (from aAb → Xa·A·Xb, break into Xa·E1, E1→A·Xb) <br><span class="nt">A</span> → <span class="nt">Xa</span><span class="nt">Xb</span> (from ab) <br><span class="nt">C</span> → <span class="nt">Xa</span><span class="nt">C</span> (from aC → already binary with new NT) <br><span class="nt">D</span> → <span class="nt">Xa</span><span class="nt">E2</span> where <span class="nt">E2</span> → <span class="nt">D</span><span class="nt">Xa</span> (from aDa) <br><span class="nt">D</span> → <span class="nt">Xb</span><span class="nt">E3</span> where <span class="nt">E3</span> → <span class="nt">D</span><span class="nt">Xb</span> (from bDb) <br><span class="nt">D</span> → <span class="nt">Xa</span><span class="nt">Xa</span> | <span class="nt">Xb</span><span class="nt">Xb</span> (from aa, bb) <br><span class="nt">Xa</span> → <span class="t">a</span> | <span class="nt">Xb</span> → <span class="t">b</span></div>
                     <div class="alabel">Step 5 — Break Long S Productions into Binary</div>
-                    <div class="grammar">S → <span class="nt">A</span><span class="nt">F1</span> where <span
-                            class="nt">F1</span> → <span class="nt">A</span><span class="nt">F2</span> where <span
-                            class="nt">F2</span> → <span class="nt">C</span><span class="nt">D</span> (from AACD)
-                        S → <span class="nt">A</span><span class="nt">F2</span> (from ACD)
-                        S → <span class="nt">A</span><span class="nt">F3</span> where <span class="nt">F3</span> → <span
-                            class="nt">A</span><span class="nt">C</span> (from AAC)
-                        S → <span class="nt">C</span><span class="nt">D</span> | <span class="nt">A</span><span
-                            class="nt">C</span> | <span class="t">a</span><span class="nt">C</span> | <span
-                            class="t">a</span></div>
+                    <div class="grammar">S → <span class="nt">A</span><span class="nt">F1</span> where <span class="nt">F1</span> → <span class="nt">A</span><span class="nt">F2</span> where <span class="nt">F2</span> → <span class="nt">C</span><span class="nt">D</span> (from AACD)<br>S → <span class="nt">A</span><span class="nt">F2</span> (from ACD)<br>S → <span class="nt">A</span><span class="nt">F3</span> where <span class="nt">F3</span> → <span class="nt">A</span><span class="nt">C</span> (from AAC)<br>S → <span class="nt">C</span><span class="nt">D</span> | <span class="nt">A</span><span class="nt">C</span> | <span class="t">a</span><span class="nt">C</span> | <span class="t">a</span></div>
                     <div class="nbox">
                         <div class="nl">Final CNF Summary</div>All productions are now A→BC or A→a form. Key new
                         non-terminals: Xa, Xb, E1, E2, E3, F1, F2, F3. Every terminal in a multi-symbol RHS is replaced
