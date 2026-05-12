@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCS PYQ Solutions — NMIMS MPSTME</title>
+    <style>
+        :root { --bg: #0d1117; --bg2: #161b22; --bg3: #1c2128; --bg4: #21262d; --border: #30363d; --cyan: #79c0ff; --gold: #f0c040; --green: #3fb950; --orange: #ffa657; --purple: #d2a8ff; --red: #f85149; --pink: #f778ba; --blue: #58a6ff; --text: #e6edf3; --text2: #8b949e; --text3: #c9d1d9; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.7; padding-bottom:60px;}
+        .topnav { position: sticky; top: 0; z-index: 999; background: var(--bg2); border-bottom: 2px solid var(--border); padding: 12px 24px; display:flex; align-items:center; }
+        .brand { font-size: 14px; font-weight: 800; color: var(--gold); margin-right: 20px;}
+        .nav-links a { color: var(--text2); text-decoration: none; margin-right: 15px; font-size:13px; font-weight:600;}
+        .nav-links a:hover { color: var(--cyan); }
+        .main { max-width: 1020px; margin: 0 auto; padding: 32px 36px 80px; }
+        
+        .ph { background: var(--bg2); border: 1px solid var(--border); padding: 24px 30px; border-radius: 12px; margin-bottom: 30px; border-top: 4px solid var(--cyan); }
+        .ph h2 { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 12px; }
+        .ph-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--text2); font-family: monospace; }
+        .ph-meta span { background: var(--bg3); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
+        
+        .qb { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 24px; overflow: hidden; }
+        .qh { display: flex; align-items: stretch; background: var(--bg3); border-bottom: 1px solid var(--border); }
+        .qn { padding: 12px 18px; font-weight: 800; font-size: 14px; color: var(--bg); display: flex; align-items: center; justify-content: center; min-width: 60px; }
+        .c1 { background: var(--blue); } .c2 { background: var(--green); } .c3 { background: var(--orange); } .c4 { background: var(--purple); } .c5 { background: var(--red); } .c6 { background: var(--gold); }
+        .qt { padding: 12px 16px; font-weight: 600; color: var(--text); flex-grow: 1; align-self: center; }
+        .qm { padding: 12px 16px; font-weight: 700; color: var(--text2); font-family: monospace; align-self: center; border-left: 1px solid var(--border); }
+        
+        .qbody { padding: 24px 28px; }
+        .qstmt { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); line-height: 1.6; }
+        .alabel { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan); margin-bottom: 12px; display: inline-block; background: rgba(121,192,255,.1); padding: 4px 10px; border-radius: 4px; }
+        .a { margin-bottom: 16px; color: var(--text3); }
+        
+        .formula { background: var(--bg3); border: 1px solid var(--border); padding: 16px; border-radius: 6px; font-family: monospace; font-size: 13.5px; color: var(--cyan); margin: 16px 0; overflow-x: auto; white-space: pre-wrap; line-height: 1.5;}
+        
+        .dbox { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; overflow-x: auto; }
+        
+        .tw { margin: 20px 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
+        th { background: var(--bg3); color: var(--text); font-weight: 600; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text3); font-family: monospace; vertical-align: top;}
+        tr:last-child td { border-bottom: none; }
+        
+        ul.a-list { margin-left: 20px; margin-bottom: 16px; color: var(--text3); }
+        ul.a-list li { margin-bottom: 6px; }
+        
+        .tuple-list { margin-left: 20px; margin-bottom: 16px; color: var(--text3); }
+        .tuple-list li { margin-bottom: 8px; list-style-type: disc; }
+        .tuple-highlight { color: var(--orange); font-weight: bold; }
+    
+        .grammar { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 11px 15px; font-family: 'Courier New', monospace; font-size: 13px; margin: 9px 0; line-height: 2.2; color: var(--text3); }
+        .grammar .nt { color: var(--orange); }
+        .grammar .t { color: var(--green); }
+        .trace { background: var(--bg4); border: 1px solid var(--border); border-radius: 6px; padding: 11px 15px; font-family: 'Courier New', monospace; font-size: 12.5px; color: var(--text3); margin: 9px 0; line-height: 1.95; white-space: pre-wrap; }
+        .tbox { background: rgba(240, 192, 64, .05); border: 1px solid rgba(240, 192, 64, .2); border-left: 3px solid var(--gold); border-radius: 5px; padding: 11px 15px; margin: 10px 0; }
+        .tbox .tl { font-size: 9px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
+        .tbox ul { padding-left: 15px; }
+        .tbox li { font-size: 13px; color: var(--text3); margin-bottom: 3px; }
+        .pbox { background: rgba(63, 185, 80, .05); border: 1px solid rgba(63, 185, 80, .15); border-left: 3px solid var(--green); border-radius: 5px; padding: 11px 15px; margin: 10px 0; }
+        .pbox .pl { font-size: 9px; font-weight: 800; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
+        .nbox { background: rgba(255, 166, 87, .05); border: 1px solid rgba(255, 166, 87, .18); border-left: 3px solid var(--orange); border-radius: 5px; padding: 10px 14px; margin: 9px 0; font-size: 13px; color: var(--text3); }
+        .nbox .nl { font-size: 9px; font-weight: 800; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .oosbox { background: rgba(248, 81, 73, .05); border: 1px solid rgba(248, 81, 73, .2); border-radius: 5px; padding: 11px 15px; margin: 9px 0; font-size: 13px; color: var(--red); }
+
+    </style>
+</head>
+<body>
+    <div class="topnav">
+        <div class="brand">TCS Notes &bull; PYQ</div>
+        <div class="nav-links">
+            <a href="index.html">← Back to Chapters</a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="ph">
+            <h2>Re-Examination — Academic Year 2022-23 / 2021-22</h2>
+            <div class="ph-meta">
+                <span>Date: 03 July 2023</span>
+                <span>Marks: 100</span>
+                <span>Time: 3 hrs</span>
+                <span>Subject: Theoretical Computer Science</span>
+            </div>
+        </div>
+
+        <!-- Q1a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1a</div>
+                <div class="qt">Alphabet, String, Language</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Define the following terms with examples: i. Alphabet, ii. String, iii. Language</div>
+                <div class="alabel">i. Alphabet (Σ)</div>
+                <p class="a">An alphabet is a finite, non-empty set of indivisible symbols used to construct strings. <br><strong>Example:</strong> Binary alphabet Σ = {0, 1}, or English alphabet Σ = {a, b, c, ..., z}.</p>
+                <div class="alabel">ii. String (Word)</div>
+                <p class="a">A string is a finite sequence of symbols chosen from an alphabet Σ. The length of a string w, denoted |w|, is the number of symbols it contains. <br><strong>Example:</strong> Over Σ = {0, 1}, w = "0110" is a string of length 4.</p>
+                <div class="alabel">iii. Language (L)</div>
+                <p class="a">A language is a set of strings (which could be finite or infinite) formed over an alphabet Σ. Formally, L ⊆ Σ*. <br><strong>Example:</strong> The language of all binary strings of length 2 over Σ = {0, 1} is L = {"00", "01", "10", "11"}.</p>
+            </div>
+        </div>
+
+        <!-- Q1b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1b</div>
+                <div class="qt">Finite Automata Definitions</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">What are Finite Automata (FA)? How is FA without output different from FA with output?</div>
+                <div class="alabel">Finite Automata (FA)</div>
+                <p class="a">A Finite Automata is a mathematical model of computation consisting of a finite number of states, transitions, an initial state, and an input alphabet. It reads input symbols one by one and changes its state according to transition rules.</p>
+                <div class="alabel">FA without Output vs FA with Output</div>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>FA Without Output (DFA / NFA)</th><th>FA With Output (Moore / Mealy)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Used primarily for <strong>Language Recognition</strong> (accepting/rejecting strings).</td><td>Used primarily for <strong>Data Transformation</strong> (generating an output sequence for an input).</td></tr>
+                            <tr><td>Has a concept of <strong>Final/Accepting states</strong>.</td><td>Does <strong>not</strong> have final or accepting states.</td></tr>
+                            <tr><td>Output is implicit: simply "Yes/Accept" or "No/Reject".</td><td>Output is explicit: generated at each state or transition.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q1c -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1c</div>
+                <div class="qt">CFG for First and Last Symbol Difference</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Give CFG for the language containing all strings (over Σ={0,1}) in which the first and last symbols differ.</div>
+                <div class="alabel">Logic & Grammar</div>
+                <p class="a">The string must either start with '0' and end with '1', or start with '1' and end with '0'. The middle part can be any combination of 0s and 1s, which we can generate using a non-terminal <code>A → 0A | 1A | ε</code>.</p>
+                <div class="grammar"><span class="nt">S</span> → <span class="t">0</span><span class="nt">A</span><span class="t">1</span> | <span class="t">1</span><span class="nt">A</span><span class="t">0</span><br><span class="nt">A</span> → <span class="t">0</span><span class="nt">A</span> | <span class="t">1</span><span class="nt">A</span> | <span class="t">ε</span></div>
+            </div>
+        </div>
+
+        <!-- Q1d -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c1">Q1d</div>
+                <div class="qt">Closure Property: Union of CFGs</div>
+                <div class="qm">[5]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Prove that context-free languages are closed under union operation. L1={aⁿ | n≥1}, L2={bⁿ | n≥1}</div>
+                <div class="alabel">Proof using Grammar Construction</div>
+                <p class="a">To prove CFLs are closed under union, we construct the CFGs for L1 and L2, and show that a new valid CFG can generate L1 ∪ L2.</p>
+                <div class="trace">Grammar for L1 (G1):
+S1 → aS1 | a
+
+Grammar for L2 (G2):
+S2 → bS2 | b
+
+Union Grammar (G_union):
+Introduce a new start symbol S that branches to either S1 or S2.
+S → S1 | S2
+S1 → aS1 | a
+S2 → bS2 | b</div>
+                <p class="a">Since the union of two Context-Free Grammars produces another valid Context-Free Grammar, CFLs are closed under union.</p>
+            </div>
+        </div>
+
+        <!-- Q2a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c2">Q2a</div>
+                <div class="qt">DFA for Even 'a's and Odd 'b's</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Design a finite state machine over {a,b} for strings with even number of a's and odd number of b's.</div>
+                <div class="alabel">State Design</div>
+                <p class="a">We need 4 states to track the 4 possible combinations of odd/even parities for 'a' and 'b'. <br>
+                <code>q0</code>: Even 'a', Even 'b' (Start)<br>
+                <code>q1</code>: Odd 'a', Even 'b'<br>
+                <code>q2</code>: Even 'a', Odd 'b' (Final/Accept)<br>
+                <code>q3</code>: Odd 'a', Odd 'b'</p>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -30 500 250" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="m2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
+                        </defs>
+                        <!-- q0 (EE) -->
+                        <circle cx="150" cy="50" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="150" y="54" text-anchor="middle" font-size="11" fill="#58a6ff">q0 (EE)</text>
+                        
+                        <!-- q1 (OE) -->
+                        <circle cx="350" cy="50" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="350" y="54" text-anchor="middle" font-size="11" fill="#58a6ff">q1 (OE)</text>
+                        
+                        <!-- q2 (EO) - Accept -->
+                        <circle cx="150" cy="180" r="30" fill="rgba(63,185,80,.1)" stroke="#3fb950" stroke-width="2"/>
+                        <circle cx="150" cy="180" r="24" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+                        <text x="150" y="184" text-anchor="middle" font-size="11" font-weight="bold" fill="#3fb950">q2 (EO)</text>
+                        
+                        <!-- q3 (OO) -->
+                        <circle cx="350" cy="180" r="25" fill="none" stroke="#58a6ff" stroke-width="2"/>
+                        <text x="350" y="184" text-anchor="middle" font-size="11" fill="#58a6ff">q3 (OO)</text>
+                        
+                        <!-- Horizontal Transitions (a) -->
+                        <path d="M175,40 L325,40" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="250" y="35" text-anchor="middle" font-size="11" fill="#c9d1d9">a</text>
+                        <path d="M325,60 L175,60" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="250" y="75" text-anchor="middle" font-size="11" fill="#c9d1d9">a</text>
+                        
+                        <path d="M180,170 L325,170" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="250" y="165" text-anchor="middle" font-size="11" fill="#c9d1d9">a</text>
+                        <path d="M325,190 L180,190" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="250" y="205" text-anchor="middle" font-size="11" fill="#c9d1d9">a</text>
+                        
+                        <!-- Vertical Transitions (b) -->
+                        <path d="M140,75 L140,150" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="130" y="115" text-anchor="middle" font-size="11" fill="#c9d1d9">b</text>
+                        <path d="M160,150 L160,75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="170" y="115" text-anchor="middle" font-size="11" fill="#c9d1d9">b</text>
+                        
+                        <path d="M340,75 L340,155" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="330" y="115" text-anchor="middle" font-size="11" fill="#c9d1d9">b</text>
+                        <path d="M360,155 L360,75" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m2a)"/>
+                        <text x="370" y="115" text-anchor="middle" font-size="11" fill="#c9d1d9">b</text>
+                    </svg>
+                </div>
+                <div class="tbox">
+                    <div class="tl">5-Tuple DFA: M = (Q, Σ, δ, q0, F)</div>
+                    <ul>
+                        <li><code>Q = {q0, q1, q2, q3}</code></li>
+                        <li><code>Σ = {a, b}</code></li>
+                        <li><code>q0 = q0</code> (Initial state)</li>
+                        <li><code>F = {q2}</code> (Accepting state)</li>
+                        <li><strong>Initial Valid Strings:</strong> "b", "aab", "baa", "aba", "bbb"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q2b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c2">Q2b</div>
+                <div class="qt">Recursive vs REL & TM Power</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Write a short note on: i. Recursive and REL, ii. Power of TM over PDA</div>
+                <div class="alabel">Recursive vs Recursively Enumerable Language (REL)</div>
+                <p class="a"><strong>Recursively Enumerable Language (REL):</strong> A language is REL if there exists a Turing Machine that will halt and accept any valid string in the language. However, if a string is NOT in the language, the TM might loop forever. (Also known as Turing-recognizable).<br><br>
+                <strong>Recursive Language:</strong> A language is Recursive if there exists a Turing Machine that will <em>always halt</em>—it accepts valid strings and explicitly rejects invalid strings without ever going into an infinite loop. (Also known as Turing-decidable).</p>
+                <div class="alabel">Power of TM over PDA</div>
+                <p class="a">While a PDA has an infinite stack, it can only access the top element (LIFO). A Turing Machine has an infinite read/write tape and a head that can move both left and right freely. This allows the TM to arbitrarily scan, seek, and overwrite data anywhere in memory, enabling it to compute anything that is mathematically computable (like <code>aⁿbⁿcⁿ</code>), which a PDA cannot do.</p>
+            </div>
+        </div>
+
+        <!-- Q3a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c3">Q3a</div>
+                <div class="qt">Mealy to Moore Conversion</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Convert the following Mealy Machine to Moore Machine.</div>
+                <div class="alabel">Mealy & Moore Definition</div>
+                <p class="a"><strong>Mealy Machine:</strong> Output depends on the current state and the input symbol (outputs are on transitions).<br>
+                <strong>Moore Machine:</strong> Output depends entirely on the current state (outputs are assigned to states).</p>
+                <div class="alabel">Assumed Given Mealy Machine Table</div>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th rowspan="2">Current State</th><th colspan="2">Input = 0</th><th colspan="2">Input = 1</th></tr>
+                            <tr><th>Next State</th><th>Output</th><th>Next State</th><th>Output</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>→ q1</td><td>q2</td><td>0</td><td>q1</td><td>1</td></tr>
+                            <tr><td>q2</td><td>q3</td><td>1</td><td>q1</td><td>0</td></tr>
+                            <tr><td>q3</td><td>q3</td><td>0</td><td>q2</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alabel">Moore Conversion Strategy</div>
+                <p class="a">Split states based on the unique outputs targeting them. <br>
+                - `q1` has incoming outputs 0 and 1 → Split into `q1_0` and `q1_1`<br>
+                - `q2` has incoming outputs 0 and 1 → Split into `q2_0` and `q2_1`<br>
+                - `q3` has incoming outputs 0 and 1 → Split into `q3_0` and `q3_1`<br>
+                Make initial state `q1` without output just `q1` or assign a dummy initial output.</p>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>Moore State</th><th>Output</th><th>Input = 0</th><th>Input = 1</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>→ q1_init</td><td>-</td><td>q2_0</td><td>q1_1</td></tr>
+                            <tr><td>q1_0</td><td>0</td><td>q2_0</td><td>q1_1</td></tr>
+                            <tr><td>q1_1</td><td>1</td><td>q2_0</td><td>q1_1</td></tr>
+                            <tr><td>q2_0</td><td>0</td><td>q3_1</td><td>q1_0</td></tr>
+                            <tr><td>q2_1</td><td>1</td><td>q3_1</td><td>q1_0</td></tr>
+                            <tr><td>q3_0</td><td>0</td><td>q3_0</td><td>q2_1</td></tr>
+                            <tr><td>q3_1</td><td>1</td><td>q3_0</td><td>q2_1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q3b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c3">Q3b</div>
+                <div class="qt">PDA for Palindrome over {a,b}</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Construct pushdown automata to accept palindrome over Σ={a,b}</div>
+                <div class="alabel">Logic</div>
+                <p class="a">A palindrome like `abba` (even) or `abcba` (odd) reads the same forwards and backwards. The PDA pushes symbols into the stack during the first half of the string. Non-deterministically, it guesses the middle of the string, switches to state q1, and then starts popping symbols if they match the input.</p>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>State</th><th>Input</th><th>Top Stack</th><th>Next State</th><th>Operation</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="5" style="text-align:center; background:var(--bg2);"><strong>Phase 1: Pushing (Guessing first half)</strong></td></tr>
+                            <tr><td>q0</td><td>a</td><td>Z0</td><td>q0</td><td>Push A (AZ0)</td></tr>
+                            <tr><td>q0</td><td>b</td><td>Z0</td><td>q0</td><td>Push B (BZ0)</td></tr>
+                            <tr><td>q0</td><td>a</td><td>A or B</td><td>q0</td><td>Push A (AA or AB)</td></tr>
+                            <tr><td>q0</td><td>b</td><td>A or B</td><td>q0</td><td>Push B (BA or BB)</td></tr>
+                            
+                            <tr><td colspan="5" style="text-align:center; background:var(--bg2);"><strong>Phase 2: Transition (Middle)</strong></td></tr>
+                            <tr><td>q0</td><td>ε</td><td>Any</td><td>q1</td><td>Skip (Even palindrome)</td></tr>
+                            <tr><td>q0</td><td>a or b</td><td>Any</td><td>q1</td><td>Skip (Odd palindrome: Ignore middle char)</td></tr>
+                            
+                            <tr><td colspan="5" style="text-align:center; background:var(--bg2);"><strong>Phase 3: Popping (Matching second half)</strong></td></tr>
+                            <tr><td>q1</td><td>a</td><td>A</td><td>q1</td><td>Pop (ε)</td></tr>
+                            <tr><td>q1</td><td>b</td><td>B</td><td>q1</td><td>Pop (ε)</td></tr>
+                            
+                            <tr><td colspan="5" style="text-align:center; background:var(--bg2);"><strong>Acceptance</strong></td></tr>
+                            <tr><td>q1</td><td>ε</td><td>Z0</td><td>q_final</td><td>Accept</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q4a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c4">Q4a</div>
+                <div class="qt">Convert Grammar to CNF</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Convert grammar G into Chomsky Normal Form (CNF): S → ASA | aB, A → B | S, B → b | ε</div>
+                <div class="alabel">Step 1: Remove ε-productions</div>
+                <div class="trace">Nullable symbols: B → ε, so B is nullable.
+A → B, so A is nullable.
+S → ASA, so S is nullable (if A is ε).
+
+Remove B → ε:
+B → b
+A → B | S | ε (Wait, A→ε is added because A→B)
+S → ASA | SA | AS | S | aB | a
+
+Remove A → ε:
+A → B | S
+S → ASA | SA | AS | S | aB | a
+
+Remove S → ε:
+S → ASA | SA | AS | S | aB | a</div>
+
+                <div class="alabel">Step 2: Remove Unit Productions</div>
+                <div class="trace">Unit productions: A → B, A → S, S → S.
+
+Remove S → S:
+S → ASA | SA | AS | aB | a
+
+Remove A → B (B gives b):
+A → S | b
+
+Remove A → S:
+A → ASA | SA | AS | aB | a | b</div>
+
+                <div class="alabel">Step 3: Convert to CNF</div>
+                <p class="a">CNF requires all rules to be <code>A → BC</code> (two variables) or <code>A → a</code> (one terminal). Introduce new variables for terminals.</p>
+                <div class="grammar"><span class="nt">X</span> → <span class="t">a</span><br><span class="nt">Y</span> → <span class="t">b</span><br><br><span class="nt">S</span> → <span class="nt">A</span><span class="nt">C1</span> | <span class="nt">S</span><span class="nt">A</span> | <span class="nt">A</span><span class="nt">S</span> | <span class="nt">X</span><span class="nt">B</span> | <span class="t">a</span><br><span class="nt">C1</span> → <span class="nt">S</span><span class="nt">A</span><br><span class="nt">A</span> → <span class="nt">A</span><span class="nt">C1</span> | <span class="nt">S</span><span class="nt">A</span> | <span class="nt">A</span><span class="nt">S</span> | <span class="nt">X</span><span class="nt">B</span> | <span class="t">a</span> | <span class="t">b</span><br><span class="nt">B</span> → <span class="t">b</span></div>
+            </div>
+        </div>
+
+        <!-- Q4b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c4">Q4b</div>
+                <div class="qt">Turing Machine for Reverse of a String</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Design a Turing Machine to find the reverse of a string over Σ={0,1}</div>
+                <div class="alabel">High Level Logic</div>
+                <p class="a">Given input <code>w</code>, the TM must create a reversed copy of it on the tape (e.g., <code>011#110</code>).<br>
+                1. The TM scans the input from left to right. It picks the first unmarked symbol, marks it (e.g., replace '0' with 'X', '1' with 'Y').<br>
+                2. It remembers the symbol in its state (q_read0 or q_read1).<br>
+                3. It scans all the way to the right, past the '#' separator (if not placed, it places one) and past any already reversed symbols.<br>
+                4. It writes the remembered symbol ('0' or '1') at the first blank space on the right.<br>
+                5. It moves left all the way back to the marked symbols (X or Y), steps one right, and repeats the process until all original symbols are marked.<br>
+                6. Finally, it cleans up the tape by replacing X and Y back to 0 and 1.</p>
+            </div>
+        </div>
+
+        <!-- Q5a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c5">Q5a</div>
+                <div class="qt">NFA with ε to DFA Conversion</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">Convert NFA with epsilon moves to equivalent DFA.</div>
+                <div class="alabel">Assumed NFA Table</div>
+                <div class="tw">
+                    <table>
+                        <thead><tr><th>State</th><th>a</th><th>b</th><th>c</th><th>ε</th></tr></thead>
+                        <tbody>
+                            <tr><td>→ p</td><td>{p}</td><td>Φ</td><td>Φ</td><td>{q}</td></tr>
+                            <tr><td>q</td><td>Φ</td><td>{q}</td><td>Φ</td><td>{r}</td></tr>
+                            <tr><td>★ r</td><td>Φ</td><td>Φ</td><td>{r}</td><td>Φ</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="alabel">Step 1: Find ε-Closures</div>
+                <div class="trace">ε-Closure(p) = {p, q, r}
+ε-Closure(q) = {q, r}
+ε-Closure(r) = {r}</div>
+
+                <div class="alabel">Step 2: Subset Construction</div>
+                <p class="a">For any subset state S and input X, Next State = ε-Closure(Transition(S, X)). Start state is ε-Closure(p).</p>
+                <div class="tw">
+                    <table>
+                        <thead><tr><th>DFA State</th><th>a</th><th>b</th><th>c</th></tr></thead>
+                        <tbody>
+                            <tr><td>→ ★ A = {p,q,r}</td><td>ε-Cl({p}) = {p,q,r} = A</td><td>ε-Cl({q}) = {q,r} = B</td><td>ε-Cl({r}) = {r} = C</td></tr>
+                            <tr><td>★ B = {q,r}</td><td>Φ</td><td>ε-Cl({q}) = {q,r} = B</td><td>ε-Cl({r}) = {r} = C</td></tr>
+                            <tr><td>★ C = {r}</td><td>Φ</td><td>Φ</td><td>ε-Cl({r}) = {r} = C</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="a">Since the original NFA had <code>r</code> as a final state, all DFA states containing <code>r</code> (which is A, B, and C) are final states.</p>
+            </div>
+        </div>
+
+        <!-- Q5b -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c5">Q5b</div>
+                <div class="qt">Grammar Simplification</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">What is grammar simplification? Simplify: S→ASB|ε, A→aAS|a, B→SbS|A|bb</div>
+                <div class="alabel">Grammar Simplification</div>
+                <p class="a">Simplification removes unnecessary rules to make the grammar cleaner and parsing more efficient. It involves three steps in order: Removing ε-productions, Removing Unit productions, and Removing Useless symbols.</p>
+                
+                <div class="alabel">Step 1: Remove ε-Productions</div>
+                <div class="trace">S is nullable.
+S → ASB | AB
+A → aAS | aA | a
+B → SbS | bS | Sb | b | A | bb</div>
+
+                <div class="alabel">Step 2: Remove Unit Productions</div>
+                <div class="trace">Only unit production is B → A.
+Replace B → A with A's productions.
+S → ASB | AB
+A → aAS | aA | a
+B → SbS | bS | Sb | b | bb | aAS | aA | a</div>
+
+                <div class="alabel">Step 3: Remove Useless Symbols</div>
+                <p class="a">All symbols are reachable from S and all symbols generate terminals. Thus, no useless symbols exist. The result from Step 2 is the fully simplified grammar.</p>
+            </div>
+        </div>
+
+        <!-- Q6a -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c6">Q6a</div>
+                <div class="qt">DFA vs NFA & Regular Expressions</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">i. Compare DFA and NFA. ii. Design RE for 5 conditions.</div>
+                <div class="alabel">i. DFA vs NFA</div>
+                <div class="tw">
+                    <table>
+                        <thead>
+                            <tr><th>DFA (Deterministic Finite Automata)</th><th>NFA (Non-Deterministic Finite Automata)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>For every state and input symbol, there is exactly one strictly defined transition.</td><td>For a state and input symbol, there can be zero, one, or multiple transitions.</td></tr>
+                            <tr><td>Cannot use empty string (ε) transitions.</td><td>Can change states without reading input (ε-moves).</td></tr>
+                            <tr><td>Harder to design, but execution is fast (O(n)).</td><td>Easier to design intuitively, but simulation is slower.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alabel">ii. Regular Expressions over {a,b}</div>
+                <ul class="a-list">
+                    <li><strong>Starts with "abb":</strong> <code>abb(a+b)*</code></li>
+                    <li><strong>Ends with "bab":</strong> <code>(a+b)*bab</code></li>
+                    <li><strong>Contains substring "aba":</strong> <code>(a+b)*aba(a+b)*</code></li>
+                    <li><strong>Starts and ends with the SAME symbol:</strong> <code>a(a+b)*a + b(a+b)*b + a + b</code></li>
+                    <li><strong>Starts and ends with DIFFERENT symbols:</strong> <code>a(a+b)*b + b(a+b)*a</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Q6b & c -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c6">Q6b & c</div>
+                <div class="qt">PDA Acceptability & Derivation Tree</div>
+                <div class="qm">[10]</div>
+            </div>
+            <div class="qbody">
+                <div class="qstmt">What is PDA? Acceptability ways? Derive "aabbaa" for S→aAS|a, A→SbA|SS|ba using RMD.</div>
+                <div class="alabel">Push Down Automata (PDA)</div>
+                <p class="a">A PDA is essentially a Finite State Machine integrated with an external infinite Stack memory (Last-In-First-Out). It is used to recognize Context-Free Languages.</p>
+                <ul class="a-list">
+                    <li><strong>Acceptance by Final State:</strong> The input is fully consumed and the PDA transitions into an explicitly defined accepting state (stack content doesn't matter).</li>
+                    <li><strong>Acceptance by Empty Stack:</strong> The input is fully consumed and the stack is completely popped empty (including the initial Z0 symbol). No explicit final state is needed.</li>
+                </ul>
+
+                <div class="alabel">Rightmost Derivation (RMD) for "aabbaa"</div>
+                <div class="trace">S ⇒ aAS 
+  ⇒ aAa              (Using S → a)
+  ⇒ aSbAa            (Using A → SbA)
+  ⇒ aSba a           (Using A → a)
+  ⇒ a ab ba a        (Using S → a) -> aabbaa</div>
+  
+                <div class="alabel">Derivation Tree</div>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 0 300 280" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                        <text x="150" y="20" font-weight="bold" fill="#c9d1d9">S</text>
+                        <path d="M145,25 L100,60" stroke="#8b949e" fill="none"/>
+                        <path d="M150,25 L150,60" stroke="#8b949e" fill="none"/>
+                        <path d="M155,25 L200,60" stroke="#8b949e" fill="none"/>
+                        
+                        <text x="95" y="80" fill="#3fb950">a</text>
+                        <text x="145" y="80" font-weight="bold" fill="#c9d1d9">A</text>
+                        <text x="195" y="80" font-weight="bold" fill="#c9d1d9">S</text>
+                        
+                        <path d="M200,85 L200,120" stroke="#8b949e" fill="none"/>
+                        <text x="195" y="140" fill="#3fb950">a</text>
+                        
+                        <path d="M140,85 L100,120" stroke="#8b949e" fill="none"/>
+                        <path d="M150,85 L150,120" stroke="#8b949e" fill="none"/>
+                        <path d="M160,85 L200,120" stroke="#8b949e" fill="none"/>
+                        
+                        <text x="95" y="140" font-weight="bold" fill="#c9d1d9">S</text>
+                        <text x="145" y="140" fill="#3fb950">b</text>
+                        <text x="195" y="140" font-weight="bold" fill="#c9d1d9">A</text>
+                        
+                        <path d="M100,145 L100,180" stroke="#8b949e" fill="none"/>
+                        <text x="95" y="200" fill="#3fb950">a</text>
+                        
+                        <path d="M200,145 L200,180" stroke="#8b949e" fill="none"/>
+                        <text x="195" y="200" fill="#3fb950">a</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="qb">
+            <div class="qh">
+                <div class="qn c7">Q7</div>
+                <div class="qt">Regular Closure, Type-2 Grammar, Moore, TM Adder</div>
+                <div class="qm">[20]</div>
+            </div>
+            <div class="qbody">
+                <div class="alabel">a. Closure properties of Regular Languages</div>
+                <p class="a">Regular languages are closed under Union (A∪B), Intersection (A∩B), Complement, Concatenation (AB), Kleene Star (A*), and Reversal. This means applying these operations to a regular language guarantees the resulting language is also mathematically regular.</p>
+
+                <div class="alabel">b. Syntax for Type-2 Grammar (CFG)</div>
+                <p class="a">Type-2 Grammars are Context-Free Grammars. The strict syntax rule is: <code>A → α</code>, where the left side <strong>must</strong> be a single Non-Terminal variable (<code>A ∈ V</code>), and the right side <code>α</code> can be any combination of terminals and non-terminals (<code>α ∈ (V∪T)*</code>). Example: <code>S → aSb | ε</code>.</p>
+
+                <div class="alabel">c. Moore machine for Even/Odd 1s</div>
+                <p class="a">States: <code>q0</code> (Even 1s, Output = 1), <code>q1</code> (Odd 1s, Output = 0).</p>
+                <div class="dbox">
+                    <svg width="100%" viewBox="0 -30 400 150" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="m7c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#8b949e" stroke-width="1.5"/></marker>
+                        </defs>
+                        <circle cx="100" cy="50" r="30" fill="none" stroke="#3fb950" stroke-width="2"/>
+                        <text x="100" y="54" text-anchor="middle" font-size="12" fill="#3fb950">q0 / 1</text>
+                        
+                        <circle cx="300" cy="50" r="30" fill="none" stroke="#f85149" stroke-width="2"/>
+                        <text x="300" y="54" text-anchor="middle" font-size="12" fill="#f85149">q1 / 0</text>
+                        
+                        <!-- q0 to q1 on 1 -->
+                        <path d="M125,35 Q200,10 275,35" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m7c)"/>
+                        <text x="200" y="15" text-anchor="middle" font-size="11" fill="#c9d1d9">1</text>
+                        
+                        <!-- q1 to q0 on 1 -->
+                        <path d="M275,65 Q200,90 125,65" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m7c)"/>
+                        <text x="200" y="95" text-anchor="middle" font-size="11" fill="#c9d1d9">1</text>
+                        
+                        <!-- Self loops on 0 -->
+                        <path d="M75,35 Q50,-20 75,35" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m7c)"/>
+                        <text x="60" y="-5" text-anchor="middle" font-size="11" fill="#c9d1d9">0</text>
+                        
+                        <path d="M325,35 Q350,-20 325,35" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#m7c)"/>
+                        <text x="340" y="-5" text-anchor="middle" font-size="11" fill="#c9d1d9">0</text>
+                    </svg>
+                </div>
+
+                <div class="alabel">d. Turing machine to add two unary numbers</div>
+                <p class="a">Input format: <code>0^m 1 0^n</code>. To compute <code>m+n</code>, the TM simply needs to merge the two blocks of 0s. The algorithm is: Scan right to find the separator <code>'1'</code>. Overwrite the <code>'1'</code> with a <code>'0'</code> (tape now has one extra zero). Move all the way to the right end of the 0s. Overwrite the very last <code>'0'</code> with a Blank (<code>B</code>). Halt. The remaining contiguous 0s represent m+n.</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
